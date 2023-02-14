@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Acciones de GitHub Actions para Node.js | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Acciones de GitHub Actions para Node.js" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Presentación de las acciones de GitHub Actions relacionadas con proyectos Node.js como, por ejemplo, las usadas para clonar el repositorio de Git, la de instalación de Node.js y las utilizadas para ejecutar comandos de NPM." />
+<meta property="og:description" content="Presentación de las acciones de GitHub Actions relacionadas con proyectos Node.js como, por ejemplo, las usadas para clonar el repositorio de Git, la de instalación de Node.js y las utilizadas para ejecutar comandos de NPM." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Acciones de GitHub Actions para Node.js" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Presentación de las acciones de GitHub Actions relacionadas con proyectos Node.js como, por ejemplo, las usadas para clonar el repositorio de Git, la de instalación de Node.js y las utilizadas para ejecutar comandos de NPM.","headline":"Acciones de GitHub Actions para Node.js","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/devsecops-con-github-actions-ed-nodejs/acciones-de-github-actions-para-nodejs"},"url":"/libros/devsecops-con-github-actions-ed-nodejs/acciones-de-github-actions-para-nodejs"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/devsecops-con-github-actions-ed-nodejs'>Dev(Sec)Ops con GitHub Actions (Ed. Node.js)</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Acciones de GitHub Actions para Node.js</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>7 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Una vez tenemos claros los fundamentos de <strong>GitHub Actions</strong>, vamos a presentar las acciones necesarias para definir pasos relacionados con proyectos <strong>Node.js</strong> como, por ejemplo, cómo instalar <strong>Node.js</strong>, cómo compilar el código, cómo ejecutar las pruebas automatizadas, etc.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Cómo clonar el repositorio <strong>Git</strong> de trabajo.</p>
+  </li>
+  <li>
+    <p>Cómo instalar y configurar <strong>Node.js</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo instalar las dependencias de un proyecto de <strong>Node.js</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo ejecutar comandos varios durante el flujo de trabajo.</p>
+  </li>
+  <li>
+    <p>Cómo publicar cambios realizados por el flujo de trabajo en el repositorio de <strong>Git</strong>.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>Son muchas las acciones que podemos utilizar en nuestros flujos de trabajo de <strong>GitHub Actions</strong>.
+Puede echar un vistazo en <a href="https://github.com/marketplace?type=actions">https://github.com/marketplace?type=actions</a>.</p>
+
+<p>En esta lección, vamos a prestar atención a las más habituales cuando se trabaja con <strong>Node.js</strong>.</p>
+
+<h3 id="acción-actionscheckout">Acción <em>actions/checkout</em></h3>
+
+<p>La <strong>acción <em>actions/checkout</em></strong> (<em>actions/checkout action</em>) se utiliza para clonar un repositorio para su uso en un trabajo.
+Por esta razón, suele ser el primer paso de la mayoría de los trabajos.
+Tiene varias opciones que podemos indicar en su propiedad <strong><em>with</em></strong>, entre las cuales encontramos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>repository</em></strong></td>
+      <td>Repositorio a clonar. Su valor predeterminado es <code class="language-plaintext highlighter-rouge">${{ github.repository }}</code>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>ref</em></strong></td>
+      <td>Nombre de la rama o etiqueta a usar.</td>
+    </tr>
+    <tr>
+      <td><strong><em>token</em></strong></td>
+      <td><em>Token</em> de acceso a usar. Valor predeterminado: <code class="language-plaintext highlighter-rouge">${{ github.token }}</code>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>path</em></strong></td>
+      <td>Ruta dentro de la máquina virtual o contenedor donde realizar la clonación.</td>
+    </tr>
+    <tr>
+      <td><strong><em>fetch-depth</em></strong></td>
+      <td>Número de confirmaciones a clonar. Valor predeterminado: <strong><em>0</em></strong>, todas.</td>
+    </tr>
+    <tr>
+      <td><strong><em>submodules</em></strong></td>
+      <td>¿Clonar los submódulos? Valor predeterminado: <strong><em>true</em></strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Lo más habitual, si consultamos flujos de trabajo ya publicados en <strong>GitHub</strong>, es un paso como el siguiente, para clonar el repositorio donde se encuentra el flujo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+</code></pre></div></div>
+
+<h2 id="acciones-de-instalación-de-plataformas">Acciones de instalación de plataformas</h2>
+
+<p><strong>GitHub Actions</strong> proporciona varias acciones para instalar plataformas de desarrollo como, por ejemplo, para <strong>Go</strong>, <strong>.NET</strong>, <strong>Node.js</strong> o <strong>Python</strong>.
+Vamos a centrarnos en la relacionada con <strong>Node.js</strong>.</p>
+
+<h3 id="acción-actionssetup-node">Acción <em>actions/setup-node</em></h3>
+
+<p>Para instalar <strong>Node.js</strong> en la máquina virtual o contenedor actual, usaremos la <strong>acción <em>actions/setup-node</em></strong> (<em>actions/setup-node action</em>).
+Recuerde que la ejecución de los trabajos es aislada y, hacerlo en uno de ellos, no lo hace en los demás.
+Por lo tanto, si tiene varios trabajos que necesiten <strong>Node.js</strong>, tendrá que añadir un paso, en cada uno de ellos, para que se instale.
+Entre sus opciones <strong><em>with</em></strong>, podemos encontrar:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>node-version</em></strong></td>
+      <td>Versión de <strong>Node.js</strong> a instalar: <strong><em>14.x</em></strong>, <strong><em>16.x</em></strong>, <strong><em>18.x</em></strong>, <strong><em>latest</em></strong>, <strong><em>current</em></strong>, entre otras.</td>
+    </tr>
+    <tr>
+      <td><strong><em>node-version-file</em></strong></td>
+      <td>Archivo a usar que contiene la versión a instalar. Sólo se usa si no se indica <strong><em>node-version</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>architecture</em></strong></td>
+      <td>Arquitectura a instalar: <strong><em>x86</em></strong>; <strong><em>x64</em></strong>, la predeterminada; <strong><em>arm64</em></strong>; <strong><em>armv6l</em></strong>; <strong><em>armv7l</em></strong>; <strong><em>ppc64le</em></strong>; o <strong><em>s390x</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>registry-url</em></strong></td>
+      <td>URL del registro a utilizar. Valor predeterminado: <strong>https://registry.npmjs.org</strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Por lo general, la versión de <strong>Node.js</strong> a instalar se suele fijar con una expresión de <strong>GitHub Actions</strong> que hace uso de una variable de la estrategia matriz.
+He aquí un ejemplo ilustrativo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Instalación de Node.js ${{ matrix.node }}</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-node@v3</span>
+  <span class="na">with</span><span class="pi">:</span>
+    <span class="na">node-version</span><span class="pi">:</span> <span class="s">${{ matrix.node }}</span>
+</code></pre></div></div>
+
+<h2 id="instalación-de-dependencias">Instalación de dependencias</h2>
+
+<p>La acción <strong>actions/setup-node</strong> no hace otra cosa que instalar <strong>Node.js</strong>.
+Para instalar las dependencias de nuestro proyecto, tenemos que hacerlo explícitamente en un paso aparte y posterior a la instalación de <strong>Node.js</strong>.</p>
+
+<p>Cuando se instalan las dependencias en <strong>GitHub Actions</strong>, se suele usar el comando <strong>npm ci</strong>, en vez de <strong>npm i</strong>.
+Lo más común es tener un paso como el siguiente:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Instalación de dependencias</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="s">npm ci</span>
+</code></pre></div></div>
+
+<p><strong>npm ci</strong> es similar a <strong>npm i</strong>, con las siguientes características:</p>
+
+<ul>
+  <li>
+    <p><strong>npm ci</strong> instala todas las dependencias del proyecto, no se puede usar para instalar dependencias individuales como sí puede <strong>npm i</strong>.</p>
+  </li>
+  <li>
+    <p><strong>npm ci</strong> requiere que el proyecto tenga un archivo de bloqueo como, por ejemplo, <strong>package-lock.json</strong>, a diferencia de <strong>npm i</strong> que no lo exige.</p>
+  </li>
+  <li>
+    <p><strong>npm ci</strong> elimina la carpeta <strong>node_modules</strong> si ya existe, antes de realizar su instalación de dependencias.</p>
+  </li>
+  <li>
+    <p><strong>npm ci</strong> no escribe en los archivos <strong>package.json</strong> ni <strong>package-lock.json</strong>.</p>
+  </li>
+</ul>
+
+<p>Recuerde que si tiene que instalar alguna dependencia extra, generalmente global, debe usar <strong>npm i</strong>, en vez de <strong>npm ci</strong>, pues este segundo comando no tiene la capacidad de instalar dependencias individuales.</p>
+
+<p>Otro comando ampliamente utilizado es <strong>npm install-ci-test</strong> o <strong>npm cit</strong>, es similar a ejecutar <strong>npm ci &amp;&amp; npm t</strong>.</p>
+
+<p>La <strong>OpenSSF</strong>, <a href="https://openssf.org/">https://openssf.org/</a>, recomienda que el flujo de integración continua use <strong>npm i –no-package-lock</strong>, con el objeto de detectar, lo antes posible, nuevas versiones de nuestras dependencias.
+La opción <code class="language-plaintext highlighter-rouge">--no-package-lock</code> lo que dice es que no se tenga en cuenta el archivo <strong>package-lock.json</strong>.</p>
+
+<h2 id="ejecución-de-comandos">Ejecución de comandos</h2>
+
+<p>Una vez instalada la plataforma de desarrollo y sus dependencias, es muy probable, tal y como veremos más adelante en el libro, que tengamos que compilar, ejecutar análisis estáticos de código, ejecutar las pruebas automatizadas, etc.
+Para ello, si todo está disponible en el entorno del trabajo, no hay más que usar un paso <strong><em>run</em></strong> para llevar a cabo la tarea necesaria.
+En <strong>Node.js</strong>, es muy habitual invocar un <em>script</em> definido en el archivo de metadatos <strong>package.json</strong>, pero no es obligatorio.
+He aquí algunos ejemplos ilustrativos:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Análisis estático de código</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="s">npm run lint</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Transpilación de TypeScript</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="s">npm run tsc</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Generación de la documentación de la API</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="s">npm run doc</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Ejecución de pruebas automatizadas</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="s">npm t</span>
+</code></pre></div></div>
+
+<h3 id="instalación-de-paquetes-en-ejecutores-ubuntu">Instalación de paquetes en ejecutores <em>Ubuntu</em></h3>
+
+<p>Para instalar cualquier paquete de <strong>Ubuntu</strong> en un ejecutor <strong>Ubuntu</strong>, hay que usar un paso <strong><em>run</em></strong> como el que muestra el siguiente ejemplo, no olvide utilizar <strong>sudo</strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Instalación de redis-cli</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="s">sudo apt install redis-tools</span>
+</code></pre></div></div>
+
+<h3 id="ejecución-del-comando-gh">Ejecución del comando <em>gh</em></h3>
+
+<p>Todos los trabajos pueden utilizar el comando <strong>gh</strong> sin necesidad de instalarlo explícitamente.
+Viene de fábrica.
+He aquí un ejemplo ilustrativo, ojo, no olvide el <em>token</em> de <strong>GitHub</strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Publish release</span>
+  <span class="na">env</span><span class="pi">:</span>
+    <span class="na">GITHUB_TOKEN</span><span class="pi">:</span> <span class="s">${{ secrets.GITHUB_TOKEN }}</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">filePath=dist/pdf/${{ inputs.fileName }}.pdf</span>
+    
+    <span class="s">gh release create $version -t "Release: $version"</span>
+    <span class="s">gh release upload $version $filePath</span>
+</code></pre></div></div>
+
+<h2 id="publicación-de-cambios-en-el-repositorio-git">Publicación de cambios en el repositorio <em>Git</em></h2>
+
+<p>Atendiendo al flujo de trabajo, es posible que algunos trabajos realicen cambios en el código.
+Por ejemplo:
+el análisis de código podría cambiar código para adaptarlo a la guía de estilos de la organización;
+la publicación podría requerir cambiar la versión del paquete antes de su publicación;
+etc.
+Está claro que cuando realizamos cambios que deben persistirse en el repositorio, debemos llevarlos al repositorio de <strong>GitHub</strong> para que refleje la realidad dejada por el flujo.
+En este caso, el trabajo debe hacer lo que haríamos nosotros mismos si lo estuviéramos haciendo manualmente:</p>
+
+<ol>
+  <li>
+    <p>Confirmar los cambios.</p>
+  </li>
+  <li>
+    <p>Publicar los cambios en el repositorio.</p>
+  </li>
+</ol>
+
+<p>Antes de realizar estos pasos, debemos configurar quién es el que lo está haciendo.
+Eso significa configurar, como mínimo, las variables de configuración <strong><em>user.name</em></strong> y <strong><em>user.email</em></strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Configuración de Git</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">git config --global user.name ${{ github.actor }}</span>
+    <span class="s">git config --global user.email ${{ github.actor }}@users.noreply.github.com</span>
+</code></pre></div></div>
+
+<p>Se recomienda realizar esta configuración tras la clonación del repositorio, es decir, tras la acción <strong>actions/checkout</strong>.</p>
+
+<p>A continuación, ya podemos confirmar los cambios y solicitar su publicación en el repositorio remoto:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Publicación de cambios</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">version=$(node -p 'require("./lerna.json").version')</span>
+    <span class="s">git add .</span>
+    <span class="s">git commit -m $version</span>
+    <span class="s">git tag -a v$version -m $version</span>
+    <span class="s">git push --force</span>
+</code></pre></div></div>
+
+<p>Si la rama en la que va a publicar los cambios está protegida, puede tener problemas, sobre todo si requiere una solicitud de integración aprobada por algún propietario del código (<em>code owner</em>).</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

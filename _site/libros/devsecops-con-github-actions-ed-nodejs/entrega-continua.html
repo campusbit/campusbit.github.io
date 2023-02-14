@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Entrega continua | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Entrega continua" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Qué es la entrega continua (CD) y qué aspectos importantes de GitHub Actions teneos que tener en cuenta de cara a su flujo de trabajo." />
+<meta property="og:description" content="Qué es la entrega continua (CD) y qué aspectos importantes de GitHub Actions teneos que tener en cuenta de cara a su flujo de trabajo." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Entrega continua" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Qué es la entrega continua (CD) y qué aspectos importantes de GitHub Actions teneos que tener en cuenta de cara a su flujo de trabajo.","headline":"Entrega continua","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/devsecops-con-github-actions-ed-nodejs/entrega-continua"},"url":"/libros/devsecops-con-github-actions-ed-nodejs/entrega-continua"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/devsecops-con-github-actions-ed-nodejs'>Dev(Sec)Ops con GitHub Actions (Ed. Node.js)</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Entrega continua</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>18 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Hasta el momento, hemos presentado los flujos de integración continua, aquellos que nos permiten llevar a cabo el <strong>CI</strong> del <strong>CI/CD</strong>.
+Pero todavía no hemos prestado especial atención a la entrega continua, esto es, al <strong>CD</strong> del <strong>CI/CD</strong>.
+Ha llegado el momento de verlo.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es la entrega continua.</p>
+  </li>
+  <li>
+    <p>Cómo utilizar las etiquetas de <strong>Git</strong> para identificar versiones en el historial del repositorio.</p>
+  </li>
+  <li>
+    <p>Qué son y cómo crear las interdependencias de trabajos.</p>
+  </li>
+  <li>
+    <p>Cómo generar y publicar imágenes de <strong>Docker</strong> de manera automática con <strong>GitHub Actions</strong>.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>La <strong>entrega continua</strong> (<em>continuous delivery</em>) está relacionada con la entrega más rápida y frecuente de software.
+Si conseguimos entregar los cambios más rápidamente, generamos más valor para nuestro proyecto y para sus usuarios.
+Además, al tenerlo automatizado seremos menos propensos a errores de entrega.
+Básicamente, añade una fase de despliegue del software en entornos de producción o pruebas al flujo <strong>CI/CD</strong>.</p>
+
+<p>La entrega continua no se ejecuta cada vez que realizamos una confirmación o combinación de ramas.
+Se podría ejecutar, pero no es el objetivo.
+El objetivo es tenerlo todo preparado para poder realizar entregas o publicaciones rápidamente <em>en cualquier momento</em>.</p>
+
+<p>Si conseguimos automatizar el proceso de entrega, podemos reducir fácilmente el <strong>tiempo de espera</strong> (<em>lead time</em>), ya sea el que transcurre entre que se detecta una necesidad y la ponemos a disposición de los usuarios; o bien, el que transcurre desde que subimos un cambio al repositorio <strong>Git</strong> y este llega finalmente al usuario en la siguiente entrega.
+Por ejemplo, si estamos usando una estrategia de ramificación troncal, como ya sabemos, la rama troncal es siempre construible y estable.
+Eso permite que podamos publicar muy fácilmente nuevos módulos o paquetes.
+Por ejemplo, al finalizar el día, podemos generar lo que se conocen como una <strong>versión nocturna</strong> (<em>nightly version</em>), versión generada por la noche con el código actual de la rama troncal, todo ello, sin necesidad de intervención manual.
+Otro ejemplo sería la publicación o entrega bajo demanda.
+Esto es posible porque la rama troncal es siempre construible y podemos desplegar de inmediato al tener el proceso automatizado.</p>
+
+<p>De la misma manera que podemos automatizar el proceso de integración continua con <strong>GitHub Actions</strong>, también podemos hacer lo mismo con la entrega continua.
+Siguiendo con las versiones nocturnas, podemos configurar un disparador a medianoche que genere esta versión y la publique automáticamente poniéndola, así, a disposición de nuestros usuarios sin necesidad de realizar ningún trabajo manual.</p>
+
+<p>En este punto, vamos a recordar algunas métricas ya presentadas anteriormente, recuperarlas nos ayudará a asentarlas un poquito más en nuestra memoria:</p>
+
+<ul>
+  <li>
+    <p>El <strong>tiempo de espera</strong> (<em>lead time</em>) está relacionado con el tiempo transcurrido desde que nos ponemos a trabajar en una cosa hasta que llega al usuario.
+Se suele medir en días, semanas o meses.
+Lo ideal es que sea en unos días o pocas semanas.</p>
+  </li>
+  <li>
+    <p>La <strong>frecuencia de entrega</strong> (<em>delivery frequency</em>) hace referencia a cada cuánto tiempo entregamos versiones del producto a los usuarios.
+Aquí también lo ideal es hacerlo cada pocos días o semanas.</p>
+  </li>
+  <li>
+    <p>El <strong>tiempo medio de reparación</strong> (<em>mean time to repair</em> o <strong><em>MTTR</em></strong>) es el tiempo que transcurre desde que identificamos un problema, lo resolvemos y los ponemos a disposición de los usuarios.
+Y como no podía ser de otra manera, también debe ser pequeño.</p>
+  </li>
+  <li>
+    <p>La <strong>tasa de fallos de cambio</strong> (<em>change failure rate</em>) es el porcentaje de entregas que resultaron en fallo.
+Ayuda a detectar si estamos haciendo cosas mal que acaban generando software que falla.
+Una tasa del cero al diez por ciento se considera más o menos aceptable; pero mayor, no.</p>
+  </li>
+</ul>
+
+<p>De la misma manera que la integración continua ayuda a mejorar algunas de estas métricas, la entrega continua también lo hace.
+Ambas son claves y mejoran nuestra eficiencia y productividad, así como el valor de nuestro producto de software.</p>
+
+<h2 id="flujo-de-lanzamiento">Flujo de lanzamiento</h2>
+
+<p>Un <strong>lanzamiento</strong> (<em>release</em>) representa una versión de un paquete.
+Esta versión debe generarse mediante un flujo de trabajo que se conoce formalmente como <strong>flujo de trabajo de lanzamiento</strong> (<em>release workflow</em>), el cual puede descomponerse en los siguientes pasos:</p>
+
+<ol>
+  <li>
+    <p>Descargar el repositorio <strong>Git</strong> de trabajo.</p>
+  </li>
+  <li>
+    <p>Instalar las dependencias necesarias como, por ejemplo, cualquier herramienta que vayamos a utilizar en el lanzamiento.</p>
+  </li>
+  <li>
+    <p>Ejecutar el flujo de CI para garantizar que todo va bien.
+   Otra posibilidad es extraer el artefacto que contiene el paquete compilado y ya probado del almacén de artefactos.</p>
+  </li>
+  <li>
+    <p>Generar las notas de lanzamiento.</p>
+  </li>
+  <li>
+    <p>Fijar la versión del lanzamiento.</p>
+  </li>
+  <li>
+    <p>Crear el <strong>lanzamiento en GitHub</strong> si es necesario.</p>
+
+    <p>Los <strong>lanzamientos de GitHub</strong> son muy recomendados y los describimos en la lección posterior.</p>
+  </li>
+</ol>
+
+<p>Es buena práctica separar el flujo de generación de una nueva versión o lanzamiento de su publicación.
+Aunque algunas organizaciones los suelen fusionar en un único flujo.</p>
+
+<h3 id="permisos-del-flujo-de-lanzamiento">Permisos del flujo de lanzamiento</h3>
+
+<p>Por seguridad, no debemos olvidar el principio de menor privilegio.
+Generalmente, los flujos de lanzamiento necesitan permiso de lectura y escritura de contenido, porque suelen hacer cambios al código fuente y, a continuación, los suben a <strong>GitHub</strong>.
+Este tipo de flujos tienden a tener la siguiente propiedad <strong>permissions</strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">permissions</span><span class="pi">:</span>
+  <span class="na">contents</span><span class="pi">:</span> <span class="s">write</span>
+</code></pre></div></div>
+
+<h2 id="etiquetado-de-git">Etiquetado de <em>Git</em></h2>
+
+<p>El <strong>etiquetado</strong> (<em>tagging</em>) es una operación por la que asociamos una etiqueta a un cambio del repositorio de <strong>Git</strong>.
+Se utiliza principalmente, aunque no únicamente, para identificar versiones dentro del historial.
+Es importante saber cómo trabajar con ellas para poder identificar puntos del historial del repositorio donde se encuentra el código concreto de una determinada versión.</p>
+
+<h3 id="creación-de-etiquetas">Creación de etiquetas</h3>
+
+<p><strong>Git</strong> soporta dos tipos de etiquetas, las ligeras y las anotadas.
+Una <strong>etiqueta ligera</strong> (<em>lightweight tag</em>) no es más que un puntero a una determinada confirmación (<em>commit</em>).
+Se crean mediante el comando <strong>git tag</strong> como sigue:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># etiqueta el último commit</span>
+git tag etiqueta
+
+<span class="c"># etiqueta el commit indicado</span>
+git tag etiqueta sumaDeComprobación
+</code></pre></div></div>
+
+<p>Ejemplo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag v1.2.3
+</code></pre></div></div>
+
+<p>Por otra parte, tenemos las <strong>etiquetas anotadas</strong> (<em>annotated tags</em>), se implementan mediante un objeto específico dentro del historial de <strong>Git</strong>.
+Contiene información, por ejemplo, sobre quién la creó e incluso un mensaje de etiqueta específico que no tienen las ligeras.
+Se crean mediante el comando <strong>git tag</strong> con las opciones <code class="language-plaintext highlighter-rouge">-a</code> y <code class="language-plaintext highlighter-rouge">-m</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># etiqueta el último commit</span>
+git tag <span class="nt">-a</span> etiqueta <span class="nt">-m</span> <span class="s1">'Mensaje de etiquetado'</span>
+
+<span class="c"># etiqueta el commit indicado</span>
+git tag <span class="nt">-a</span> etiqueta <span class="nt">-m</span> <span class="s1">'Mensaje de etiquetado'</span> sumaDeComprobación
+</code></pre></div></div>
+
+<p>Ejemplo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag <span class="nt">-a</span> v1.2.3 <span class="nt">-m</span> <span class="s2">"Release: v1.2.3"</span>
+</code></pre></div></div>
+
+<h3 id="publicación-de-etiquetas">Publicación de etiquetas</h3>
+
+<p>Las etiquetas que creamos en nuestro entorno local no se publican automáticamente cuando hacemos un <strong>git push</strong>.
+Es necesario utilizar una sintaxis especial de este comando:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># publica una determinada etiqueta</span>
+git push idRepoRemoto etiqueta
+
+<span class="c"># publica todas las etiquetas</span>
+git push idRepoRemoto <span class="nt">--tags</span>
+</code></pre></div></div>
+
+<p>Ejemplo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push origin <span class="nt">--tags</span>
+</code></pre></div></div>
+
+<h3 id="listado-de-etiquetas">Listado de etiquetas</h3>
+
+<p>Para listar las etiquetas existentes, utilizaremos el comando <strong>git tag -l</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># lista las etiquetas existentes</span>
+git tag <span class="nt">-l</span>
+
+<span class="c"># lista las etiquetas que cumplen un patrón</span>
+git tag <span class="nt">-l</span> patrón
+</code></pre></div></div>
+
+<p>He aquí un ejemplo ilustrativo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag <span class="nt">-l</span> v1.2<span class="k">*</span>
+</code></pre></div></div>
+
+<h3 id="supresión-de-etiquetas">Supresión de etiquetas</h3>
+
+<p>Para suprimir una etiqueta, usaremos uno de los siguientes comandos:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># supresión local de una etiqueta</span>
+git tag <span class="nt">-d</span> etiqueta
+
+<span class="c"># supresión remota de una etiqueta</span>
+git push idRepoRemoto <span class="nt">--delete</span> etiqueta
+</code></pre></div></div>
+
+<h2 id="interdependencia-de-trabajos">Interdependencia de trabajos</h2>
+
+<p>Los trabajos de un flujo de trabajo son independientes y se ejecutan aisladamente en sus propias máquinas virtuales o contenedores.
+Eso permite que se puedan ejecutar de manera paralela todos o parte de ellos.</p>
+
+<p>En ocasiones, necesitamos que los trabajos se ejecuten uno detrás de otro, por cuestiones de dependencia, por ejemplo, porque un trabajo necesita una salida o un artefacto generado por otro.
+Existe entonces una <strong>interdependencia de trabajos</strong> (<em>job interdependency</em>), ya que un trabajo depende de otro del mismo flujo.
+Esto hace que el dependiente tenga que esperar a que su dependencia termine.</p>
+
+<h3 id="propiedad-needs-de-los-trabajos">Propiedad <em>needs</em> de los trabajos</h3>
+
+<p>En estos casos, podemos indicar que un trabajo depende de otro y sólo puede ejecutarse tras ese otro, mediante su propiedad <strong><em>needs</em></strong>.
+El valor de esta propiedad puede ser el identificador del trabajo del que depende, es decir, que debe ejecutarse antes, o bien un array de los trabajos de los que depende.</p>
+
+<p>A continuación, se muestra un ejemplo de un flujo de trabajo que espera a que las pruebas de unidad se hayan ejecutado para comenzar con las de integración:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">CI</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">**"</span>
+
+<span class="na">permissions</span><span class="pi">:</span>
+  <span class="na">contents</span><span class="pi">:</span> <span class="s">write</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">runUnitTests</span><span class="pi">:</span>
+    <span class="na">uses</span><span class="pi">:</span> <span class="s">siacodelabs/.github/.github/workflows/actions-ci.yaml@main</span>
+
+  <span class="na">runSystemTests</span><span class="pi">:</span>
+    <span class="na">needs</span><span class="pi">:</span> <span class="s">runUnitTests</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+
+    <span class="na">env</span><span class="pi">:</span>
+      <span class="na">skylink</span><span class="pi">:</span> <span class="s">sia://AAAFCzW_tyQKKJZL_xHXHWE-XwusklwWBSv9HFFtZhtecA</span>
+      <span class="na">localFilePath</span><span class="pi">:</span> <span class="s">/tmp/hello-world.txt</span>
+
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Clone repo</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Install dependencies</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">npm i --production</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Download skylink</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">./</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">skylink</span><span class="pi">:</span> <span class="s">${{ env.skylink }}</span>
+          <span class="na">path</span><span class="pi">:</span> <span class="s">${{ env.localFilePath }}</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Check local file</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">cat ${{ env.localFilePath }}</span>
+
+          <span class="s">if [[ ! $(grep -i hello ${{ env.localFilePath }}) ]]; then</span>
+            <span class="s">echo "::error::File should contain the text 'hello'."</span>
+            <span class="s">exit 1</span>
+          <span class="s">fi</span>
+</code></pre></div></div>
+
+<h3 id="propiedad-outputs-de-los-trabajos-y-los-pasos">Propiedad <em>outputs</em> de los trabajos y los pasos</h3>
+
+<p>Un trabajo puede generar artefactos y datos para sus dependientes.
+Los artefactos los presentamos en una lección anterior, pero también es posible generar datos como, por ejemplo, el nombre de un artefacto generado para que sea usado por un trabajo dependiente.
+Estos datos se conocen formalmente como <strong>salidas</strong> (<em>outputs</em>) y se indican mediante la propiedad <strong><em>outputs</em></strong> del trabajo.
+Esta propiedad de tipo objeto debe contener una propiedad para cada una de sus salidas, donde su valor es el valor de la propiedad.
+Si alguna salida contiene una expresión, esta se ejecutará al finalizar la ejecución del trabajo para que pueda, así, acceder a los valores finales de los contextos del trabajo.</p>
+
+<p>Veamos un ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">version</span><span class="pi">:</span>
+    <span class="na">outputs</span><span class="pi">:</span>
+      <span class="na">version</span><span class="pi">:</span> <span class="s">${{ env.version }}</span>
+    
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="c1"># ...</span>
+</code></pre></div></div>
+
+<h4 id="contexto-steps">Contexto <em>steps</em></h4>
+
+<p>Como los pasos son los que realmente generan los artefactos y los datos, estos también pueden contener una propiedad <strong><em>outputs</em></strong>.
+Cuando un trabajo necesita acceder a la salida de uno de sus pasos, puede utilizar su contexto <strong><em>steps</em></strong>.
+Para cada paso, existe una propiedad cuyo valor es un objeto que describe el paso.
+El formato para acceder al valor de una salida de un paso es el siguiente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>${{ steps.idDelPaso.outputs.nombreDeLaSalida }}
+</code></pre></div></div>
+
+<p>En estos casos, el paso debe tener una propiedad <strong><em>id</em></strong> que indique su identificador en el contexto <strong><em>steps</em></strong>.</p>
+
+<h4 id="contexto-needs">Contexto <em>needs</em></h4>
+
+<p>Un trabajo puede utilizar su contexto <strong><em>needs</em></strong> para acceder a las salidas de cualquiera de los trabajos de los que depende.
+Para ello, podemos utilizar una expresión similar a la siguiente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>${{ needs.nombreTrabajoDelQueSeDepende.outputs.nombreSalida }}
+</code></pre></div></div>
+
+<h2 id="generación-de-imágenes-de-docker">Generación de imágenes de <em>Docker</em></h2>
+
+<p><strong>Docker</strong> es una plataforma de virtualización basada en contenedores ampliamente utilizada hoy en día.
+Son muchos los proyectos de software que además de publicarse en registros como, por ejemplo, <strong>NPM</strong>, también generan imágenes de <strong>Docker</strong> para facilitar su uso.
+Cuando este es el caso, la generación de las imágenes y su posterior publicación en un registro de <strong>Docker</strong> pueden generarse automáticamente.
+En el caso de <strong>Node.js</strong>, esta generación se suele realizar tras la publicación de los paquetes correspondientes en <strong>NPM</strong>, o sea, tras la ejecución del flujo de lanzamiento.</p>
+
+<h3 id="evento-workflow_run">Evento <em>workflow_run</em></h3>
+
+<p><strong>GitHub Actions</strong> proporciona el evento <strong><em>workflow_run</em></strong> con el que atar o desencadenar la ejecución de un flujo una vez comenzado o terminado otro.
+Su sintaxis es como sigue:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span>
+  <span class="na">workflow_run</span><span class="pi">:</span>
+    <span class="na">workflows</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">lista de nombres de flujo de trabajo</span><span class="pi">]</span>
+    <span class="na">types</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">cuándo debe ejecutarse este flujo</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>Veamos un ejemplo introductorio extraído de <a href="https://github.com/akromio/nodejs-akromio/blob/main/.github/workflows/release-docker.yaml">https://github.com/akromio/nodejs-akromio/blob/main/.github/workflows/release-docker.yaml</a>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">release-docker</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">workflow_run</span><span class="pi">:</span>
+    <span class="na">workflows</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">release-npm</span><span class="pi">]</span>
+    <span class="na">types</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">completed</span><span class="pi">]</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="c1"># ...</span>
+</code></pre></div></div>
+
+<p>La propiedad <strong><em>workflows</em></strong> indica los flujos de los que depende.
+Contiene una lista de <em>nombres</em> de estos flujos.
+Recuerde que el nombre de un flujo es su propiedad <strong><em>name</em></strong>, no el nombre del archivo.
+Así pues, si el archivo es, por ejemplo, <em>release-npm.yaml</em> y su propiedad <strong><em>name</em></strong> es <em>Release NPM</em>, tendremos que indicar <em>Release NPM</em>.</p>
+
+<p>Por otra parte, tenemos la propiedad <strong><em>types</em></strong> que afina mejor el evento de disparo.
+Consiste en una lista de elementos, cuyos valores pueden ser:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Valor</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>completed</em></strong></td>
+      <td>Una vez terminado el flujo del que se depende.</td>
+    </tr>
+    <tr>
+      <td><strong><em>requested</em></strong></td>
+      <td>Una vez solicitada la ejecución del flujo del que se depende.</td>
+    </tr>
+    <tr>
+      <td><strong><em>in_progress</em></strong></td>
+      <td>Una vez se encuentre el flujo indicado en ejecución.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>En el ejemplo anterior, la generación y publicación de las imágenes en el registro oficial de <strong>Docker</strong> se realiza una vez ha finalizado el flujo <em>release-npm</em>.
+En este caso, no se tiene en cuenta si el flujo termina con éxito o en fallo.
+Siempre que finalice, se ejecutará.
+Por suerte, podemos indicar que el trabajo sólo debe ejecutarse si el flujo termina bien mediante una propiedad <strong><em>if</em></strong> como la siguiente:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">docker-hub</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Publish images on Docker Hub</span>
+    <span class="na">if</span><span class="pi">:</span> <span class="s">github.event.workflow_run.conclusion == 'success'</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+
+    <span class="c1"># ...</span>
+</code></pre></div></div>
+
+<p>Lo que estamos diciendo en el <strong><em>if</em></strong> es:
+el trabajo sólo debe ejecutarse si el evento <strong><em>workflow_run</em></strong> disparador asociado a cualquiera de los flujos indicados en <strong><em>on.workflow_run.workflows</em></strong> finaliza completamente sin errores.</p>
+
+<p>Este evento se puede utilizar tanto para la ejecución automática del flujo de publicación de imágenes en <strong>Docker</strong> como para otras cosas como, por ejemplo, la ejecución de pruebas de integración una vez terminada la ejecución del flujo de integración continua como, por ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">ci-itg</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">workflow_run</span><span class="pi">:</span>
+    <span class="na">workflows</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">ci</span><span class="pi">]</span>
+    <span class="na">types</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">completed</span><span class="pi">]</span>
+
+<span class="na">permissions</span><span class="pi">:</span>
+  <span class="na">contents</span><span class="pi">:</span> <span class="s">read</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">tests</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Run integration tests</span>
+    <span class="na">if</span><span class="pi">:</span> <span class="s">github.event.workflow_run.conclusion == 'success'</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+
+    <span class="na">strategy</span><span class="pi">:</span>
+      <span class="na">matrix</span><span class="pi">:</span>
+        <span class="na">node</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">16.x</span><span class="pi">,</span> <span class="nv">18.x</span><span class="pi">]</span>
+    
+    <span class="na">services</span><span class="pi">:</span>
+      <span class="na">redis</span><span class="pi">:</span>
+        <span class="na">image</span><span class="pi">:</span> <span class="s">redis:alpine</span>
+        <span class="na">ports</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="s">6379:6379</span>
+        <span class="na">options</span><span class="pi">:</span> <span class="pi">&gt;-</span>
+          <span class="s">--health-cmd "redis-cli ping"</span>
+          <span class="s">--health-interval 10s</span>
+          <span class="s">--health-timeout 5s</span>
+          <span class="s">--health-retries 5</span>
+
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Clone repository</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set up redis-cli</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">sudo apt install redis-tools</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set up Node.js ${{ matrix.node }}</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-node@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">node-version</span><span class="pi">:</span> <span class="s">${{ matrix.node }}</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set up Gattuso</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">akromio/setup-gattuso@v1</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Install dependencies</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">npm ci</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Run integration tests</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">gattuso r ci/itg</span>
+</code></pre></div></div>
+
+<h3 id="acción-dockerlogin-action">Acción <em>docker/login-action</em></h3>
+
+<p>Para poder publicar una imagen en un <strong>registro de Docker</strong>, primero debemos identificarnos.
+Para esto, disponemos de la <strong>acción <em>docker/login-action</em></strong>.
+Es muy sencilla, he aquí un ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Login to Docker Hub</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">docker/login-action@v2</span>
+  <span class="na">with</span><span class="pi">:</span>
+    <span class="na">username</span><span class="pi">:</span> <span class="s">${{ secrets.DOCKER_HUB_USERNAME }}</span>
+    <span class="na">password</span><span class="pi">:</span> <span class="s">${{ secrets.DOCKER_HUB_TOKEN }}</span>
+</code></pre></div></div>
+
+<p>Observe que espera dos argumentos de entrada.
+Con <strong><em>username</em></strong>, indicamos nuestro nombre de usuario en el registro, el cual mantendremos a buen recaudo en el almacén de secretos de <strong>GitHub Actions</strong>.
+Mientras que con <strong><em>password</em></strong>, indicamos el <em>token</em> de acceso que nos proporciona el registro de <strong>Docker</strong>, el cual también mantendremos en el almacén de secretos.
+En el caso del registro oficial, para generar este <em>token</em>, hay que ir a <strong><em>Account Settings &gt; Security &gt; Access Tokens</em></strong> y hacer clic en <strong><em>New Access Token</em></strong>.
+Como permisos de acceso indicaremos <strong><em>Read, Write, Delete</em></strong> o simplemente <strong><em>Read &amp; Write</em></strong>, según nuestras necesidades:</p>
+
+<p><img src="img/generaci%C3%B3n-de-token-de-acceso-en-docker.png" alt="Generación de *token* de acceso en el registro de *Docker*" /></p>
+
+<p>De manera predeterminada, se utiliza el registro oficial de <strong>Docker</strong>.
+En caso de usar otro, tendremos que indicar el argumento <strong><em>registry</em></strong>, además de <strong><em>username</em></strong> y <strong><em>password</em></strong>, y su dominio como, por ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># GitHub Container Registry</span>
+<span class="na">registry</span><span class="pi">:</span> <span class="s">ghcr.io</span>
+
+<span class="c1"># Azure Container Registry</span>
+<span class="na">registry</span><span class="pi">:</span> <span class="s">nombreDeNuestroRegistro.azurecr.io</span>
+</code></pre></div></div>
+
+<h3 id="acción-dockerbuild-push-action">Acción <em>docker/build-push-action</em></h3>
+
+<p>Una vez identificados, podemos pasar a construir nuestra imagen y a publicarla.
+Para este fin, disponemos de la <strong>acción <em>docker/build-push-action</em></strong>.
+Veamos un ejemplo de uso:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build and push Gattuso image</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">docker/build-push-action@v3</span>
+  <span class="na">with</span><span class="pi">:</span>
+    <span class="na">context</span><span class="pi">:</span> <span class="s">./docker/gattuso/alpine</span>
+    <span class="na">build-args</span><span class="pi">:</span> <span class="s">version=${{ env.version }}</span>
+    <span class="na">push</span><span class="pi">:</span> <span class="kc">true</span>
+    <span class="na">tags</span><span class="pi">:</span> <span class="s">akromio/gattuso:latest,akromio/gattuso:${{ env.mmVersion}},akromio/gattuso:${{ env.version }}</span>
+</code></pre></div></div>
+
+<p>El argumento <strong><em>context</em></strong> indica el directorio en el que se encuentra el <strong>Dockerfile</strong> a usar para generar la imagen.
+Mediante <strong><em>build-args</em></strong>, pasamos los argumentos a usar, si son necesarios, para esta construcción.
+El nombre y las etiquetas de la imagen se indican en la propiedad <strong><em>tags</em></strong>;
+cada <em>imagen:etiqueta</em> se separa de la siguiente con una coma.
+Finalmente, para indicar que debe publicarse la imagen en el registro se fijará el argumento <strong><em>push</em></strong> a <strong><em>true</em></strong>.</p>
+
+<h3 id="permisos-del-flujo-de-docker">Permisos del flujo de <em>Docker</em></h3>
+
+<p>Por lo general, el flujo de construcción y publicación de imágenes de <strong>Docker</strong> no suele modificar el contenido del repositorio.
+Por lo que tendrá una su propiedad <strong>permissions</strong> como sigue:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">permissions</span><span class="pi">:</span>
+  <span class="na">contents</span><span class="pi">:</span> <span class="s">read</span>
+</code></pre></div></div>
+
+<h3 id="ejemplo-de-flujo-de-generación-y-publicación-de-imagen-de-docker">Ejemplo de flujo de generación y publicación de imagen de <em>Docker</em></h3>
+
+<p>A continuación, vamos a presentar un ejemplo que publica varias imágenes en el <strong>registro oficial de Docker</strong> tras cada publicación en <strong>NPM</strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">release-docker</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">workflow_run</span><span class="pi">:</span>
+    <span class="na">workflows</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">release-npm</span><span class="pi">]</span>
+    <span class="na">types</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">completed</span><span class="pi">]</span>
+
+<span class="na">permissions</span><span class="pi">:</span>
+  <span class="na">contents</span><span class="pi">:</span> <span class="s">read</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">docker-hub</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Publish images on Docker Hub</span>
+    <span class="na">if</span><span class="pi">:</span> <span class="s">github.event.workflow_run.conclusion == 'success'</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+
+    <span class="na">strategy</span><span class="pi">:</span>
+      <span class="na">matrix</span><span class="pi">:</span>
+        <span class="na">node</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">18.x</span><span class="pi">]</span>
+
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Clone repository</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set up Node.js ${{ matrix.node }}</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-node@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">node-version</span><span class="pi">:</span> <span class="s">${{ matrix.node }}</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Determine versions to publish</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s"># (1) latest version</span>
+          <span class="s">version=$(npm pkg --workspace @akromio/gattuso get version | grep gattuso | grep -o -E "[[:digit:]]+.[[:digit:]]+.[[:digit:]]")</span>
+          <span class="s">echo "version=$version" &gt;&gt; $GITHUB_ENV</span>
+
+          <span class="s"># (2) major.minor version</span>
+          <span class="s">mmVersion=$(npm pkg --workspace @akromio/gattuso get version | grep gattuso | grep -o -E "[[:digit:]]+.[[:digit:]]+")</span>
+          <span class="s">echo "mmVersion=$mmVersion" &gt;&gt; $GITHUB_ENV</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Login to Docker Hub</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">docker/login-action@v2</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">username</span><span class="pi">:</span> <span class="s">${{ secrets.DOCKER_HUB_USERNAME }}</span>
+          <span class="na">password</span><span class="pi">:</span> <span class="s">${{ secrets.DOCKER_HUB_TOKEN }}</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build and push Gattuso image</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">docker/build-push-action@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">context</span><span class="pi">:</span> <span class="s">./docker/gattuso/alpine</span>
+          <span class="na">build-args</span><span class="pi">:</span> <span class="s">version=${{ env.version }}</span>
+          <span class="na">push</span><span class="pi">:</span> <span class="kc">true</span>
+          <span class="na">tags</span><span class="pi">:</span> <span class="s">akromio/gattuso:latest,akromio/gattuso:${{ env.mmVersion}},akromio/gattuso:${{ env.version }}</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build and push Carboni image</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">docker/build-push-action@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">context</span><span class="pi">:</span> <span class="s">./docker/carboni/alpine</span>
+          <span class="na">build-args</span><span class="pi">:</span> <span class="s">version=${{ env.version }}</span>
+          <span class="na">push</span><span class="pi">:</span> <span class="kc">true</span>
+          <span class="na">tags</span><span class="pi">:</span> <span class="s">akromio/carboni:latest,akromio/carboni:${{ env.mmVersion}},akromio/carboni:${{ env.version }}</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build and push Cavani image</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">docker/build-push-action@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">context</span><span class="pi">:</span> <span class="s">./docker/cavani/alpine</span>
+          <span class="na">build-args</span><span class="pi">:</span> <span class="s">version=${{ env.version }}</span>
+          <span class="na">push</span><span class="pi">:</span> <span class="kc">true</span>
+          <span class="na">tags</span><span class="pi">:</span> <span class="s">akromio/cavani:latest,akromio/cavani:${{ env.mmVersion}},akromio/cavani:${{ env.version }}</span>
+</code></pre></div></div>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

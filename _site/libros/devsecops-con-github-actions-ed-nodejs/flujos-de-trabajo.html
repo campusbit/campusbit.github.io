@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Flujos de trabajo | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Flujos de trabajo" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Introducción a la creación de flujos de trabajo de GitHub Actions." />
+<meta property="og:description" content="Introducción a la creación de flujos de trabajo de GitHub Actions." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Flujos de trabajo" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Introducción a la creación de flujos de trabajo de GitHub Actions.","headline":"Flujos de trabajo","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/devsecops-con-github-actions-ed-nodejs/flujos-de-trabajo"},"url":"/libros/devsecops-con-github-actions-ed-nodejs/flujos-de-trabajo"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/devsecops-con-github-actions-ed-nodejs'>Dev(Sec)Ops con GitHub Actions (Ed. Node.js)</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Flujos de trabajo</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>30 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p><strong>GitHub Actions</strong> es una plataforma proporcionada por <strong>GitHub</strong> con la que podemos automatizar tareas e implementar <strong>CI/CD</strong>.
+En esta lección, vamos a introducir los flujos de trabajo y cómo usarlos.
+Más adelante, veremos cómo usar estos flujos para automatizar los procesos de <strong>CI/CD</strong>.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es y cómo se define un flujo de trabajo.</p>
+  </li>
+  <li>
+    <p>Cómo definir flujos de trabajo ejecutables manualmente o periódicamente.</p>
+  </li>
+  <li>
+    <p>Qué son los contextos y cómo se usan.</p>
+  </li>
+  <li>
+    <p>Cómo utilizar expresiones para conseguir valores en tiempo de ejecución.</p>
+  </li>
+  <li>
+    <p>Cómo inhabilitar un flujo de trabajo.</p>
+  </li>
+  <li>
+    <p>Cómo añadir los distintivos de estado de los flujos de trabajo.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>Un <strong>flujo de trabajo</strong> (<em>workflow</em>) no es más que un proceso automatizado asociado a un repositorio de <strong>GitHub</strong>, ejecutable mediante <strong>GitHub Actions</strong>.
+Describe un proceso que realiza determinadas tareas de manera automática.
+Puede realizar tanto tareas de integración continua como de entrega o despliegue continuo, aunque, en cada caso, sus responsabilidades son claramente diferentes.</p>
+
+<p>Este proceso se ejecutará automáticamente cada vez que se produzca alguno de los eventos que le hemos indicado.
+Por ejemplo, podemos configurar que se pueda ejecutar manualmente o cada vez que hagamos un <em>push</em> o cerremos una <em>PR</em>.</p>
+
+<p>Estos flujos se redactan en su propio <strong>archivo YAML</strong>, dentro del directorio <strong>.github/workflows</strong> de la raíz del repositorio.
+Podemos tener tantos archivos de flujo de trabajo como sea necesario, cada uno con su propio objetivo.
+He aquí un ejemplo ilustrativo, de un flujo de trabajo que debe ejecutarse manualmente para realizar la publicación de unos paquetes en <strong>NPM</strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Release</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">workflow_dispatch</span><span class="pi">:</span>
+    <span class="na">inputs</span><span class="pi">:</span>
+      <span class="na">release</span><span class="pi">:</span>
+        <span class="na">description</span><span class="pi">:</span> <span class="s">Version type to publish</span>
+        <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>
+        <span class="na">type</span><span class="pi">:</span> <span class="s">choice</span>
+        <span class="na">options</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">major</span><span class="pi">,</span> <span class="nv">minor</span><span class="pi">,</span> <span class="nv">patch</span><span class="pi">]</span>
+
+<span class="na">env</span><span class="pi">:</span>
+  <span class="na">version</span><span class="pi">:</span> <span class="s">${{ inputs.release }}</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">publish</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Publish packages</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">${{ matrix.os }}</span>
+
+    <span class="na">strategy</span><span class="pi">:</span>
+      <span class="na">matrix</span><span class="pi">:</span>
+        <span class="na">node</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">18.x</span><span class="pi">]</span>
+        <span class="na">os</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">ubuntu-latest</span><span class="pi">]</span>
+
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Node.js ${{ matrix.node }}</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-node@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">node-version</span><span class="pi">:</span> <span class="s">${{ matrix.node }}</span>
+          <span class="na">registry-url</span><span class="pi">:</span> <span class="s">https://registry.npmjs.org</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set Git metadata</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">git config --global user.name "${{ github.actor }}"</span>
+          <span class="s">git config --global user.email "${{ github.actor }}@users.noreply.github.com"</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Install dependencies</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">npm ci &amp;&amp; npm run bootstrap</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set version to publish</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">npm run version -- --yes --no-push ${{ env.version }}</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Publish packages</span>
+        <span class="na">env</span><span class="pi">:</span>
+          <span class="na">NODE_AUTH_TOKEN</span><span class="pi">:</span> <span class="s">${{ secrets.NPM_TOKEN }}</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">npm run publish -- from-package --yes</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Push changes</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">git push --force</span>
+</code></pre></div></div>
+
+<h2 id="propiedades-de-los-flujos-de-trabajo">Propiedades de los flujos de trabajo</h2>
+
+<p>Los flujos de trabajo se definen como archivos <strong>YAML</strong>, en vez de con algún lenguaje de programación particular.
+Estos archivos contienen varias propiedades con los que describimos o definimos el flujo de trabajo.</p>
+
+<h3 id="propiedades-name-y-run-name-del-flujo-de-trabajo">Propiedades <em>name</em> y <em>run-name</em> del flujo de trabajo</h3>
+
+<p>Mediante la propiedad <strong><em>name</em></strong>, fijamos el nombre del flujo de trabajo que mostrará <strong>GitHub Actions</strong> en los informes cada vez que lo ejecute.
+Su identificador es el del archivo que lo define.
+En el ejemplo anterior, el archivo se ha nombrado como <em>release.yaml</em> que es distinto al nombre que tiene, <em>Release</em>.</p>
+
+<p>El valor de la propiedad <strong><em>name</em></strong> es estático, no se puede cambiar en cada ejecución del flujo de trabajo, siempre será el mismo.
+Si necesitamos personalizar el nombre, debemos usar <strong><em>run-name</em></strong>, que puede contener expresiones de <strong>GitHub Actions</strong> como, por ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">run-name</span><span class="pi">:</span> <span class="s">Continuous integration run by @${{ github.actor }}</span>
+</code></pre></div></div>
+
+<h3 id="propiedad-on-del-flujo-de-trabajo">Propiedad <em>on</em> del flujo de trabajo</h3>
+
+<p>La propiedad <strong><em>on</em></strong> establece cuándo debe ejecutarse el flujo, o sea, bajo qué eventos.
+Más adelante, presentaremos los eventos más detenidamente.
+Por ahora, debe saber que su valor puede ser:</p>
+
+<ul>
+  <li>
+    <p>Un texto, el cual indicará el nombre de un único evento encargado de generar la ejecución automática del flujo de trabajo como, por ejemplo:</p>
+
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span> <span class="s">push</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Un array de textos, en este caso, indicará distintos eventos.
+Ejemplos:</p>
+
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">push</span><span class="pi">,</span> <span class="nv">pull_request</span><span class="pi">]</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Un objeto, donde cada propiedad representa un evento disparador y contiene su configuración particular:</p>
+
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">**"</span>
+
+  <span class="na">pull_request</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">master</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>El valor dependerá de los eventos disparadores y de sus configuraciones.
+Si ninguno tiene configuración asociada, entonces, puede usar el texto o el array de textos.
+En otro caso, tendrá que utilizar un objeto como valor.</p>
+
+<p>Sólo los eventos configurados en la propiedad <strong><em>on</em></strong> podrán disparar la ejecución del flujo de trabajo.</p>
+
+<h3 id="propiedad-jobs-del-flujo-de-trabajo">Propiedad <em>jobs</em> del flujo de trabajo</h3>
+
+<p>La propiedad <strong><em>jobs</em></strong> contiene los trabajos que deben ejecutarse cada vez que se invoque el flujo.
+De manera predeterminada, los trabajos se ejecutan en paralelo, aunque en ocasiones podremos desear que se ejecuten de manera secuencial, al menos, algunos de ellos.</p>
+
+<p>Esta propiedad es un objeto donde cada una de sus propiedades define un trabajo en particular.
+El identificador del trabajo será el de la propiedad y su valor, de tipo objeto, contendrá su definición.</p>
+
+<h2 id="contextos">Contextos</h2>
+
+<p>Antes de pasar a abordar los componentes principales de un flujo de trabajo más detenidamente, vamos a introducir los contextos.
+Un <strong>contexto</strong> (<em>context</em>) es un conjunto de datos relacionados con alguna cosa que podemos acceder en los flujos de trabajo mediante expresiones.
+Más adelante presentaremos las expresiones, por ahora, simplemente recuerde que las expresiones en <strong>GitHub Actions</strong> se delimitan por <code class="language-plaintext highlighter-rouge">${{</code> y <code class="language-plaintext highlighter-rouge">}}</code> como, por ejemplo, <em>${{ matrix.node }}</em>.</p>
+
+<p>En las expresiones, los contextos se representan mediante objetos, como los de <strong>JavaScript</strong>, cuyas propiedades contienen los valores específicos de ese contexto.
+A lo largo de esta lección, presentaremos los contextos más utilizados o, por lo menos, los más importantes cuando comenzamos a trabajar con <strong>GitHub Actions</strong>.
+Recuerde que un contexto no es más que un conjunto de datos relacionados con alguna cosa que pone a nuestra disposición <strong>GitHub Actions</strong>.
+Entre otros contextos, encontramos: <strong><em>env</em></strong>, <strong><em>github</em></strong>, <strong><em>inputs</em></strong>, <strong><em>matrix</em></strong>, <strong><em>runner</em></strong> y <strong><em>secrets</em></strong>.</p>
+
+<h2 id="eventos">Eventos</h2>
+
+<p><strong>GitHub Actions</strong> es una plataforma conducida por eventos (<em>event-driven platform</em>).
+Esto quiere decir que la ejecución de los flujos de trabajo se dispara automáticamente cuando se generan los eventos indicados en el propio flujo de trabajo.
+Un <strong>evento</strong> (<em>event</em>) no es más que un suceso que se produce en la plataforma, en este caso, de <strong>GitHub</strong> como, por ejemplo, uno que represente que se ha producido un <em>push</em> o que se ha cerrado una <em>PR</em>.
+Cada flujo de trabajo debe indicar, mediante su propiedad <strong><em>on</em></strong>, los eventos que generarán o provocarán su ejecución.
+Cada propiedad de <strong><em>on</em></strong> representa un determinado evento o tipo de evento y podemos indicar tantos como necesitemos.</p>
+
+<p>Atendiendo a si el evento se produce dentro de la plataforma de <strong>GitHub</strong> o fuera, se clasifican en internos o externos.
+Un <strong>evento interno</strong> (<em>internal event</em>) es aquel que se produce dentro de la plataforma de <strong>GitHub</strong> como, por ejemplo, una confirmación (<em>commit</em>), una solicitud de integración (<em>pull request</em>), etc.
+Se producen dentro de la plataforma y provocan la ejecución de aquellos flujos de trabajo que los tienen asociados.
+En cambio, un <strong>evento externo</strong> (<em>external event</em>) es aquel que se produce fuera de <strong>GitHub</strong> y debemos notificar mediante la <strong>API de GitHub</strong>.
+Esto proporciona mayor flexibilidad porque no se limita a sólo aquello que se produce en <strong>GitHub</strong>.</p>
+
+<p>Los eventos internos, a su vez, se clasifican en:</p>
+
+<ul>
+  <li>
+    <p><strong>Eventos planificados</strong> (<em>scheduled events</em>), aquellos que se ejecutan en momentos determinados como, por ejemplo, periódicamente o a intervalos.</p>
+  </li>
+  <li>
+    <p><strong>Eventos manuales</strong> (<em>manual events</em>), los que ejecutamos manualmente.
+No existe un evento particular, sino que somos nosotros los que solicitamos su ejecución explícitamente.</p>
+  </li>
+  <li>
+    <p><strong>Eventos <em>webhooks</em></strong> (<em>webhook events</em>), aquellos que se producen cuando un determinado evento de la plataforma <strong>GitHub</strong> se produce.</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p>Debido a los objetivos de esta lección, vamos a considerar únicamente los eventos manuales y planificados;
+el resto los veremos en lecciones posteriores cuando sea necesario.
+Aunque algunos de ellos ya los hemos visto en lecciones anteriores como, por ejemplo, los relacionados
+con <strong>GitHub Projects</strong> o <strong>GitHub Issues</strong>.</p>
+</blockquote>
+
+<h3 id="eventos-manuales">Eventos manuales</h3>
+
+<p>Un <strong>evento manual</strong> (<em>manual event</em>) es aquel que permite la ejecución manual del flujo de trabajo y se representa mediante el evento <strong><em>workflow_dispatch</em></strong>.</p>
+
+<h4 id="evento-manual-workflow_dispatch">Evento manual <em>workflow_dispatch</em></h4>
+
+<p>El evento <strong><em>workflow_dispatch</em></strong> lo usaremos cuando deseemos pedir la ejecución del flujo de trabajo desde la <strong>web de GitHub</strong> o desde la línea de comandos mediante <strong>gh</strong>.
+Sólo se puede usar si el flujo de trabajo lo definimos en la rama predeterminada.
+Recordemos que la <strong>rama predeterminada</strong> (<em>default branch</em>) es la principal del repositorio, aquella que se muestra automáticamente cuando visitamos el repositorio mediante la web;
+suele ser <strong><em>master</em></strong> o <strong><em>main</em></strong>.</p>
+
+<p>Este tipo de evento contiene parámetros a través de los cuales pasar datos al flujo específicos de esa ejecución, conocidos formalmente como <strong>entradas</strong> (<em>inputs</em>).
+Cada vez que solicitemos la ejecución manual mediante este evento, tendremos que pasar los valores de estas entradas.</p>
+
+<p>Las entradas se definen en la propiedad <strong><em>inputs</em></strong> del evento.
+Esta propiedad de tipo objeto contiene, a su vez, una propiedad para cada entrada.
+El nombre de la entrada será el nombre de la propiedad; y su valor se indicará con otro objeto que puede presentar las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Tipo de datos</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>description</em></strong></td>
+      <td>Texto</td>
+      <td>Breve descripción del objeto de la entrada.</td>
+    </tr>
+    <tr>
+      <td><strong><em>required</em></strong></td>
+      <td>Booleano</td>
+      <td>¿Hay que proporcionar un valor sí o sí?</td>
+    </tr>
+    <tr>
+      <td><strong><em>default</em></strong></td>
+      <td>Cualquiera</td>
+      <td>Valor predeterminado en caso de que no se proporcione.</td>
+    </tr>
+    <tr>
+      <td><strong><em>type</em></strong></td>
+      <td>Texto</td>
+      <td>Tipo de datos del valor: <strong><em>boolean</em></strong>, <strong><em>number</em></strong>, <strong><em>string</em></strong> o <strong><em>choice</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>options</em></strong></td>
+      <td>Array</td>
+      <td>Lista de posibles valores si <strong><em>type</em></strong> es <strong><em>choice</em></strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Para restringir los posibles valores aceptables, se puede utilizar las propiedades <strong>type</strong>, que deberá ser siempre <strong><em>choice</em></strong>, y <strong><em>options</em></strong> que listará los valores aceptables.</p>
+
+<p>Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span>
+  <span class="na">workflow_dispatch</span><span class="pi">:</span>
+    <span class="na">inputs</span><span class="pi">:</span>
+      <span class="na">version</span><span class="pi">:</span>
+        <span class="na">description</span><span class="pi">:</span> <span class="s">Número de versión a publicar.</span>
+        <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>
+
+      <span class="na">release</span><span class="pi">:</span>
+        <span class="na">description</span><span class="pi">:</span> <span class="s">Tipo de versión a publicar.</span>
+        <span class="na">required</span><span class="pi">:</span> <span class="kc">false</span>
+        <span class="na">type</span><span class="pi">:</span> <span class="s">choice</span>
+        <span class="na">options</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">alpha</span><span class="pi">,</span> <span class="nv">beta</span><span class="pi">,</span> <span class="nv">rc</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>Para ejecutar un flujo de trabajo manualmente, podemos ir a la pestaña <strong><em>Actions</em></strong> del repositorio, seleccionar el flujo de trabajo, hacer clic en <strong><em>Run workflow</em></strong>, rellenar los valores a pasar a las entradas y, finalmente, hacer clic en <strong><em>Run workflow</em></strong>:</p>
+
+<p><img src="img/run-workflow.png" alt="Ejecución manual de un flujo de trabajo" /></p>
+
+<h4 id="contexto-inputs">Contexto <em>inputs</em></h4>
+
+<p>Para acceder dentro del flujo de trabajo al valor de una entrada, podemos usar el contexto <strong><em>inputs</em></strong>.
+Para cada entrada dispondrá de una propiedad cuyo valor será el valor proporcionado por el usuario o fijado a través de su valor predeterminado, según sea el caso.
+Ejemplo de acceso a una entrada:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>${{ inputs.version }}
+</code></pre></div></div>
+
+<h3 id="eventos-planificados">Eventos planificados</h3>
+
+<p>Un <strong>evento planificado</strong> (<em>scheduled event</em>) es aquel que se ejecuta periódicamente, en momentos concretos o a intervalos regulares.
+Es posible indicar este tipo de eventos para que provoquen la ejecución de los flujos de trabajo de manera temporal.</p>
+
+<p>Para indicar un evento planificado, hay que usar la propiedad <strong><em>schedule</em></strong>, cuyo valor debe ser un array de objetos, cada uno de los cuales representa un momento en el que debe generarse y, por lo tanto, ejecutarse el flujo de trabajo.
+Cada elemento de este array debe contener una propiedad <strong><em>cron</em></strong>, la cual indica cuándo debe generarse el evento.
+Esta propiedad sigue la <strong>sintaxis cron POSIX</strong> (<em>POSIX cron syntax</em>) que describe de manera muy sencilla los momentos en los que se generará el evento:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minuto hora díaDelMes mes díaDeLaSemana
+</code></pre></div></div>
+
+<p>Comencemos con un ejemplo ilustrativo y, a continuación, abordaremos más detenidamente esta sintaxis:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span>
+  <span class="na">schedule</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">cron</span><span class="pi">:</span> <span class="s">30 5 * * 1,3</span>
+    <span class="pi">-</span> <span class="na">cron</span><span class="pi">:</span> <span class="s">30 5 * * 2,4</span>
+</code></pre></div></div>
+
+<p>La expresión debe contener cinco secciones:</p>
+
+<ul>
+  <li>
+    <p><strong>Minuto(s) de ejecución</strong> (<em>minute(s)</em>).
+En qué minuto(s) debe ejecutarse, entre <strong>0</strong> y <strong>59</strong>.</p>
+  </li>
+  <li>
+    <p><strong>Hora(s) de ejecución</strong> (<em>hour(s)</em>).
+En qué hora(s) del día debe ejecutarse, entre <strong>0</strong> y <strong>23</strong>.</p>
+  </li>
+  <li>
+    <p><strong>Día(s) del mes</strong> (<em>day(s) of the month</em>).
+Día(s) del mes en los que debe generarse, entre <strong>1</strong> y <strong>31</strong>.</p>
+  </li>
+  <li>
+    <p><strong>Mes(es)</strong> (<em>month(s)</em>).
+Mes(es) del año en los que debe generarse, entre <strong>1</strong> y <strong>12</strong>.
+Si prefiere, puede indicar la abreviación del mes en inglés:
+<strong><em>JAN</em></strong>, <strong><em>FEB</em></strong>, <strong><em>MAR</em></strong>, <strong><em>APR</em></strong>, <strong><em>MAY</em></strong>, <strong><em>JUN</em></strong>, <strong><em>JUL</em></strong>, <strong><em>AUG</em></strong>, <strong><em>SEP</em></strong>, <strong><em>OCT</em></strong>, <strong><em>NOV</em></strong> o <strong><em>DEC</em></strong>.</p>
+  </li>
+  <li>
+    <p><strong>Día(s) de la semana</strong> (<em>day(s) of the week</em>).
+Día(s) de la semana en que debe generarse, entre <strong>0</strong> y <strong>6</strong>, considerando el cero como domingo.
+También se puede indicar la abreviatura del día de la semana en inglés como, por ejemplo, <strong><em>SUN</em></strong>, <strong><em>MON</em></strong>, <strong><em>TUE</em></strong>, <strong><em>WED</em></strong>, <strong><em>THU</em></strong>, <strong><em>FRI</em></strong> o <strong><em>SAT</em></strong>.</p>
+  </li>
+</ul>
+
+<p>En cualquier sección, podemos indicar un valor numérico concreto o varios.
+En caso de fijar varios, usaremos la coma (<code class="language-plaintext highlighter-rouge">,</code>) como separador.</p>
+
+<p>También es posible indicar un asterisco (<code class="language-plaintext highlighter-rouge">*</code>) como valor, en vez de valores numéricos.
+En este caso, lo que se está indicando es cada posible valor de la sección.
+Así, por ejemplo, en el caso de la sección relacionada con la hora en la que se debe generar indicaría cada hora.</p>
+
+<p>Otra posibilidad es usar rangos, mediante el signo ortográfico guion (<code class="language-plaintext highlighter-rouge">-</code>).</p>
+
+<p>Vamos a mostrar algunos ejemplos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Expresión</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>* * * * *</td>
+      <td>En cada minuto.</td>
+    </tr>
+    <tr>
+      <td>0 5 * * *</td>
+      <td>Todos los días del año a las 05:00.</td>
+    </tr>
+    <tr>
+      <td>5 6,18 * * *</td>
+      <td>Todos los días del año a las 06:05 y 18:05.</td>
+    </tr>
+    <tr>
+      <td>0 0 * JAN MON</td>
+      <td>Los lunes de enero a las 00:00.</td>
+    </tr>
+    <tr>
+      <td>0 12 1 * *</td>
+      <td>El primer día de cada mes a las 12:00.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="trabajos">Trabajos</h2>
+
+<p>Un <strong>trabajo</strong> (<em>job</em>) representa una secuencia de operaciones a realizar dentro de un determinado entorno de trabajo.
+Cada flujo de trabajo define los suyos mediante su propiedad <strong><em>jobs</em></strong>.
+Esta propiedad de tipo objeto contiene, a su vez, una o más propiedades, donde cada propiedad define un trabajo.</p>
+
+<p>Los trabajos disponen de varias propiedades, las cuales vamos a describir a continuación.
+Pero primero, un ejemplo ilustrativo que nos ayude a <em>visualizar</em> lo que nos espera a continuación:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">runTests</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Node.js ${{ matrix.node }} on ${{ matrix.os }}</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">${{ matrix.os }}</span>
+
+    <span class="na">strategy</span><span class="pi">:</span>
+      <span class="na">matrix</span><span class="pi">:</span>
+        <span class="na">node</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">16.x</span><span class="pi">,</span> <span class="nv">18.x</span><span class="pi">]</span>
+        <span class="na">os</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">ubuntu-latest</span><span class="pi">,</span> <span class="nv">windows-latest</span><span class="pi">]</span>
+
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Node.js ${{ matrix.node }}</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-node@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">node-version</span><span class="pi">:</span> <span class="s">${{ matrix.node }}</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Install dependencies</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">npm ci &amp;&amp; npm run bootstrap</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Run tests</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">npm run cov</span>
+</code></pre></div></div>
+
+<h3 id="propiedad-name-de-un-trabajo">Propiedad <em>name</em> de un trabajo</h3>
+
+<p>El identificador del trabajo es el nombre de la propiedad dentro del objeto <strong><em>jobs</em></strong>.
+Pero si deseamos pedir que se muestre un título más formal, podemos indicarlo en la propiedad <strong><em>name</em></strong> del trabajo, de manera similar a la homónima del flujo de trabajo.</p>
+
+<h3 id="propiedad-runs-on-de-un-trabajo">Propiedad <em>runs-on</em> de un trabajo</h3>
+
+<p>Cada trabajo se ejecuta aisladamente del resto dentro de su propia máquina virtual o contenedor.
+Esto quiere decir que si definimos dos trabajos, estos se ejecutarán en dos máquinas o contenedores distintos, sin nada que ver el uno con el otro.
+De ahí que los trabajos de un flujo se puedan ejecutar paralelamente, a menos que especifiquemos explícitamente que se deben ejecutar de manera secuencial.</p>
+
+<p>Mediante la propiedad <strong><em>runs-on</em></strong> indicamos dónde se debe ejecutar el trabajo.
+Al componente que ejecuta el trabajo se le conoce formalmente como <strong><em>ejecutor</em></strong> (<em>runner</em>), no es más que un componente que contiene una aplicación instalada que se encarga de ejecutar los pasos del trabajo.
+Por lo general, aunque no siempre, usaremos <strong>ejecutores alojados en GitHub</strong> (<em>GitHub-hosted runners</em>), es lo recomendado por <strong>GitHub Actions</strong>.
+Un ejecutor de este tipo consiste en una determinada máquina virtual alojada en <strong>GitHub</strong>, la cual se creará automáticamente para ejecutar el trabajo.
+Actualmente, podemos usar <strong>Linux</strong>, <strong>Windows</strong> o <strong>macOS</strong>.
+Hay que indicar concretamente el sistema operativo a utilizar.
+Algunos posibles valores son <strong><em>ubuntu-latest</em></strong>, <strong><em>ubuntu-20.04</em></strong>, <strong><em>windows-latest</em></strong>, <strong><em>windows-2022</em></strong>, <strong><em>macos-latest</em></strong> o <strong><em>macos-12</em></strong>.
+Hay más, si necesita otra versión de alguno de estos sistemas operativos, consulte la documentación oficial.</p>
+
+<p>Así pues, si deseamos indicar que el trabajo se ejecute en una máquina bajo <strong>Linux</strong>, lo más habitual será utilizar:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+</code></pre></div></div>
+
+<h4 id="contexto-runner">Contexto <em>runner</em></h4>
+
+<p>El <strong>contexto <em>runner</em></strong> (<em>runner context</em>) proporciona datos específicos del ejecutor.
+Sus propiedades más importantes son:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>os</em></strong></td>
+      <td>Sistema operativo en el que se está ejecutando el trabajo: <strong><em>Linux</em></strong>, <strong><em>Windows</em></strong> o <strong><em>macOS</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>arch</em></strong></td>
+      <td>Arquitectura de la máquina virtual: <strong><em>X86</em></strong>, <strong><em>X64</em></strong>, <strong><em>ARM</em></strong> o <strong><em>ARM64</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>temp</em></strong></td>
+      <td>Ruta al directorio temporal.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="propiedad-strategy-de-un-trabajo">Propiedad <em>strategy</em> de un trabajo</h3>
+
+<p>En algunas ocasiones, necesitamos que un determinado trabajo se ejecute en varios sistemas operativos bajo varias versiones.
+Por ejemplo, suponga que deseamos comprobar que las pruebas de unidad pasan tanto en <strong>Linux</strong> como en <strong>Windows</strong>, bajo una o varias versiones de <strong>Node.js</strong>.
+Esto se puede configurar de manera muy sencilla mediante una <strong>estrategia matriz</strong> (<em>matrix strategy</em>).
+Esta estrategia lo que hace es decirle a <strong>GitHub Actions</strong> que cree varias máquinas con configuraciones específicas y que en cada una ejecute el trabajo.</p>
+
+<p>Vamos a ver un ejemplo ilustrativo.
+Supongamos que acabamos de desarrollar un paquete de <strong>Node.js</strong> bajo su versión <strong>16</strong>.
+Deseamos que este paquete funcione tanto bajo esta versión <strong>16</strong> como la <strong>18</strong>.
+Además de querer que funcione tanto en <strong>Linux</strong> como en <strong>Windows</strong>.
+La matriz a utilizar será algo tan sencillo como lo siguiente:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">strategy</span><span class="pi">:</span>
+  <span class="na">matrix</span><span class="pi">:</span>
+    <span class="na">node</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">16.x</span><span class="pi">,</span> <span class="nv">18.x</span><span class="pi">]</span>
+    <span class="na">os</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">ubuntu-latest</span><span class="pi">,</span> <span class="nv">windows-latest</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>Cuando <strong>GitHub Actions</strong> detecte que nuestro trabajo tiene una estrategia matriz, combinará los valores de todas las variables indicadas, en nuestro caso, <em>node</em> y <em>os</em>, pero puede definir aquellas que quiera con el nombre que quiera.
+Así pues, para nuestro caso, se crearán las siguientes combinaciones:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>node</th>
+      <th>os</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>16.x</td>
+      <td>ubuntu-latest</td>
+    </tr>
+    <tr>
+      <td>18.x</td>
+      <td>ubuntu-latest</td>
+    </tr>
+    <tr>
+      <td>16.x</td>
+      <td>windows-latest</td>
+    </tr>
+    <tr>
+      <td>18.x</td>
+      <td>windows-latest</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Con estas combinaciones, ahora tendremos que utilizar el contexto <strong><em>matrix</em></strong> para acceder a cada valor en particular.
+Por lo tanto, si tenemos <code class="language-plaintext highlighter-rouge">runs-on: ${{ matrix.os }}</code>, para cada combinación estará usando el valor en cuestión de la variable <em>os</em> definida en <strong><em>strategy.matrix</em></strong>.
+Si por otra parte, tal y como veremos más adelante en uno de los pasos del trabajo, tenemos algo como lo siguiente:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">steps</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Node.js ${{ matrix.node }}</span>
+    <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-node@v3</span>
+    <span class="na">with</span><span class="pi">:</span>
+      <span class="na">node-version</span><span class="pi">:</span> <span class="s">${{ matrix.node }}</span>
+</code></pre></div></div>
+
+<p>Lo que estamos haciendo es configurar <strong>Node.js</strong> a la versión específica de la variable <em>node</em> definida en <strong><em>strategy.matrix</em></strong>.</p>
+
+<p>Tenga en cuenta que la estrategia no fija las máquinas ni las versiones de las acciones que se deben usar, lo que hace es crear una máquina para cada combinación.
+Si el trabajo tiene un <strong><em>runs-on</em></strong> específico, usará la máquina ahí indicada para todas las combinaciones.
+Pero si desea que la máquina venga dada por una variable de la estrategia matriz, pues no tiene más que usar el contexto <strong><em>matrix.nombreVariable</em></strong>, tal y como hemos visto en el ejemplo anterior.</p>
+
+<p>La estrategia matriz proporciona una herramienta muy poderosa para determinar distintos entornos y versiones con los que trabajar.</p>
+
+<h4 id="contexto-matrix">Contexto <em>matrix</em></h4>
+
+<p><strong>GitHub Actions</strong> proporciona el contexto <strong><em>matrix</em></strong>, tal y como acabamos de ver, para acceder a los valores de las variables definidas en <strong><em>strategy.matrix</em></strong>.
+En cada trabajo, los valores serán los de una combinación realizada por <strong>GitHub Actions</strong>.</p>
+
+<h4 id="propiedad-exclude-de-strategymatrix">Propiedad <em>exclude</em> de <em>strategy.matrix</em></h4>
+
+<p>En ocasiones, puede ser necesario omitir una determinada combinación de entre todas las generadas.
+Esto se puede conseguir muy fácilmente indicándolas mediante la propiedad <strong><em>exclude</em></strong> de <strong><em>strategy.matrix</em></strong>.
+Esta propiedad de tipo lista contiene un elemento para cada combinación a no tener en cuenta.
+A continuación, un ejemplo extraído de la documentación oficial de <strong>GitHub Actions</strong> que excluye dos de las posibles combinaciones:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">strategy</span><span class="pi">:</span>
+  <span class="na">matrix</span><span class="pi">:</span>
+    <span class="na">os</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">macos-latest</span><span class="pi">,</span> <span class="nv">windows-latest</span><span class="pi">]</span>
+    <span class="na">version</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">12</span><span class="pi">,</span> <span class="nv">14</span><span class="pi">,</span> <span class="nv">16</span><span class="pi">]</span>
+    <span class="na">environment</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">staging</span><span class="pi">,</span> <span class="nv">production</span><span class="pi">]</span>
+
+    <span class="na">exclude</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">os</span><span class="pi">:</span> <span class="s">macos-latest</span>
+        <span class="na">version</span><span class="pi">:</span> <span class="m">12</span>
+        <span class="na">environment</span><span class="pi">:</span> <span class="s">production</span>
+
+      <span class="pi">-</span> <span class="na">os</span><span class="pi">:</span> <span class="s">windows-latest</span>
+        <span class="na">version</span><span class="pi">:</span> <span class="m">16</span>
+</code></pre></div></div>
+
+<p>Observe que la matriz es tridimensional, pero no hace falta que las exclusiones indiquen las tres dimensiones.
+Si indicamos menos, se descartarán todas aquellas que contengan las dimensiones cuyos valores son los indicados.</p>
+
+<h3 id="propiedad-if-de-un-trabajo">Propiedad <em>if</em> de un trabajo</h3>
+
+<p>Un <strong>trabajo condicional</strong> (<em>conditional job</em>) es aquel que se ejecuta sólo si se cumple una determinada condición.
+De manera predeterminada, si no indicamos ninguna condición, se ejecutan siempre.
+Para convertirlos en condicionales, debemos indicar una propiedad <strong><em>if</em></strong>, la cual contendrá la expresión que deseamos se evalúe y cuyo valor resultado determinará si se debe ejecutar o no.
+Por ejemplo, si deseamos indicar que un determinado trabajo sólo debe ejecutarse si estamos bajo <strong>Linux</strong>, podemos indicarlo como sigue:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">if</span><span class="pi">:</span> <span class="s">runner.os == 'Linux'</span>
+</code></pre></div></div>
+
+<p>A continuación, otro ejemplo que indica que el trabajo sólo debe ejecutarse si el mensaje de confirmación no contiene el texto <em>ci skip</em>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">if</span><span class="pi">:</span> <span class="s2">"</span><span class="s">!contains(github.event.commits[0].message,</span><span class="nv"> </span><span class="s">'ci</span><span class="nv"> </span><span class="s">skip')"</span>
+</code></pre></div></div>
+
+<h3 id="propiedad-steps-de-un-trabajo">Propiedad <em>steps</em> de un trabajo</h3>
+
+<p>Los trabajos realizan operaciones o acciones, cada una de las cuales se indica como un paso.
+Esta propiedad es de tipo array y cada uno de sus elementos declara un paso.
+Los pasos de un trabajo se ejecutan secuencialmente, uno detrás de otro.</p>
+
+<h2 id="pasos">Pasos</h2>
+
+<p>Un <strong>paso</strong> (<em>step</em>) representa una acción a ejecutar en un trabajo.
+Una <strong>acción</strong> (<em>action</em>) representa una operación reutilizable.
+<strong>GitHub Actions</strong> proporciona un <em>marketplace</em>, <a href="https://github.com/marketplace?type=actions">https://github.com/marketplace?type=actions</a>, en el que podemos encontrar las acciones disponibles que podemos usar.</p>
+
+<p>Cada paso debe indicar la acción que debe ejecutarse.
+A guisa de ejemplo y para ir abriendo boca, he aquí un paso ilustrativo que solicita la instalación de <strong>Node.js</strong>, concretamente la versión indicada por la variable <em>node</em>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Node.js ${{ env.node }}</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-node@v3</span>
+  <span class="na">with</span><span class="pi">:</span>
+    <span class="na">node-version</span><span class="pi">:</span> <span class="s">${{ env.node }}</span>
+</code></pre></div></div>
+
+<p>La propiedad <strong><em>uses</em></strong> indica la acción en cuestión, en nuestro caso, la <strong>versión 3</strong> de <strong><em>actions/setup-node</em></strong>.
+La propiedad opcional <strong><em>name</em></strong> la podemos usar para indicar un título personalizado de cara al informe de ejecución.
+Finalmente, la propiedad <strong><em>with</em></strong> contiene argumentos específicos de la acción.
+En este caso, mediante su propiedad <strong><em>node-version</em></strong> indicaremos la versión de <strong>Node.js</strong> a utilizar.
+Lo habitual es indicar la versión mediante una expresión.
+En nuestro caso, hemos usado el contexto <strong><em>env</em></strong>, que presentaremos más adelante en el libro, pero también se puede usar cualquier otro como, por ejemplo, <strong><em>matrix</em></strong>, tal y como hemos visto anteriormente.</p>
+
+<p>A continuación, otro ejemplo de acción muy habitual:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+</code></pre></div></div>
+
+<p>La acción <strong><em>actions/checkout</em></strong> realiza una clonación del repositorio para así poder usarlo en el trabajo.
+Se suele indicar como el primer paso de la mayoría de trabajos.</p>
+
+<h3 id="versiones-de-las-acciones">Versiones de las acciones</h3>
+
+<p>Cuando se indica una acción en un paso, hay que indicar también la versión que deseamos utilizar.
+Esto se indica finalizando el nombre de la acción con una arroba (<code class="language-plaintext highlighter-rouge">@</code>) y la versión como, por ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>actions/checkout@v3
+</code></pre></div></div>
+
+<p>El objeto de especificar siempre la versión de la acción es que si se publica una nueva versión que rompe con la interfaz, esa rotura no nos afecte a nosotros y, así, no tengamos problemas.
+Cuando queramos usar esa nueva versión, haremos las pruebas pertinentes y actualizaremos a la nueva.</p>
+
+<h3 id="restricción-de-acciones-utilizables">Restricción de acciones utilizables</h3>
+
+<p>Es posible restringir las acciones utilizables en los flujos de trabajo, por ejemplo, para que sólo se puedan usar las desarrolladas por <strong>GitHub</strong> o por nosotros mismos.
+Para ello, hay que ir a la configuración general del repositorio, recuerde, ubicada en su pestaña <strong><em>Settings</em></strong>.
+Y en la sección <strong><em>Actions permissions</em></strong> bajo <strong><em>General &gt; Code and automation &gt; Actions &gt; General</em></strong>, seleccionar cualquiera de las siguientes opciones:</p>
+
+<ul>
+  <li>
+    <p><strong><em>Allow all actions and reusable workflows</em></strong>.
+Permite utilizar cualquier acción, además de reutilizar cualquier flujo de trabajo propio o público.</p>
+  </li>
+  <li>
+    <p><strong><em>Allow &lt;propietario&gt; actions and reusable workflows</em></strong>.
+Esta opción sólo permite utilizar acciones propias, además de reutilizar flujos de trabajo propios.</p>
+  </li>
+  <li>
+    <p><strong><em>Allow &lt;propietario&gt;, and select non-&lt;propietario&gt;, actions and reusable workflows</em></strong>.
+Si seleccionamos esta opción, se despliega una lista de opciones extras que permite configurar más detenidamente las acciones.
+Por ejemplo, con <strong><em>Allow actions created by GitHub</em></strong> restringiremos las acciones a aquellas desarrolladas por <strong>GitHub</strong>;
+con <strong><em>Allow actions by Marketplace verified creators</em></strong>, a aquellas desarrolladas por creadores verificados;
+y con <strong><em>Allow specified actions and reusable workflows</em></strong> podemos indicar aquellas acciones y flujos de trabajo reutilizables que podemos usar.</p>
+
+    <p>Esta opción siempre permite el uso de nuestras acciones y flujos de trabajo reutilizables.</p>
+  </li>
+</ul>
+
+<h3 id="paso-run">Paso <em>run</em></h3>
+
+<p>Existe un paso especial conocido como <strong><em>run</em></strong> con el que podemos ejecutar un comando mediante <em>shell</em>.
+Este paso no usa la propiedad <strong><em>uses</em></strong>, sino <strong><em>run</em></strong>, la cual contiene el comando o los comandos a ejecutar.
+Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Instala dependencias</span>
+  <span class="na">run</span><span class="pi">:</span> <span class="s">npm ci &amp;&amp; npm run bootstrap</span>
+</code></pre></div></div>
+
+<p>Para indicar el <em>shell</em> a utilizar, podemos hacerlo mediante la propiedad <strong><em>shell</em></strong>:
+<strong><em>bash</em></strong>;
+<strong><em>sh</em></strong>;
+<strong><em>cmd</em></strong>;
+<strong><em>powershell</em></strong>;
+entre otros.
+Es posible indicar un <em>shell</em> con parámetros, sobre todo si vamos a ejecutar el flujo de trabajo en varios sistemas operativos.
+En este caso, se suele utilizar la propiedad <strong><em>defaults.run.shell</em></strong> del flujo de trabajo para fijarlo de cara a todos los pasos <strong><em>run</em></strong>.
+He aquí un ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">defaults</span><span class="pi">:</span>
+  <span class="na">run</span><span class="pi">:</span>
+    <span class="na">shell</span><span class="pi">:</span> <span class="s">bash -e {0}</span>
+</code></pre></div></div>
+
+<p><strong><em>{0}</em></strong> representa lo indicado en el paso <strong><em>run</em></strong>.
+Más concretamente, la ruta al <em>script</em> creado automáticamente por <strong>GitHub Actions</strong> para ejecutar el contenido de <strong><em>run</em></strong>.
+Si establece la propiedad <strong><em>shell</em></strong> con parámetros, no olvide indicar <strong><em>{0}</em></strong>.</p>
+
+<h2 id="expresiones">Expresiones</h2>
+
+<p>Una <strong>expresión</strong> (<em>expression</em>) es una proposición formada por operadores y operandos que se evalúa para que devuelva un determinado valor resultado, de manera similar a cualquier lenguaje de programación.
+En <strong>GitHub Actions</strong>, podemos usar las expresiones para determinar dinámicamente valores de propiedades, ya sean del flujo de trabajo, de un trabajo o de un paso.
+Para que <strong>GitHub Actions</strong> sepa que se encuentra ante una expresión, debe delimitarse por <code class="language-plaintext highlighter-rouge">${{</code> y <code class="language-plaintext highlighter-rouge">}}</code> como, por ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>${{ matrix.node }}
+</code></pre></div></div>
+
+<p>Las expresiones indicadas en la propiedad <strong><em>if</em></strong> no hace falta delimitarlas, porque se asume que su valor es siempre una expresión, pero si lo hace no tendrá problemas.
+Pero en el resto de propiedades, tenemos que delimitarlas sí o sí.
+Y podemos indicarlas como el valor final de una propiedad o como una parte de un valor textual de una propiedad.
+Esto se ve mejor con un ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Node.js ${{ env.node }}</span>   <span class="c1"># parte del valor de la propiedad</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-node@v3</span>
+  <span class="na">with</span><span class="pi">:</span>
+    <span class="na">node-version</span><span class="pi">:</span> <span class="s">${{ env.node }}</span> <span class="c1"># valor de la propiedad</span>
+</code></pre></div></div>
+
+<p>Las expresiones están formadas por operadores y operandos.
+Un <strong>operador</strong> (<em>operator</em>) es un símbolo que denota una operación a realizar con uno o dos operandos.
+Donde un <strong>operando</strong> (<em>operand</em>) representa un valor con el que operar.</p>
+
+<p>Como operandos podemos utilizar valores literales booleanos (<em>true</em> o <em>false</em>), números (<em>123</em> o <em>123.45</em>), textos (<em>‘hola mundo!’</em>) o el valor nulo (<em>null</em>).
+También pueden hacer referencia a objetos de tipo contexto como <em>env.HOME</em> o <em>matrix.node</em>.</p>
+
+<p>Entre los operadores disponibles, tenemos, con un parecido muy similar a sus homólogos de <strong>JavaScript</strong>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Operador</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">()</code></td>
+      <td>Para agrupar una expresión.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[]</code></td>
+      <td>Para indexar.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.</code></td>
+      <td>Para acceder a un campo o propiedad de un objeto.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">!</code></td>
+      <td>Operador lógico de negación.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&amp;&amp;</code></td>
+      <td>Operador lógico <em>AND</em>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">\|\|</code></td>
+      <td>Operador lógico <em>OR</em>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">==</code></td>
+      <td>Operador de igualdad.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">!=</code></td>
+      <td>Operador de desigualdad.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;</code></td>
+      <td>Operador menor que.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;=</code></td>
+      <td>Operador menor o igual que.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&gt;</code></td>
+      <td>Operador mayor que.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&gt;=</code></td>
+      <td>Operador mayor o igual que.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Las expresiones de <strong>GitHub Actions</strong> también permiten la invocación de funciones predefinidas.
+Entre otras, encontramos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Función</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><em>contains(texto, subtexto)</em></td>
+      <td>Comprueba si un texto contiene otro.</td>
+    </tr>
+    <tr>
+      <td><em>contains(lista, ítem)</em></td>
+      <td>Comprueba si una lista contiene un determinado ítem.</td>
+    </tr>
+    <tr>
+      <td><em>startsWith(texto, prefijo)</em></td>
+      <td>Comprueba si un texto comienza por un prefijo dado.</td>
+    </tr>
+    <tr>
+      <td><em>endsWith(texto, sufijo)</em></td>
+      <td>Comprueba si un texto finaliza en un sufijo dado.</td>
+    </tr>
+    <tr>
+      <td><em>format(patrón, …valores)</em></td>
+      <td>Formatea un patrón con los valores indicados. Cada valor se indica en el patrón con <strong><em>{índice}</em></strong>, comenzando con el índice cero. Ejemplo: <em>format(‘{0} {1} {0} {2}’, ‘cero’, ‘uno’, ‘dos’)</em>. Para escapar las llaves en el patrón, tenemos que duplicarlas (<code class="language-plaintext highlighter-rouge">{{</code> o <code class="language-plaintext highlighter-rouge">}}</code>).</td>
+    </tr>
+    <tr>
+      <td><em>join(lista)</em></td>
+      <td>Concatena los valores de la lista usando el separador predeterminado.</td>
+    </tr>
+    <tr>
+      <td><em>join(lista, separador)</em></td>
+      <td>Concatena los valores de la lista usando el separador indicado.</td>
+    </tr>
+    <tr>
+      <td><em>toJSON(valor)</em></td>
+      <td>Convierte el valor indicado a un texto en formato <strong>JSON</strong>.</td>
+    </tr>
+    <tr>
+      <td><em>fromJSON(texto)</em></td>
+      <td>Analiza y devuelve el valor representado en formato <strong>JSON</strong>.</td>
+    </tr>
+    <tr>
+      <td><em>success()</em></td>
+      <td>Devuelve <em>true</em> si ninguno de los pasos previos ha fallado o ha sido cancelado.</td>
+    </tr>
+    <tr>
+      <td><em>failure()</em></td>
+      <td>Devuelve <em>true</em> si el paso previo ha fallado.</td>
+    </tr>
+    <tr>
+      <td><em>always()</em></td>
+      <td>Devuelve siempre <em>true</em>.</td>
+    </tr>
+    <tr>
+      <td><em>cancelled()</em></td>
+      <td>Devuelve <em>true</em> si el flujo de trabajo ha sido cancelado.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Las funciones <strong>success()</strong>, <strong><em>always()</em></strong> y <strong><em>failure()</em></strong> se utilizan mucho en la propiedad <strong><em>if</em></strong> de los pasos.
+Por ejemplo, si usamos <code class="language-plaintext highlighter-rouge">if: always()</code>, el paso se ejecutará siempre, independientemente de cómo hayan acabado los anteriores.
+En cambio, si indicamos <code class="language-plaintext highlighter-rouge">if: success()</code>, sólo si el paso previo finalizó bien.
+Por su parte, <code class="language-plaintext highlighter-rouge">if: failure()</code> indica que sólo debe ejecutarse si el paso previo finalizó en error.
+Tenga en cuenta que si un paso falla, por la razón que sea, acabará el trabajo, a menos que los pasos que le siguen definan la propiedad <strong><em>if</em></strong> que haga que se ejecuten.</p>
+
+<h3 id="filtros-de-objeto">Filtros de objeto</h3>
+
+<p>Algunas funciones pueden indicar como primer argumento un <strong>filtro de objeto</strong> (<em>object filter</em>), una expresión que selecciona una determinada propiedad de los elementos de una lista.
+Ya no se pasa la lista como argumento, sino una expresión de filtro de objeto.
+Veamos un ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>github.event.issue.labels.*.name
+</code></pre></div></div>
+
+<p>Observe que la lista puede incluso contener comodines como el asterisco (<code class="language-plaintext highlighter-rouge">*</code>).</p>
+
+<p>La función <strong><em>contains()</em></strong> permite el uso de este filtro.</p>
+
+<h2 id="contexto-github">Contexto <em>github</em></h2>
+
+<p>El <strong>contexto <em>github</em></strong> (<em>github context</em>) contiene información sobre el flujo de trabajo y el evento que generó su ejecución.
+Entre sus propiedades más utilizadas, encontramos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>workflow</em></strong></td>
+      <td>Nombre del flujo de trabajo.</td>
+    </tr>
+    <tr>
+      <td><strong><em>actor</em></strong></td>
+      <td>Nombre del usuario que disparó la ejecución del flujo de trabajo.</td>
+    </tr>
+    <tr>
+      <td><strong><em>event_name</em></strong></td>
+      <td>Nombre del evento que generó la ejecución.</td>
+    </tr>
+    <tr>
+      <td><strong><em>base_ref</em></strong></td>
+      <td>Rama de <strong>Git</strong> en la que se está ejecutando el flujo de trabajo.</td>
+    </tr>
+    <tr>
+      <td><strong><em>ref_type</em></strong></td>
+      <td>Tipo de referencia: <strong><em>branch</em></strong> o <strong><em>tag</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>ref_name</em></strong></td>
+      <td>Rama o etiqueta que generó la ejecución del flujo de trabajo. Depende del tipo de evento.</td>
+    </tr>
+    <tr>
+      <td><strong><em>repository</em></strong></td>
+      <td>Nombre del repositorio.</td>
+    </tr>
+    <tr>
+      <td><strong><em>repository_owner</em></strong></td>
+      <td>Nombre del propietario del repositorio.</td>
+    </tr>
+    <tr>
+      <td><strong><em>run_id</em></strong></td>
+      <td>Identificador de la ejecución del flujo de trabajo.</td>
+    </tr>
+    <tr>
+      <td><strong><em>token</em></strong></td>
+      <td>Token similar a <strong><em>GITHUB_TOKEN</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>sha</em></strong></td>
+      <td>SHA de la confirmación (<em>commit</em>) que ha disparado la ejecución del flujo.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="inhabilitación-de-flujos-de-trabajo">Inhabilitación de flujos de trabajo</h2>
+
+<p>Podemos desactivar un flujo de trabajo temporalmente para que no reaccione a los eventos que tiene asociados y, así, no se ejecute.
+Esto lo podemos hacer en la <strong>pestaña <em>Actions</em></strong>, seleccionando el flujo de trabajo y, a continuación, seleccionando <strong><em>Disable workflow</em></strong> del menú desplegable mostrado cuando se hace clic en el botón de tres puntos (<code class="language-plaintext highlighter-rouge">...</code>):</p>
+
+<p><img src="img/workflow-disabling.png" alt="Inhabilitación de flujo de trabajo" /></p>
+
+<p>También es posible hacerlo mediante el comando <strong>gh workflow disable</strong>.</p>
+
+<h2 id="distintivo-del-estado-del-flujo-de-trabajo">Distintivo del estado del flujo de trabajo</h2>
+
+<p>El <strong>distintivo de estado del flujo de trabajo</strong> (<em>workflow status badge</em>) es un icono gráfico que indica el estado de la última ejecución del flujo de trabajo.
+Podemos obtenerlo mediante la siguiente URL:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://github.com/propietario/repositorio/actions/workflows/archivo/badge.svg
+</code></pre></div></div>
+
+<p>Adicionalmente, podemos indicar las propiedades siguientes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>branch</em></strong></td>
+      <td>Rama del flujo.</td>
+    </tr>
+    <tr>
+      <td><strong><em>event</em></strong></td>
+      <td>Evento del que extraer el estado como, por ejemplo, <strong><em>push</em></strong>, <strong><em>pull_request</em></strong>, etc.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://github.com/akromio/doubles/actions/workflows/ci.yaml/badge.svg
+</code></pre></div></div>
+
+<p>El icono contiene el nombre del flujo de trabajo, no el nombre del archivo, seguido del estado:</p>
+
+<p><img src="img/status-badge.png" alt="Distintivo de estado" /></p>
+
+<p>Puede obtener el distintivo fácilmente como sigue:</p>
+
+<ol>
+  <li>
+    <p>Ir al repositorio del flujo de trabajo.</p>
+  </li>
+  <li>
+    <p>Ir a la pestaña <strong><em>Actions</em></strong>.</p>
+  </li>
+  <li>
+    <p>Seleccionar el flujo de trabajo en cuestión.</p>
+  </li>
+  <li>
+    <p>Hacer clic en los tres puntos (<code class="language-plaintext highlighter-rouge">...</code>) y, a continuación, en <strong><em>Create status badge</em></strong>:</p>
+
+    <p><img src="img/creación-de-distintivo-de-estado.png" alt="Creación del distintivo de estado de un flujo de trabajo" /></p>
+  </li>
+</ol>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

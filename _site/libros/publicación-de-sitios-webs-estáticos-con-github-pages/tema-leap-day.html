@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Tema Leap day | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Tema Leap day" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Cómo utilizar el tema Leap day en un sitio web Jekyll." />
+<meta property="og:description" content="Cómo utilizar el tema Leap day en un sitio web Jekyll." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Tema Leap day" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Cómo utilizar el tema Leap day en un sitio web Jekyll.","headline":"Tema Leap day","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/publicaci%C3%B3n-de-sitios-webs-est%C3%A1ticos-con-github-pages/tema-leap-day"},"url":"/libros/publicaci%C3%B3n-de-sitios-webs-est%C3%A1ticos-con-github-pages/tema-leap-day"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/publicación-de-sitios-webs-estáticos-con-github-pages'>Publicación de sitios webs estáticos con GitHub Pages</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Tema Leap day</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>4 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p><strong>Jekyll</strong> viene de fábrica con el tema <strong>minima</strong> que puede ser muy útil en determinados sitios webs muy sencillos.
+Pero en ocasiones, puede ser insuficiente.
+Ha llegado el momento de presentar un segundo tema con una estética y diseño más llamativos y atractivos.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Dónde previsualizar el tema <strong>Leap day</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo configurar el tema.</p>
+  </li>
+  <li>
+    <p>Cómo personalizar el tema.</p>
+  </li>
+  <li>
+    <p>Qué archivo de diseño proporciona.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>Recordemos que un <strong>tema</strong> (<em>theme</em>) no es más que el estilo o la estética del sitio web.
+El <strong>tema <em>Leap day</em></strong> (<em>Leap day theme</em>), desarrollado por <strong>GitHub</strong>, permite disponer de un panel lateral donde mostrar el índice de la página que se está mostrando.
+Puede previsualizarlo en <a href="https://pages-themes.github.io/leap-day">https://pages-themes.github.io/leap-day</a>:</p>
+
+<p><img src="img/previsualización-del-tema-leap-day.png" alt="Previsualización del tema *Leap Day*" /></p>
+
+<p>Para su uso, debemos utilizar la siguiente propiedad <strong><em>remote_theme</em></strong> en el archivo <strong>_config.yaml</strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">remote_theme</span><span class="pi">:</span> <span class="s">pages-theme/leap-day</span>
+</code></pre></div></div>
+
+<p>En el archivo <strong>Gemfile</strong>, tenemos que indicar la gema <strong>github-pages</strong>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s2">"github-pages"</span><span class="p">,</span> <span class="n">group</span> <span class="ss">:jekyll_plugins</span>
+</code></pre></div></div>
+
+<p>La etiqueta de seguimiento de <strong>Google Analytics</strong> se indica en la propiedad <strong>google_analytics</strong>, recuerde que suele ser independiente al tema:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">google_analytics</span><span class="pi">:</span> <span class="s">G-XXXXXXXXXX</span>
+</code></pre></div></div>
+
+<h2 id="hojas-de-estilo">Hojas de estilo</h2>
+
+<p>Al igual que con el tema <strong>minima</strong>, podemos sobrescribir aspectos de estilo mediante el archivo <strong>/assets/css/style.css</strong> del <strong>directorio del sitio</strong>, Siendo su primera línea lo siguiente:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">---</span>
+<span class="nt">---</span>
+
+<span class="k">@import</span> <span class="s1">"{{ site.theme }}"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Si se siente cómodo con <strong>SCSS</strong>, utilice el mismo directorio pero <strong>style.scss</strong>.</p>
+
+<h2 id="archivos-de-diseño">Archivos de diseño</h2>
+
+<p>A diferencia de <strong>minima</strong> que presenta varios archivos de diseño, <strong>Leap day</strong> solo proporciona uno, <strong><em>default</em></strong>.
+Puede consultarlo en la ruta <strong>_layouts/default.html</strong> del tema, disponible en <a href="https://github.com/pages-themes/leap-day">https://github.com/pages-themes/leap-day</a>.</p>
+
+<h2 id="sobrescritura-de-plantillas-del-tema-minima">Sobrescritura de plantillas del tema <em>minima</em></h2>
+
+<p>Al igual que en <strong>minima</strong>, en ocasiones, puede ser muy útil personalizar ciertas plantillas de <strong>Leap day</strong>.
+Para ello, eche un vistazo al repositorio <strong>Git</strong>, más concretamente al directorio <strong>_includes</strong>.
+En él, encontrará:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Plantilla</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>head-custom.html</strong></td>
+      <td>Contenido personalizado a añadir al <strong>&lt;head&gt;</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong>head-custom-google-analytics.html</strong></td>
+      <td>Código del módulo de <strong>Google Analytics</strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Para sobrescribir una de ellas, no tiene más que crear la carpeta homónima y el archivo homónimo en el <strong>directorio del sitio</strong>.
+Puede copiar el contenido de la plantilla del repositorio y adaptarlo a sus necesidades.</p>
+
+<h2 id="configuración-del-banner-de-github">Configuración del banner de <em>GitHub</em></h2>
+
+<p>El tema <strong>Leap day</strong> proporciona un banner relacionado con <strong>GitHub</strong> y las descargas.
+Se encuentra debajo del título y la descripción de la página.
+Si consulta el archivo de diseño <strong>/_layouts/default.html</strong>, observará lo siguiente:</p>
+
+<div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;div id="banner"&gt;
+  &lt;span id="logo"&gt;&lt;/span&gt;
+
+  &lt;a href="<span class="p">{{</span><span class="w"> </span><span class="nv">site</span><span class="p">.</span><span class="nv">github</span><span class="p">.</span><span class="nv">repository_url</span><span class="w"> </span><span class="p">}}</span>" class="button fork"&gt;&lt;strong&gt;View On GitHub&lt;/strong&gt;&lt;/a&gt;
+  <span class="p">{%</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nv">site</span><span class="p">.</span><span class="nv">show_downloads</span><span class="w"> </span><span class="p">%}</span>
+    &lt;div class="downloads"&gt;
+      &lt;span&gt;Downloads:&lt;/span&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="<span class="p">{{</span><span class="w"> </span><span class="nv">site</span><span class="p">.</span><span class="nv">github</span><span class="p">.</span><span class="nv">zip_url</span><span class="w"> </span><span class="p">}}</span>" class="button"&gt;ZIP&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="<span class="p">{{</span><span class="w"> </span><span class="nv">site</span><span class="p">.</span><span class="nv">github</span><span class="p">.</span><span class="nv">tar_url</span><span class="w"> </span><span class="p">}}</span>" class="button"&gt;TAR&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  <span class="p">{%</span><span class="w"> </span><span class="kr">endif</span><span class="w"> </span><span class="p">%}</span>
+&lt;/div&gt;&lt;!-- end banner --&gt;
+</code></pre></div></div>
+
+<p>Si no desea este banner, puede añadir una regla <strong>CSS</strong> como la siguiente a su archivo de hoja de estilo:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#banner</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Si lo que desea es personalizar los enlaces, utilice la propiedad <strong>github</strong> del archivo <strong>_config.yaml</strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">github</span><span class="pi">:</span>
+  <span class="na">repository_url</span><span class="pi">:</span> <span class="s">url-al-repo-de-git</span>
+  <span class="na">zip_url</span><span class="pi">:</span> <span class="s">url-donde-se-encuentra-el-zip</span>
+  <span class="na">tar_url</span><span class="pi">:</span> <span class="s">url-donde-se-encuentra-el-tar</span>
+</code></pre></div></div>
+
+<p>A diferencia de <strong>minima</strong> que tiene una propiedad homónima en el archivo <strong>_config.yaml</strong> para su propia configuración, <strong>Leap day</strong> no tiene ninguna.
+Su configuración se añade como propiedades raíces al archivo de configuración.
+Recuerde que el contenido de este archivo se puede obtener en tiempo de generación del sitio web estático mediante una expresión <strong>Liquid</strong> como sigue:</p>
+
+<div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{{</span><span class="w"> </span><span class="nv">site</span><span class="p">.</span><span class="nv">propiedad</span><span class="w"> </span><span class="p">}}</span>
+</code></pre></div></div>
+
+<p>Si sólo desea suprimir la parte de las descargas, añada lo siguiente al archivo <strong>_config.yaml</strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">show_downloads</span><span class="pi">:</span> <span class="kc">false</span>
+</code></pre></div></div>
+
+<h2 id="personalización-del-tema">Personalización del tema</h2>
+
+<p>Si se da cuenta, el tema <strong>minima</strong> es mucho más configurable y personalizable que <strong>Leap day</strong>.
+Lo que ocurre que <strong>Leap day</strong> tiene algunas cosas que pueden ser interesantes en algunos proyectos.
+Esta es la razón por la que lo hemos presentado.
+Además, nos permite observar que cada tema es un mundo y lo que se puede hacer en uno, no tiene por qué poder hacerse en otro.</p>
+
+<p>Si necesita personalizar más profundamente <strong>Leap day</strong> porque le gusta su diseño, no se corte.
+Puede coger, por ejemplo, el archivo de diseño original y modificarlo a su antojo, añadiendo su nuevo diseño al directorio <strong>_layouts</strong> del <strong>directorio del sitio</strong>.
+Así, puede añadir redes sociales de manera similar a como lo hace <strong>minima</strong>.</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

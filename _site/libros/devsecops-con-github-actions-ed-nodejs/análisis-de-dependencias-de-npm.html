@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Análisis de dependencias de NPM | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Análisis de dependencias de NPM" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Cómo usar Dependabot de GitHub para automatizar la comprobaciones de vulnerabilidades de seguridad de las dependencias de nuestros paquetes de NPM." />
+<meta property="og:description" content="Cómo usar Dependabot de GitHub para automatizar la comprobaciones de vulnerabilidades de seguridad de las dependencias de nuestros paquetes de NPM." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Análisis de dependencias de NPM" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Cómo usar Dependabot de GitHub para automatizar la comprobaciones de vulnerabilidades de seguridad de las dependencias de nuestros paquetes de NPM.","headline":"Análisis de dependencias de NPM","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/devsecops-con-github-actions-ed-nodejs/an%C3%A1lisis-de-dependencias-de-npm"},"url":"/libros/devsecops-con-github-actions-ed-nodejs/an%C3%A1lisis-de-dependencias-de-npm"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/devsecops-con-github-actions-ed-nodejs'>Dev(Sec)Ops con GitHub Actions (Ed. Node.js)</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Análisis de dependencias de NPM</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>13 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>La seguridad es clave en el desarrollo de software y de su puesta en producción.
+Si estamos usando <strong>DevSecOps</strong>, tenemos la obligación de tener muy en cuenta la seguridad, entre otras cosas, encontrar las vulnerabilidades que pueda presentar nuestro software lo antes posible.
+Para intentar ayudarnos, <strong>GitHub</strong> dispone del servicio <strong>Dependabot</strong>, el cual vamos a presentar en esta lección.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es el análisis de dependencias.</p>
+  </li>
+  <li>
+    <p>Qué es y para qué sirve <strong>Dependabot</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo activar y desactivar <strong>Dependabot</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo personalizar el análisis que hará <strong>Dependabot</strong>.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>El desarrollo de software seguro debe formar parte de nuestro ADN.
+Tengamos en cuenta que las vulnerabilidades pueden ser explotadas por ciberatacantes y debemos intentar reducirlas todo lo posible.
+Recordemos que una <strong>vulnerabilidad</strong> (<em>vulnerability</em>) es una deficiencia o fallo del software que puede ser explotada por un atacante generalmente para realizar daño.
+Nuestro objetivo debe ser siempre reducir el número de vulnerabilidades de nuestro software.</p>
+
+<p>El <strong>análisis de dependencias</strong> (<em>dependency analysis</em>) consiste en evaluar todas las dependencias del proyecto y comprobar si alguna de ellas presenta vulnerabilidades para evitar, así, que nuestro software pueda presentarlas también.
+Es una operación estática que no requiere la ejecución del código, simplemente comprueba si las versiones de los paquetes de los que depende el nuestro están en la base de datos de vulnerabilidades.
+Si se detecta una vulnerabilidad de este tipo, lo que tendremos que hacer es actualizar la versión a una que tenga resuelta la vulnerabilidad o, en caso más extremo, cambiar a otro paquete, por ejemplo, si el vulnerable ya no tuviera mantenimiento.</p>
+
+<p><strong>GitHub</strong> proporciona <strong>Dependabot</strong>, un servicio gratuito para realizar análisis de dependencias.
+En nuestro caso, consistirá en analizar las dependencias del archivo <strong>package.json</strong> y detectar si alguna de ellas directa o indirectamente presenta una vulnerabilidad.
+Para ello, se sirve de la <strong>base de datos de asesoramiento de <em>GitHub</em></strong> (<em>GitHub Advisory Database</em>), <a href="https://github.com/advisories">https://github.com/advisories</a>, donde almacena vulnerabilidades de seguridad de distintas plataformas.
+Si encuentra una vulnerabilidad, lo que hace es generar una <strong>alerta de dependencia</strong> (<em>dependabot alert</em>), la cual podemos visualizar en la pestaña <strong><em>Security</em></strong> del repositorio.</p>
+
+<p>Una de sus principales ventajas es que funciona tanto con <strong>NPM</strong> como con otras plataformas como <strong>GitHub Actions</strong>, <strong>Go</strong> y <strong>Python</strong>.</p>
+
+<h2 id="activación-de-dependabot">Activación de <em>Dependabot</em></h2>
+
+<p>El servicio se puede configurar a nivel de cuenta, lo que se aplicará a todos sus repositorios, o bien a nivel de repositorio individualmente.
+Su configuración es muy similar, aquí vamos a hacerlo a nivel de repositorio:</p>
+
+<ol>
+  <li>
+    <p>Ir al <strong>repositorio de <em>GitHub</em></strong>.</p>
+  </li>
+  <li>
+    <p>Hacer clic en su pestaña <strong><em>Settings</em></strong>.</p>
+  </li>
+  <li>
+    <p>Ir a la configuración de seguridad, <strong><em>General &gt; Security &gt; Code security and analysis</em></strong>:</p>
+
+    <p><img src="img/cómo-llegar-a-la-configuración-de-dependabot.png" alt="Cómo llegar a la configuración de *Dependabot*" /></p>
+  </li>
+  <li>
+    <p>Ir a la sección <strong><em>Dependabot</em></strong> y configurar los distintos elementos individualmente:</p>
+
+    <p><img src="img/configuración-de-dependabot.png" alt="Configuración de *Dependabot*" /></p>
+  </li>
+</ol>
+
+<h2 id="notificación-de-alertas-de-dependabot">Notificación de alertas de <em>Dependabot</em></h2>
+
+<p>Una <strong>alerta</strong> (<em>alert</em>) no es más que un mensaje de atención sobre algo.
+<strong>Dependabot</strong> genera alertas cada vez que encuentra una vulnerabilidad entre nuestras dependencias.
+Estas alertas pueden visualizarse en la pestaña <strong><em>Security</em></strong> del repositorio y, si lo configuramos, en nuestros buzones de correo.</p>
+
+<p>Para configurar las alertas, iremos a la <strong>configuración de <em>Dependabot</em></strong>, tal y como acabamos de ver hace unos instantes.
+En ella, podemos activar las alertas haciendo clic en el botón <strong><em>Enable</em></strong> de <strong><em>Dependabot alerts</em></strong>;
+adicionalmente, podemos configurar las notificaciones mediante <strong><em>Configure alert notifications</em></strong>:</p>
+
+<p><img src="img/activación-de-las-alertas.png" alt="Activación de las alertas de *Dependabot*" /></p>
+
+<h2 id="reparación-automática-de-las-vulnerabilidades">Reparación automática de las vulnerabilidades</h2>
+
+<p>Además de notificar alertas por vulnerabilidades, también podemos pedirle a <strong>Dependabot</strong> que intente arreglarlas actualizando las versiones de las dependencias a aquellas que no presenten vulnerabilidades conocidas.
+Para ello, primero hay que configurar esta funcionalidad.
+Editamos las opciones de seguridad, las mismas que vimos para las alertas.
+Y justo en la sección <strong><em>Dependabot</em></strong>, hacemos clic en el botón <strong><em>Enable</em></strong> de <strong><em>Dependabot security updates</em></strong>:</p>
+
+<p><img src="img/activación-de-la-reparación-de-vulnerabilidades.png" alt="Activación de la reparación automática de las vulnerabilidades" /></p>
+
+<p>Le recomiendo configure las propiedades <strong><em>pull-request-branch-name</em></strong>, <strong><em>labels</em></strong> y <strong><em>commit-message</em></strong> del ecosistema <strong>npm</strong> del archivo <strong>dependabot.yaml</strong>.</p>
+
+<h2 id="actualización-de-versiones-de-dependencias">Actualización de versiones de dependencias</h2>
+
+<p>Además de actualizar las versiones de dependencias con vulnerabilidades, también podemos solicitar que compruebe automáticamente las versiones de las dependencias cuando aparezcan nuevas versiones, sin necesidad de presentar vulnerabilidades, para ver si podemos actualizar a ellas.
+Haremos clic en el <strong><em>Enable</em></strong> de <strong><em>Dependabot version updates</em></strong>:</p>
+
+<p><img src="img/activación-de-la-actualización-de-versiones.png" alt="Activación de la actualización automática de versiones" /></p>
+
+<p>Esta funcionalidad lo que hace es detectar si hay nuevas versiones que cumplen con lo indicado en el archivo <strong>package.json</strong>.
+Para cada una de ellas, abre una nueva rama, realiza el cambio y abre una nueva solicitud de integración.
+Esto, a su vez y si lo tenemos así configurado en <strong>GitHub Actions</strong>, ejecutará el flujo de integración continua.
+En este punto, nosotros tendremos varias solicitudes de integración abiertas, algunas habrán podido pasar las pruebas y otras no.
+El siguiente ejemplo muestra que tres de las cuatro solicitudes pasan las pruebas, pero una de ellas no lo hace:</p>
+
+<p><img src="img/solicitudes-de-integración-de-actualización-de-versiones.png" alt="Solicitudes de integración de actualización de versiones" /></p>
+
+<p>A partir de estas solicitudes y el resultado de los flujos de <strong>GitHub Actions</strong>, decidiremos qué hacer.
+En este caso particular, se integraron todas salvo <strong>chalk</strong> que se añadió a la lista de paquetes a ignorar porque sus nuevas versiones son <strong>ESM</strong> y el proyecto es <strong>CJS</strong>.
+Esto significa que son incompatibles y, por lo tanto, hay que mantener la última versión <strong>CJS</strong> de <strong>chalk</strong> hasta que el proyecto se convierta a <strong>ESM</strong>.
+Al añadir el paquete a la lista de dependencias a omitir en el archivo <strong>dependabot.yaml</strong>, automáticamente desaparecerá la solicitud de integración.</p>
+
+<h2 id="archivo-de-configuración-dependabotyaml">Archivo de configuración <em>dependabot.yaml</em></h2>
+
+<p>Puede ser muy útil personalizar el análisis de dependencias de manera distinta para cada proyecto.
+Esto se realiza mediante el archivo <strong>dependabot.yaml</strong> ubicado en la carpeta <strong>.github</strong> del repositorio.
+Básicamente contiene las siguientes propiedades que vamos a presentar a continuación.</p>
+
+<p>Comencemos con un archivo de ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="m">2</span>
+<span class="na">updates</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">package-ecosystem</span><span class="pi">:</span> <span class="s">npm</span>
+    <span class="na">directory</span><span class="pi">:</span> <span class="s">/</span>
+    <span class="na">versioning-strategy</span><span class="pi">:</span> <span class="s">increase</span>
+    <span class="na">schedule</span><span class="pi">:</span>
+      <span class="na">interval</span><span class="pi">:</span> <span class="s">weekly</span>
+      <span class="na">day</span><span class="pi">:</span> <span class="s">sunday</span>
+      <span class="na">time</span><span class="pi">:</span> <span class="s2">"</span><span class="s">00:00"</span>
+    <span class="na">pull-request-branch-name</span><span class="pi">:</span>
+      <span class="na">separator</span><span class="pi">:</span> <span class="s">/</span>
+    <span class="na">labels</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">dependencies</span>
+    <span class="na">commit-message</span><span class="pi">:</span>
+      <span class="na">prefix</span><span class="pi">:</span> <span class="s">depbot</span>
+      <span class="na">prefix-development</span><span class="pi">:</span> <span class="s">depbot</span>
+      <span class="na">include</span><span class="pi">:</span> <span class="s">scope</span>
+    <span class="na">ignore</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">dependency-name</span><span class="pi">:</span> <span class="s">array-shuffle</span>
+      <span class="pi">-</span> <span class="na">dependency-name</span><span class="pi">:</span> <span class="s">chalk</span>
+      <span class="pi">-</span> <span class="na">dependency-name</span><span class="pi">:</span> <span class="s">file-type</span>
+      <span class="pi">-</span> <span class="na">dependency-name</span><span class="pi">:</span> <span class="s">humanize-string</span>
+      <span class="pi">-</span> <span class="na">dependency-name</span><span class="pi">:</span> <span class="s">indent-string</span>
+      <span class="pi">-</span> <span class="na">dependency-name</span><span class="pi">:</span> <span class="s">inquirer</span>
+      <span class="pi">-</span> <span class="na">dependency-name</span><span class="pi">:</span> <span class="s">term-size</span>
+</code></pre></div></div>
+
+<h3 id="propiedad-version">Propiedad <em>version</em></h3>
+
+<p>Mediante la <strong>propiedad <em>version</em></strong> (<em>version property</em>), indicamos la versión de la especificación de <strong>Dependabot</strong> con la que configuramos el archivo.
+En nuestro caso, usaremos siempre el valor <strong>2</strong>.</p>
+
+<h3 id="propiedad-registries">Propiedad <em>registries</em></h3>
+
+<p>La <strong>propiedad <em>registries</em></strong> (<em>registries property</em>) se utiliza para configurar los registros que consultará <strong>Dependabot</strong>.
+En nuestro caso, <strong>NPM</strong>.
+Si vamos a utilizar el oficial con paquetes públicos, no tenemos que configurar nada, por lo que no hace falta que añadamos esta propiedad.
+Pero vamos a mostrar un ejemplo ilustrativo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">registries</span><span class="pi">:</span>
+  <span class="na">npm</span><span class="pi">:</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s">npm-registry</span>
+    <span class="na">url</span><span class="pi">:</span> <span class="s">https://registry.npmjs.org</span>
+    <span class="na">username</span><span class="pi">:</span> <span class="s">${{secrets.NPM_USER_NAME}}</span>
+    <span class="na">password</span><span class="pi">:</span> <span class="s">${{secrets.NPM_USER_PASSWORD}}</span>
+</code></pre></div></div>
+
+<p><strong><em>registries</em></strong> es un objeto donde cada una de sus propiedades representa un registro.
+El nombre de la propiedad será el identificador que posteriormente podremos indicar en la propiedad <strong><em>updates</em></strong> del archivo <strong>dependabot.yaml</strong>.
+En nuestro caso, hemos indicado <em>npm</em> como identificador del registro.
+A continuación, vamos a ver las propiedades de un <strong>registro de <em>NPM</em></strong>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>type</em></strong></td>
+      <td>Tipo del registro. Con <strong>NPM</strong>, siempre <strong><em>npm-registry</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>url</em></strong></td>
+      <td>URL del registro como, por ejemplo, <strong><em>https://registry.npmjs.org</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>username</em></strong></td>
+      <td>Nombre de la cuenta de usuario con la que conectar al registro.</td>
+    </tr>
+    <tr>
+      <td><strong><em>password</em></strong></td>
+      <td>Contraseña del usuario.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="propiedad-updates">Propiedad <em>updates</em></h3>
+
+<p>Con la <strong>propiedad <em>updates</em></strong> (<em>updates property</em>), configuramos más detenidamente las dependencias del proyecto.
+Por ejemplo, podemos indicar que ciertas dependencias, independientemente de que presenten vulnerabilidades, no se deben corregir.
+Consiste en un array o lista de objetos donde cada uno de sus elementos representa un <strong>ecosistema</strong> (<em>ecosystem</em>), el cual hace referencia a un administrador de paquetes del proyecto.
+En nuestro caso, el ecosistema de trabajo será sólo <strong>NPM</strong>, pero podríamos tener un repositorio con una parte escrita en <strong>NPM</strong> y otra en <strong>Rust</strong>, por lo que tendríamos que configurar ambos ecosistemas mediante su elemento correspondiente de la propiedad <strong><em>updates</em></strong>.</p>
+
+<p>Cada ecosistema dispone de varias propiedades que lo configuran.
+Vamos a presentar las más utilizadas, centrándonos en <strong>NPM</strong>.</p>
+
+<h4 id="propiedad-package-ecosystem-del-ecosistema">Propiedad <em>package-ecosystem</em> del ecosistema</h4>
+
+<p>La <strong>propiedad <em>package-ecosystem</em></strong> (<em>package-ecosystem property</em>) indica el ecosistema en cuestión.
+En nuestro caso, su valor será siempre <strong><em>npm</em></strong>.
+Pero para otros ecosistemas podría ser <strong><em>cargo</em></strong>, <strong><em>gomod</em></strong>, <strong><em>pip</em></strong> o <strong><em>github-actions</em></strong>.</p>
+
+<h4 id="propiedad-directory-del-ecosistema">Propiedad <em>directory</em> del ecosistema</h4>
+
+<p>En la <strong>propiedad <em>directory</em></strong> (<em>directory property</em>) indicaremos el directorio que contiene el archivo de metadatos del administrador de paquetes.
+En nuestro caso, el administrador de paquetes es <strong>npm</strong> y su archivo de metadatos <strong>package.json</strong>.
+Por lo tanto, tendremos que indicar la ubicación de este archivo en el repositorio.
+Por lo general, será <code class="language-plaintext highlighter-rouge">/</code>.</p>
+
+<h4 id="propiedad-schedule-del-ecosistema">Propiedad <em>schedule</em> del ecosistema</h4>
+
+<p>Para indicar cuándo deseamos que se analicen las dependencias, tenemos la <strong>propiedad <em>schedule</em></strong> (<em>schedule property</em>), un objeto con las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>interval</em></strong></td>
+      <td>Cada cuánto tiempo realizar el análisis: <strong><em>daily</em></strong>, <strong><em>weekly</em></strong> o <strong><em>monthly</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>day</em></strong></td>
+      <td>Qué día de la semana realizar el análisis si lo hacemos semanalmente: <strong><em>monday</em></strong>, <strong><em>tuesday</em></strong>, <strong><em>wednesday</em></strong>, <strong><em>thursday</em></strong>, <strong><em>friday</em></strong>, <strong><em>saturday</em></strong> o <strong><em>sunday</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>time</em></strong></td>
+      <td>A qué hora hacerlo en formato <strong>hh:mm</strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="m">2</span>
+<span class="na">updates</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">package-ecosystem</span><span class="pi">:</span> <span class="s">npm</span>
+    <span class="na">directory</span><span class="pi">:</span> <span class="s">/</span>
+    <span class="na">schedule</span><span class="pi">:</span>
+      <span class="na">interval</span><span class="pi">:</span> <span class="s">weekly</span>
+      <span class="na">time</span><span class="pi">:</span> <span class="s2">"</span><span class="s">00:00"</span>
+</code></pre></div></div>
+
+<h4 id="propiedad-target-branch-del-ecosistema">Propiedad <em>target-branch</em> del ecosistema</h4>
+
+<p>De manera predeterminada, se analizará la rama predeterminada del proyecto.
+Si deseamos configurar otra, indicaremos su nombre en la <strong>propiedad <em>target-branch</em></strong> (<em>target-branch property</em>).</p>
+
+<h4 id="propiedades-allow-e-ignore-del-ecosistema">Propiedades <em>allow</em> e <em>ignore</em> del ecosistema</h4>
+
+<p><strong>Dependabot</strong> analiza todas las dependencias del proyecto.
+Con las propiedades <strong><em>allow</em></strong> e <strong><em>ignore</em></strong>, personalizamos más concretamente las dependencias a analizar.
+Con <strong><em>allow</em></strong>, indicamos que sólo se analicen las indicadas;
+mientras que con <strong><em>ignore</em></strong> que ignore las indicadas.</p>
+
+<p>Ambas propiedades son listas de objetos donde cada uno de ellos representa una dependencia.
+En el caso de la propiedad <strong><em>allow</em></strong>, cada dependencia se representa mediante un objeto con las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>dependency-name</em></strong></td>
+      <td>Nombre de la dependencia. Se puede usar el comodín <code class="language-plaintext highlighter-rouge">*</code> para representar cualquier número de caracteres.</td>
+    </tr>
+    <tr>
+      <td><strong><em>dependency-type</em></strong></td>
+      <td>Indica el tipo de dependencia: <strong><em>direct</em></strong>, <strong><em>indirect</em></strong>, <strong><em>production</em></strong>, <strong><em>development</em></strong> u <strong><em>all</em></strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Las dependencias se clasifican en:</p>
+
+<ul>
+  <li>
+    <p><strong>Directas</strong> (<em>direct</em>), aquellas que referenciamos en el <strong>package.json</strong>.</p>
+  </li>
+  <li>
+    <p><strong>Indirectas</strong> (<em>indirect</em>), aquellas que son referenciadas por las directas u otras indirectas.</p>
+  </li>
+  <li>
+    <p><strong>De producción</strong> (<em>production</em>), las indicadas en la propiedad <strong><em>dependencies</em></strong> del archivo <strong>package.json</strong>.</p>
+  </li>
+  <li>
+    <p><strong>De desarrollo</strong> (<em>development</em>), las indicadas en la propiedad <strong><em>devDependencies</em></strong> del <strong>package.json</strong>.</p>
+  </li>
+</ul>
+
+<p>Las dependencias a ignorar se indican en la propiedad <strong><em>ignore</em></strong> con las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>dependency-name</em></strong></td>
+      <td>Nombre de la dependencia.</td>
+    </tr>
+    <tr>
+      <td><strong><em>versions</em></strong></td>
+      <td>Array de las versiones a ignorar. Si no se indica, todas.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Veamos un ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="m">2</span>
+<span class="na">updates</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">package-ecosystem</span><span class="pi">:</span> <span class="s">npm</span>
+    <span class="na">directory</span><span class="pi">:</span> <span class="s">/</span>
+    <span class="na">schedule</span><span class="pi">:</span>
+      <span class="na">interval</span><span class="pi">:</span> <span class="s">weekly</span>
+    <span class="na">ignore</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">dependency-name</span><span class="pi">:</span> <span class="s">express</span>
+        <span class="na">versions</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">4.x</span><span class="pi">,</span> <span class="nv">5.x</span><span class="pi">]</span>
+      <span class="pi">-</span> <span class="na">dependency-name</span><span class="pi">:</span> <span class="s">lodash</span>
+</code></pre></div></div>
+
+<h4 id="propiedades-pull-request-branch-name-labels-y-commit-message-del-ecosistema">Propiedades <em>pull-request-branch-name</em>, <em>labels</em> y <em>commit-message</em> del ecosistema</h4>
+
+<p><strong>Dependabot</strong> genera una alerta cada vez que encuentra alguna vulnerabilidad o <em>malware</em>, pero también tiene la capacidad de intentar arreglarlo, actualizando la versión de la dependencia en riesgo.
+Si así lo deseamos, debemos configurar la opción <strong><em>Dependabot security updates</em></strong>, tal y como vimos anteriormente en esta lección.</p>
+
+<p>Para realizar sus cambios, crea su propia rama de trabajo.
+Como prefijo de sus ramas, utilizará <strong><em>dependabot</em></strong>, pero podemos fijar, si lo deseamos, un separador.
+Esto se hace con la <strong>propiedad <em>pull-request-branch-name</em></strong> (<em>pull-request-branch-name property</em>) como sigue:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">pull-request-branch-name</span><span class="pi">:</span>
+  <span class="na">separator</span><span class="pi">:</span> <span class="s">/</span>
+</code></pre></div></div>
+
+<p>Además, también podemos indicar las etiquetas que deseamos tenga esta solicitud de integración.
+Lo haremos mediante la <strong>propiedad <em>label</em></strong> (<em>label property</em>).
+De manera predeterminada, será <strong><em>dependencies</em></strong>, pero podemos fijar cualquier otra.
+Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">labels</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">npm</span>
+  <span class="pi">-</span> <span class="s">dependencies</span>
+</code></pre></div></div>
+
+<p>Sus mensajes de confirmación los podemos configurar mediante la <strong>propiedad <em>commit-message</em></strong> (<em>commit-message property</em>), un objeto con las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>prefix</em></strong></td>
+      <td>Prefijo a añadir al mensaje.</td>
+    </tr>
+    <tr>
+      <td><strong><em>prefix-development</em></strong></td>
+      <td>Prefijo a añadir si actualiza dependencias de desarrollo.</td>
+    </tr>
+    <tr>
+      <td><strong><em>include</em></strong></td>
+      <td>¿Añadir la lista de dependencias actualizadas al mensaje? Si así lo deseamos, indicar <strong><em>scope</em></strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>En el momento de escribir estas líneas, los prefijos no pueden tener una longitud superior a los <strong>15</strong> caracteres.
+Tenga en cuenta que <strong>Dependabot</strong> ya añade un prefijo que seguirá al que indiquemos nosotros.
+En las actualizaciones automáticas de dependencias de desarrollo, por ejemplo, su prefijo es, en el momento de escribir estas líneas, <em>(deps-dev):</em>.</p>
+
+<h4 id="propiedad-versioning-strategy">Propiedad <em>versioning-strategy</em></h4>
+
+<p>Como acabamos de ver, <strong>Dependabot</strong> puede actualizar las versiones de las dependencias del proyecto.
+Con la <strong>propiedad <em>versioning-strategy</em></strong> (<em>versioning-strategy property</em>), lo que hacemos es indicar exactamente qué debe hacer.
+Los valores más frecuentes para el ecosistema <strong>npm</strong> son los siguientes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Valor</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>auto</em></strong></td>
+      <td>Sigue la estrategia predeterminada del ecosistema.</td>
+    </tr>
+    <tr>
+      <td><strong><em>lockfile-only</em></strong></td>
+      <td>Actualiza sólo el archivo <strong>package-lock.json</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>increase</em></strong></td>
+      <td>Actualiza tanto <strong>package.json</strong> como <strong>package-lock.json</strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Otros valores son <strong><em>widen</em></strong> e <strong><em>increase-if-necessary</em></strong>.</p>
+
+<h4 id="propiedad-registries-del-ecosistema">Propiedad <em>registries</em> del ecosistema</h4>
+
+<p>Recordemos que el archivo <strong>dependabot.yaml</strong> puede hacer referencia a varios registros, configurados con la propiedad <strong><em>registries</em></strong> del archivo.
+Cuando es necesario indicar que un ecosistema utilice uno o más registros determinados, de los definidos, en vez del predeterminado del administrador de paquetes, tenemos que indicar sus nombres en la propiedad <strong><em>registries</em></strong> del ecosistema que no es más que un array de textos.
+Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">package-ecosystem</span><span class="pi">:</span> <span class="s">npm</span>
+  <span class="na">registries</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">npm</span><span class="pi">]</span>
+  <span class="na">directory</span><span class="pi">:</span> <span class="s">/</span>
+  <span class="na">schedule</span><span class="pi">:</span>
+    <span class="na">interval</span><span class="pi">:</span> <span class="s">weekly</span>
+    <span class="na">day</span><span class="pi">:</span> <span class="s">sunday</span>
+    <span class="na">time</span><span class="pi">:</span> <span class="s2">"</span><span class="s">00:00"</span>
+  <span class="na">pull-request-branch-name</span><span class="pi">:</span>
+    <span class="na">separator</span><span class="pi">:</span> <span class="s">/</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">dependencies</span>
+  <span class="na">commit-message</span><span class="pi">:</span>
+    <span class="na">prefix</span><span class="pi">:</span> <span class="s">depbot</span>
+    <span class="na">prefix-development</span><span class="pi">:</span> <span class="s">depbot</span>
+    <span class="na">include</span><span class="pi">:</span> <span class="s">scope</span>
+</code></pre></div></div>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Campos de los ítems de GitHub Projects | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Campos de los ítems de GitHub Projects" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Qué son y cómo utilizar los campos de los ítems de GitHub Projects." />
+<meta property="og:description" content="Qué son y cómo utilizar los campos de los ítems de GitHub Projects." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Campos de los ítems de GitHub Projects" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Qué son y cómo utilizar los campos de los ítems de GitHub Projects.","headline":"Campos de los ítems de GitHub Projects","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/organizaci%C3%B3n-del-trabajo-con-github-projects-y-github-issues/campos-de-los-%C3%ADtems-de-github-projects"},"url":"/libros/organizaci%C3%B3n-del-trabajo-con-github-projects-y-github-issues/campos-de-los-%C3%ADtems-de-github-projects"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/organización-del-trabajo-con-github-projects-y-github-issues'>Organización del trabajo con GitHub Projects y GitHub Issues</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Campos de los ítems de GitHub Projects</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>11 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Los campos son un componente muy importante de los proyectos y de sus ítems.
+Proporcionan metadatos muy útiles para clasificación, priorización y/o filtro.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es un campo.</p>
+  </li>
+  <li>
+    <p>Para qué sirven los campos.</p>
+  </li>
+  <li>
+    <p>Cómo crear campos personalizados.</p>
+  </li>
+  <li>
+    <p>Algunos campos personalizados recomendados.</p>
+  </li>
+  <li>
+    <p>Cómo filtrar los elementos de un proyecto asociados a un determinado valor de campo.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>Un <strong>campo</strong> (<em>field</em>) es una propiedad que proporciona información de un determinado aspecto.
+Los ítems de los proyectos tienen sus propios campos.
+Concretamente, es el proyecto el que define qué campos presentarán sus ítems e incluso puede determinar cuáles son sus posibles valores.</p>
+
+<p>Atendiendo a quién define el campo, se clasifican en campos predefinidos y personalizados.
+Un <strong>campo predefinido</strong> (<em>default field</em>) es aquel que define <strong>GitHub</strong> en el momento de crear el proyecto.
+En cambio, un <strong>campo personalizado</strong> (<em>custom field</em>) es aquel que definimos nosotros mismos para el proyecto en cuestión.</p>
+
+<h2 id="campos-predefinidos">Campos predefinidos</h2>
+
+<p>Un <strong>campo predefinido</strong> (<em>default field</em>) es aquel que viene con <strong>GitHub</strong>.
+Cada vez que creamos un proyecto en <strong>GitHub Projects</strong>, automáticamente se crean los siguientes campos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Campo</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>Title</em></strong></td>
+      <td>Título del ítem.</td>
+    </tr>
+    <tr>
+      <td><strong><em>Assignees</em></strong></td>
+      <td>Nombres de los responsables del ítem.</td>
+    </tr>
+    <tr>
+      <td><strong><em>Status</em></strong></td>
+      <td>Estatus actual del ítem, en un tablero, columna en la que se encuentra actualmente.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Si el ítem se encuentra asociado a una propuesta (<em>issue</em>) también dispondrá de otros campos atados a la propia propuesta como, por ejemplo, <strong><em>Labels</em></strong> y <strong><em>Milestone</em></strong>.</p>
+
+<p>A diferencia de las etiquetas predefinidas, que veremos más adelante tras presentar <strong>GitHub Issues</strong>, los campos predefinidos <em>no</em> se pueden borrar.</p>
+
+<h2 id="campos-personalizados">Campos personalizados</h2>
+
+<p>Por su parte, un <strong>campo personalizado</strong> (<em>custom field</em>) es aquel que definimos nosotros mismos para el proyecto.
+Atendiendo al tipo de datos que puede almacenar, se clasifican en campos textuales, numéricos, de fecha, de iteración y de selección simple.</p>
+
+<h3 id="creación-de-campos-personalizados">Creación de campos personalizados</h3>
+
+<p>En primer lugar, vamos a ver cómo crear un campo y después pasaremos a analizar los distintos tipos:</p>
+
+<ol>
+  <li>
+    <p>Ir al proyecto.</p>
+  </li>
+  <li>
+    <p>Hacer clic en los tres puntos (<code class="language-plaintext highlighter-rouge">...</code>), lo que mostrará un menú y seleccionar <strong><em>Settings</em></strong> para acceder a las opciones del proyecto.</p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>+ New field</em></strong> junto a <strong><em>Custom fields</em></strong> para crear un nuevo campo:</p>
+
+    <p><img src="img/menú-de-nuevo-campo.png" alt="Menú de nuevo campo" /></p>
+  </li>
+  <li>
+    <p>Rellenar el formulario, en nuestro caso, <strong><em>Priority</em></strong> como nombre, <strong><em>Single select</em></strong> como valor y las posibles prioridades en <strong><em>Options</em></strong>:</p>
+
+    <p><img src="img/formulario-de-nuevo-campo.png" alt="Relleno del campo *Priority*" /></p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>Save</em></strong> para dar de alta el campo prioridad.</p>
+  </li>
+</ol>
+
+<p>A partir de este momento, cuando edite un ítem podrá observar un campo <strong><em>Priority</em></strong> para fijar su prioridad.</p>
+
+<h3 id="campos-textuales-y-numéricos">Campos textuales y numéricos</h3>
+
+<p>Un <strong>campo textual</strong> (<em>text field</em>) es aquel que puede aceptar cualquier texto en cualquier ítem del proyecto.
+Mientras que un <strong>campo numérico</strong> (<em>number field</em>) aceptará un número cualquiera.
+Son campos abiertos cuyo valor, mientras sea del tipo correspondiente, puede ser cualquiera.</p>
+
+<p>En la creación del campo, en el desplegable <strong><em>field type</em></strong>, seleccionaremos <strong><em>Text</em></strong> o <strong><em>Number</em></strong>:</p>
+
+<p><img src="img/tipo-de-campo.png" alt="Tipo de campo" /></p>
+
+<h3 id="campos-de-selección-única">Campos de selección única</h3>
+
+<p>Un <strong>campo de selección única</strong> (<em>single select</em>) es aquel que, dados unos valores predefinidos conocidos formalmente como <strong>opciones</strong> (<em>options</em>), se puede seleccionar uno cualquiera de ellos.
+Anteriormente, hemos visto cómo definir el campo <em>Priority</em> para fijar el nivel de prioridad o importancia del ítem como un campo de selección única donde sus posibles valores u opciones son <em>Low</em>, <em>Medium</em>, <em>High</em> y <em>Critical</em>.
+Cada opción, además de un texto, puede tener un color asociado.
+Extremadamente útil si el valor de la opción puede reflejar algo que fácilmente se puede identificar como importante o menos importante si le asociamos un color.</p>
+
+<h3 id="campos-de-fecha">Campos de fecha</h3>
+
+<p>Un <strong>campo de fecha</strong> (<em>date field</em>) es aquel que espera que su valor sea una fecha.
+Si indicamos el tipo <strong><em>Date</em></strong>, para cada ítem se podrá indicar una fecha cualquiera.
+En cambio, si fijamos <strong><em>Iteration</em></strong>, estamos diciendo que habrá que seleccionar una iteración de uno de los intervalos que resulten de iterar a partir de esa fecha inicial dada a intervalos dados de tiempo.</p>
+
+<p>Vamos a estudiar detenidamente los campos iterativos, pues los de tipo <strong><em>Date</em></strong> no nos deberían generar ningún tipo de misterio.
+En primer lugar, seleccionaremos <strong><em>Iteration</em></strong>, a continuación, una fecha de inicio y, para finalizar, una duración para cada intervalo, cada uno de los cuales se conocerá como iteración:</p>
+
+<p><img src="img/campo-de-iteraci%C3%B3n.png" alt="Campo iterativo" /></p>
+
+<p>De manera predeterminada, se crean tres iteraciones.
+Podemos definir otras adicionales, incluso descansos (<em>breaks</em>) si fuera necesario.
+Para ello, una vez creado el campo, lo editaremos y le añadiremos manualmente las iteraciones faltantes.
+Ahora cuando seleccionemos un valor, deberemos indicar una de las iteraciones.</p>
+
+<h2 id="análisis-de-nuestros-propios-campos">Análisis de nuestros propios campos</h2>
+
+<p>Un aspecto muy importante de todo proyecto es tener la información necesaria de cada ítem.
+Es la propia organización la que debe determinar qué campos debe haber en el proyecto.
+En nuestro caso, vamos a considerar los siguientes campos predefinidos, teniendo en cuenta que <strong><em>Status</em></strong> ya lo crea <strong>GitHub</strong> aunque aparezca entre los personalizados:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Campos</th>
+      <th>Tipo</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>Priority</em></strong></td>
+      <td>Selección única</td>
+      <td>Nivel de importancia del ítem.</td>
+    </tr>
+    <tr>
+      <td><strong><em>Origin</em></strong></td>
+      <td>Selección única</td>
+      <td>Refleja a quién se le debe la creación del ítem.</td>
+    </tr>
+    <tr>
+      <td><strong><em>When</em></strong></td>
+      <td>Selección única</td>
+      <td>Cuándo se debe atender, desarrollar o implementar el ítem.</td>
+    </tr>
+    <tr>
+      <td><strong><em>Complexity</em></strong></td>
+      <td>Selección única</td>
+      <td>Complejidad que consideramos tiene su desarrollo o implementación.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Vamos a analizar cada campo individualmente.
+Pero antes de continuar, por favor, eche un vistazo ilustrativo al siguiente proyecto <a href="https://github.com/users/akromio/projects/1">https://github.com/users/akromio/projects/1</a>.
+No hay nada como una imagen para asentar mejor lo que vamos a presentar a continuación.</p>
+
+<h3 id="campo-prioridad">Campo prioridad</h3>
+
+<p>La <strong>prioridad</strong> (<em>priority</em>) indica cómo de importante es su atención.
+No es lo mismo una propuesta con una baja prioridad que otra con una prioridad crítica como, por ejemplo, un fallo que está dejando el servicio inoperativo.
+Es importante que prioricemos los ítems para centrarnos en los más importantes por delante de los que tienen una menor preferencia.
+En nuestro caso, las opciones de prioridad son: <strong><em>Low</em></strong>, <strong><em>Medium</em></strong>, <strong><em>High</em></strong> y <strong><em>Critical</em></strong>.</p>
+
+<p>Cuando aparece un ítem con prioridad crítica, la organización debe definir qué hacer.
+Una opción es dejarlo todo y ponernos de inmediato con ese ítem.
+O bien, cuando terminemos lo que estamos haciendo, elegir la crítica.</p>
+
+<p>En <strong>Scrumban</strong>, existe un término conocido como <strong>clase de servicio</strong> (<em>class of service</em>) que indica cómo debe ser atendida la tarjeta.
+Generalmente, suele ser de manera normal, urgente o a fecha fija.
+Si en su proyecto puede ser útil, no dude en añadir también este otro campo.</p>
+
+<h3 id="campo-origen">Campo origen</h3>
+
+<p>El <strong>origen</strong> (<em>origin</em>) indica quién solicita lo indicado en el ítem, por si tuviéramos que obtener más información, saber dónde dirigirnos.
+En nuestro caso, distinguimos entre:
+<strong><em>IT</em></strong>, el equipo de IT o desarrollo;
+<strong><em>Product</em></strong>, el equipo de producto como, por ejemplo, el <em>Product Owner</em> o <em>Marketing</em>;
+o <strong><em>Stakeholder</em></strong>, una solicitud de una persona usuaria o del cliente.</p>
+
+<h3 id="campo-cuándo">Campo cuándo</h3>
+
+<p>El <strong>cuándo</strong> (<em>when</em>) indica en qué momento debe desarrollarse, lo que permitirá saber a qué iteración debería asignarse.
+Por ejemplo, en el proyecto <strong>Akromio</strong>, a un ítem se le puede asignar uno de tres tipos de valores:</p>
+
+<ul>
+  <li>
+    <p>Ninguno, en cuyo caso, no se sabe todavía cuándo se desarrollará.</p>
+  </li>
+  <li>
+    <p>Un año determinado, en este caso, sólo se sabe que durante el año indicado, no así el bimestre en cuestión.</p>
+  </li>
+  <li>
+    <p>Un bimestre dado, con este tipo de valor se sabe exactamente en qué iteración se debe atender el ítem.</p>
+  </li>
+</ul>
+
+<p>Concretamente, para los años, en febrero de 2023, sólo existe <em>2023</em>.
+Cuando esté cercano el fin de año y empiece a haber ítems para <em>2024</em>, se creará la opción <em>2024</em>.
+Para el año <em>2023</em>, a su vez, se han creado las siguientes opciones: <em>2023/B1</em>, <em>2023/B2</em>, <em>2023/B3</em>, <em>2023/B4</em>, <em>2023/B5</em> y <em>2023/B6</em>.
+Cuando se sabe exactamente el bimestre de 2023, se le asigna ese bimestre.
+Si se sabe que durante 2023, pero no en qué bimestre, se seleccionará la opción <em>2023</em>.</p>
+
+<p>Para poder centrar el foco en un determinado bimestre, el proyecto dispone de una vista donde se filtra por aquellos ítems cuyo valor es ese bimestre.
+Así, por ejemplo, en febrero, están disponibles la vista <em>General</em>, <em>2023/B1</em> y <em>2023/B2</em>.
+Esta última para visualizar la carga que tendrá el siguiente bimestre.</p>
+
+<h3 id="campo-complejidad">Campo complejidad</h3>
+
+<p>La <strong>complejidad</strong> (<em>complexity</em>) hace referencia a lo complejo o complicado que parece ser su desarrollo.
+Personalmente, creo que es una cualidad muy subjetiva, lo que para uno puede ser complejo, para otro puede ser sencillo, muy influido por sus capacidades intelectuales, su formación, su experiencia y su conocimiento en el dominio del problema.
+Se intenta que sea objetivo, pero las capacidades de cada uno nos llevan a evaluar la complejidad de una cosa de manera completamente subjetiva, centrándonos en lo que a nosotros mismos nos parece.</p>
+
+<p>La complejidad es por tanto una estimación subjetiva de lo complejo o complicado que será atender, desarrollar o implementar el ítem.
+Ayuda a comprender la magnitud de lo que hay que desarrollar.
+Existen varias formas de estimar esta complejidad, siendo las más frecuentes la de comparación, la de tiempo y la de tamaño.</p>
+
+<p>La <strong>estimación por comparación</strong> consiste en fijar una cosa que represente un valor de partida que consideraremos de valor uno.
+A partir de ahí, intentaremos estimar la complejidad comparando con ese punto de partida, una vez, dos veces, tres veces, cinco veces, etc.
+Otra opción es la <strong>estimación temporal</strong>, aquella que determina cuánto tiempo en horas o días tardaremos.
+Y finalmente la <strong>estimación por tamaño</strong>, que viene a decir algo así como el tamaño de lo que tendremos que cambiar para llevarlo a cabo.</p>
+
+<p>Generalmente, la gente se siente más cómoda con las estimaciones temporales y por tamaño.
+Aunque algunos <em>Scrum Masters</em> consideran que la mejor es la de comparación.
+Pero si el equipo no se siente cómodo con ese tipo, sus estimaciones tenderán a ser siempre malas.
+Más vale hacer una estimación con un método con el que todo el mundo se siente cómodo que con el que el <em>Scrum Master</em> considera mejor, siendo que este rol no realiza ninguna estimación.</p>
+
+<p>Antes de continuar, la estimación no es un contrato.
+No es para meter <em>pressing</em> a la persona que atienda el ítem.
+Es tan solo un valor que debe ayudar a poder seleccionar, posteriormente, aquellos ítems que <em>quepan</em> en la iteración teniendo en cuenta el peso de cada una de ellas por su complejidad.
+Obviamente, debemos esforzarnos en hacer buenas estimaciones y no dejarnos llevar por el resto para evitar confrontaciones.</p>
+
+<p>Si decide utilizar como complejidad el tiempo, puede indicar un campo numérico abierto o bien fijar varios valores como, por ejemplo, la secuencia de <strong>Fibonacci</strong>: <strong><em>1</em></strong>, <strong><em>2</em></strong>, <strong><em>3</em></strong>, <strong><em>5</em></strong>, <strong><em>8</em></strong>, <strong><em>13</em></strong> y <strong><em>21</em></strong> horas.
+Otra opción es fijar tamaños de camisetas como, por ejemplo, <strong><em>XS</em></strong>, <strong><em>S</em></strong>, <strong><em>M</em></strong>, <strong><em>L</em></strong> y <strong><em>XL</em></strong>, teniendo que conocer cuánto representa cada valor.</p>
+
+<p>Por lo general, la complejidad, si estamos usando <strong>Scrum</strong>, la suele fijar el equipo de desarrollo en la reunión de <strong>refinamiento</strong>.
+Puede ser a mano alzada o mediante <strong><em>planning poker</em></strong>.
+En esta última forma, cada persona del equipo dispone de una baraja de cartas especial cada una de ellas con un valor de la secuencia de <strong>Fibonacci</strong>, desde <strong><em>0</em></strong> a <strong><em>89</em></strong>.
+Aunque se puede reducir la baraja a los primeros números de la secuencia como, por ejemplo, hasta <strong>21</strong> ó <strong>34</strong>.
+También es posible encontrar barajas con <strong><em>0</em></strong>, <strong><em>1</em></strong>, <strong><em>2</em></strong>, <strong><em>3</em></strong>, <strong><em>4</em></strong>, <strong><em>8</em></strong>, <strong><em>20</em></strong>, <strong>40</strong> y <strong><em>100</em></strong>.
+A partir de ahí, se expone la tarea, se hacen las preguntas necesarias para concebir lo que hay que hacer y, a la de tres, todos ponen encima de la mesa su estimación.
+La idea es que el valor de complejidad se ponga por consenso.
+Para ello, los que ponen valores más bajos y más altos explican por qué han decidido ese valor.
+Esto abre un pequeño debate que puede llevar a que tanto esas personas como el resto del equipo ajusten sus estimaciones.
+Es un proceso participativo en la que podemos cambiar de opinión si con las argumentaciones dadas consideramos que debemos indicar otro valor más acorde.</p>
+
+<p>Si el proyecto es personal o es un proyecto de código abierto donde la realización de los refinamientos es difícil de llevar a cabo por la dificultad de conseguir reunir a los participantes, la complejidad la puede definir el líder del equipo, pero no atendiendo a su conocimiento sino teniendo en cuenta el conocimiento que tiene el promedio de las personas que participan en el desarrollo.</p>
+
+<p>Lo importante es no olvidar que son estimaciones.</p>
+
+<h2 id="filtrado-de-ítems-de-un-proyecto-por-valor-de-campo">Filtrado de ítems de un proyecto por valor de campo</h2>
+
+<p>Es posible que necesitemos filtrar aquellos ítems del proyecto que tengan un determinado valor para un campo.
+Es muy sencillo.
+Basta con ir al proyecto, hacer clic en el valor en cuestión en cualquier ítem que lo tenga.
+Automáticamente, añadirá el predicado <strong><em>nombreCampo:valor</em></strong> al filtro.
+También puede añadir este predicado directamente al filtro.</p>
+
+<p>Si añade varios predicados al filtro, recuerde que sólo se mostrarán aquellos que cumplan todos ellos.</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Plantillas de flujos de trabajo | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Plantillas de flujos de trabajo" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Cómo utilizar las plantillas de flujos de trabajo para crear más fácilmente nuestros propios flujos de trabajo de GitHub Actions." />
+<meta property="og:description" content="Cómo utilizar las plantillas de flujos de trabajo para crear más fácilmente nuestros propios flujos de trabajo de GitHub Actions." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Plantillas de flujos de trabajo" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Cómo utilizar las plantillas de flujos de trabajo para crear más fácilmente nuestros propios flujos de trabajo de GitHub Actions.","headline":"Plantillas de flujos de trabajo","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/devsecops-con-github-actions-ed-nodejs/plantillas-de-flujos-de-trabajo"},"url":"/libros/devsecops-con-github-actions-ed-nodejs/plantillas-de-flujos-de-trabajo"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/devsecops-con-github-actions-ed-nodejs'>Dev(Sec)Ops con GitHub Actions (Ed. Node.js)</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Plantillas de flujos de trabajo</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>6 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>En muchas ocasiones, los flujos de trabajo son muy similares en los repositorios de un mismo proyecto.
+Para reducir esfuerzos, ser más consistentes y organizados, <strong>GitHub Actions</strong> permite definir plantillas de flujos de trabajo que podemos copiar en nuestros repositorios muy fácilmente.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es una plantilla de flujo de trabajo.</p>
+  </li>
+  <li>
+    <p>Cómo se crean las plantillas de flujo de trabajo.</p>
+  </li>
+  <li>
+    <p>Cómo hacer una copia de una plantilla de flujo de trabajo en un repositorio destino.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>Una <strong>plantilla de flujo de trabajo</strong> (<em>workflow template</em> o <em>starter workflow</em>) es un archivo que se puede utilizar como punto de partida para crear rápida y fácilmente un flujo de trabajo.
+Por ejemplo, si tiene un proyecto con varios repositorios donde sus flujos de trabajo son similares o parecidos, puede crear una plantilla para generarlos fácil y rápidamente desde un repositorio centralizado.
+Es mejor hacerlo así que tener que buscar otro repositorio que tiene el flujo de trabajo similar a utilizar y, entonces, copiar y pegar.
+El proyecto <strong>Akromio</strong> dispone de varias plantillas que se utilizan a la hora de crear nuevos repositorios para el proyecto, <a href="https://github.com/akromio/.github/tree/master/.github/workflow-templates">https://github.com/akromio/.github/tree/master/.github/workflow-templates</a>.</p>
+
+<h2 id="ubicación-de-las-plantillas-de-flujo-de-trabajo">Ubicación de las plantillas de flujo de trabajo</h2>
+
+<p>Las plantillas de flujo de trabajo deben crearse en el repositorio público <strong>.github</strong> de la organización en el directorio <strong>.github/workflow-templates</strong>.</p>
+
+<h2 id="archivos-de-plantilla-de-flujo-de-trabajo">Archivos de plantilla de flujo de trabajo</h2>
+
+<p>Las plantillas requieren dos archivos: el de la propia plantilla y su archivo de propiedades.</p>
+
+<h3 id="archivo-plantilla">Archivo plantilla</h3>
+
+<p>Por un lado, la plantilla requiere el archivo de flujo de trabajo que copiaremos cuando lo necesitemos, como cualquier otro archivo de flujo de trabajo.
+En este archivo, podemos utilizar la variable <strong>$default-branch</strong> para hacer referencia a la rama predeterminada del repositorio donde se creará, finalmente, el flujo.
+En tiempo de copia y pega, <strong>GitHub Actions</strong> cambiará su valor al de la rama predeterminada del repositorio donde añadiremos la copia de la plantilla como flujo de trabajo <em>de facto</em>.
+He aquí un ejemplo ilustrativo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">CI</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">$default-branch</span>
+      
+  <span class="na">pull_request</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">$default-branch</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">runTests</span><span class="pi">:</span>
+    <span class="na">uses</span><span class="pi">:</span> <span class="s">akromio/.github/.github/workflows/nodejs-ci.yaml@master</span>
+</code></pre></div></div>
+
+<h3 id="archivo-de-propiedades">Archivo de propiedades</h3>
+
+<p>Por otra parte, tenemos el archivo de metadatos o propiedades de la plantilla.
+Tiene el mismo nombre que el archivo <strong>YAML</strong>, pero con la extensión <strong>.properties.json</strong>.
+Ejemplo:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CI Workflow (Node.js)"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Continuous integration workflow."</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"categories"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"node"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"filePatterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"package.json$"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Las propiedades del archivo son las siguientes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>name</em></strong></td>
+      <td>Nombre con el que nos referiremos a la plantilla.</td>
+    </tr>
+    <tr>
+      <td><strong><em>description</em></strong></td>
+      <td>Breve descripción de la plantilla.</td>
+    </tr>
+    <tr>
+      <td><strong><em>iconName</em></strong></td>
+      <td>Ruta a un archivo <strong>SVG</strong>, sin la extensión, que se asociará a la plantilla. Debe encontrarse en el mismo directorio de plantillas <strong>workflow-templates</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>categories</em></strong></td>
+      <td>Lenguajes de los proyectos en los que se podrá utilizar como, por ejemplo, <strong><em>Go</em></strong>, <strong><em>node</em></strong>, <strong><em>Python</em></strong> o <strong><em>TypeScript</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>filePatterns</em></strong></td>
+      <td>Patrones de archivos que deben aparecer en el repositorio destino para poder copiarse en él.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="uso-de-plantillas">Uso de plantillas</h2>
+
+<p>Una vez está disponible la plantilla en el repositorio público <strong>.github</strong>, más concretamente, en su directorio <strong>.github/workflow-templates</strong>, podemos pasar a hacer una copia en cualquiera de nuestros repositorios.
+Para ello, tenemos que utilizar la interfaz web de <strong>GitHub</strong>.
+Debe quedar claro que vamos a escribir en un repositorio y, por lo tanto, tendremos que hacerlo mediante una confirmación (<em>commit</em>), por lo que al final del proceso nos solicitará el mensaje de confirmación a indicar.</p>
+
+<p>Los pasos a seguir son los siguientes:</p>
+
+<ol>
+  <li>
+    <p>Ir al repositorio destino donde copiar la plantilla.</p>
+  </li>
+  <li>
+    <p>Ir a la pestaña <strong><em>Actions</em></strong>.</p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>New workflow</em></strong>:</p>
+
+    <p><img src="img/new-workflow.png" alt="Nuevo flujo de trabajo" /></p>
+  </li>
+  <li>
+    <p>Seleccionar la plantilla a copiar en el repositorio mediante <strong><em>Choose a workflow</em></strong>, observe que puede utilizar plantillas de otras organizaciones también.</p>
+
+    <p>Para que sus plantillas aparezcan, su cuenta debe ser de organización y no personal.
+En caso de estar ante una cuenta personal, podrá utilizar las plantillas de otras organizaciones siempre que recuerde que si está intentando copiar la plantilla a uno de sus repositorios privados, necesitará un plan de pago.
+Si es a un repositorio público, no debería tener problemas.</p>
+  </li>
+  <li>
+    <p>Hacer cualquier cambio extra necesario en la copia de la plantilla.</p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>Start commit</em></strong> para hacer la confirmación.</p>
+  </li>
+</ol>
+
+<p>Recuerde que la variable <strong>$default-branch</strong>, que aparece en las plantillas, se sustituirá por la rama predeterminada del repositorio destino.</p>
+
+<p>No hay que olvidar que las plantillas propias sólo se pueden copiar a un repositorio destino si la plantilla se encuentra en una cuenta de organización.
+En caso de no ser así, puede utilizar el siguiente <em>script</em> para hacerlo desde la línea de comandos:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="c"># GitHub owner name.</span>
+<span class="nb">readonly </span><span class="nv">owner</span><span class="o">=</span><span class="nv">$1</span>
+
+<span class="c"># Owner branch to query.</span>
+<span class="nb">readonly </span><span class="nv">branch</span><span class="o">=</span>master
+
+<span class="c"># Workflow template file.</span>
+<span class="nb">readonly </span><span class="nv">templateFile</span><span class="o">=</span><span class="nv">$2</span>
+
+<span class="c"># Default branch in the current repo.</span>
+<span class="nb">readonly </span><span class="nv">defaultBranch</span><span class="o">=</span><span class="si">$(</span><span class="o">[[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="nv">$3</span><span class="s2">"</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">"master"</span> <span class="o">||</span> <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$3</span><span class="s2">"</span><span class="si">)</span>
+
+<span class="c"># Show the help of this script.</span>
+<span class="k">function </span>showHelp<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$0</span><span class="s2"> ownerName templateFile [targetDefaultBranch]"</span>
+  <span class="nb">echo
+  echo</span> <span class="s2">"Example: </span><span class="nv">$0</span><span class="s2"> theOwner go-ci.yaml master"</span>
+  <span class="nb">echo</span> <span class="s2">"Notes:"</span>
+  <span class="nb">echo</span> <span class="s2">"  - The script must be run in the repo's root dir."</span>
+  <span class="nb">echo</span> <span class="s2">"  - If target file already exists, the copy is cancelled."</span>
+  <span class="nb">echo</span> <span class="s2">"  - If targetDefaultBranch unset, master used."</span>
+<span class="o">}</span>
+
+<span class="c"># (1) pre: show help?</span>
+<span class="k">if</span> <span class="o">[[</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"-h"</span> <span class="o">||</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"--help"</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+  </span>showHelp
+  <span class="nb">exit
+</span><span class="k">fi
+
+if</span> <span class="o">[[</span> <span class="nv">$# </span><span class="o">!=</span> 2 <span class="o">&amp;&amp;</span> <span class="nv">$# </span><span class="o">!=</span> 3 <span class="o">]]</span><span class="p">;</span> <span class="k">then
+  </span>showHelp
+  <span class="nb">exit </span>1
+<span class="k">fi</span>
+
+<span class="c"># (2) pre: target file must not exist</span>
+<span class="nb">readonly </span><span class="nv">targetDir</span><span class="o">=</span>.github/workflows
+<span class="nb">readonly </span><span class="nv">targetFile</span><span class="o">=</span><span class="nv">$targetDir</span>/<span class="nv">$templateFile</span>
+
+<span class="k">if</span> <span class="o">[[</span> <span class="nt">-f</span> <span class="nv">$targetFile</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+  </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$targetFile</span><span class="s2"> already exists. Operation cancelled."</span>
+  <span class="nb">exit </span>1
+<span class="k">fi</span>
+
+<span class="c"># (3) get template content</span>
+<span class="nb">readonly </span><span class="nv">url</span><span class="o">=</span>https://raw.githubusercontent.com/<span class="nv">$owner</span>/.github/<span class="nv">$branch</span>/.github/workflow-templates/<span class="nv">$templateFile</span>
+<span class="nb">readonly </span><span class="nv">templateContent</span><span class="o">=</span><span class="si">$(</span>curl <span class="nt">-s</span> <span class="nv">$url</span><span class="si">)</span>
+
+<span class="k">if</span> <span class="o">[[</span> <span class="s2">"</span><span class="nv">$templateContent</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"404: Not Found"</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+  </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$url</span><span class="s2"> not found."</span>
+  <span class="nb">exit </span>1
+<span class="k">fi</span>
+
+<span class="c"># (4) copy/clone</span>
+<span class="k">if</span> <span class="o">[[</span> <span class="o">!</span> <span class="nt">-d</span> <span class="nv">$targetDir</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+  </span><span class="nb">echo</span> <span class="s2">"Creating directory </span><span class="nv">$targetDir</span><span class="s2">..."</span>
+  <span class="nb">mkdir</span> <span class="nt">-p</span> <span class="nv">$targetDir</span>
+<span class="k">fi
+
+</span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$templateContent</span><span class="s2">"</span> <span class="o">&gt;</span> <span class="nv">$targetFile</span>
+<span class="nb">sed</span> <span class="nt">-i</span> s/<span class="se">\$</span>default-branch/<span class="nv">$defaultBranch</span>/g <span class="nv">$targetFile</span>
+<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$targetFile</span><span class="s2"> created."</span>
+</code></pre></div></div>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

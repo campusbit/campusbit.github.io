@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Acciones personalizadas JavaScript | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Acciones personalizadas JavaScript" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Cómo desarrollar acciones personalizadas de GitHub Actions con JavaScript." />
+<meta property="og:description" content="Cómo desarrollar acciones personalizadas de GitHub Actions con JavaScript." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Acciones personalizadas JavaScript" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Cómo desarrollar acciones personalizadas de GitHub Actions con JavaScript.","headline":"Acciones personalizadas JavaScript","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/devsecops-con-github-actions-ed-nodejs/acciones-personalizadas-javascript"},"url":"/libros/devsecops-con-github-actions-ed-nodejs/acciones-personalizadas-javascript"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/devsecops-con-github-actions-ed-nodejs'>Dev(Sec)Ops con GitHub Actions (Ed. Node.js)</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Acciones personalizadas JavaScript</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>9 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>En la lección anterior, aprendimos a extender la funcionalidad de <strong>GitHub Actions</strong> con las acciones compuestas.
+En esta, vamos a hacerlo con las acciones escritas en <strong>JavaScript</strong>.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es una acción <strong>JavaScript</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo desarrollar una acción <strong>JavaScript</strong>.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>Una <strong>acción JavaScript</strong> (<em>JavaScript action</em>) es aquella que se desarrolla en <strong>JavaScript</strong>.
+Más concretamente, con <strong>Node.js</strong> y, generalmente, <strong>TypeScript</strong>.
+En las siguientes URLs, puede encontrar algunos ejemplos de acciones muy sencillas desarrolladas con <strong>TypeScript</strong> que puede utilizar como punto de partida:
+<a href="https://github.com/siacodelabs/upload-to-skynet">https://github.com/siacodelabs/upload-to-skynet</a> y
+<a href="https://github.com/siacodelabs/download-from-skynet">https://github.com/siacodelabs/download-from-skynet</a>.
+En estos repositorios, encontrará todo lo necesario para implementar una acción, incluidas pruebas de unidad y de integración, así como flujos de trabajo.</p>
+
+<h2 id="archivo-actionyaml">Archivo <em>action.yaml</em></h2>
+
+<p>Recordemos que toda acción personalizada dispone de un archivo de metadatos <strong>action.yaml</strong>.
+Las propiedades son las mismas que las que vimos con las acciones compuestas, salvo la propiedad <strong><em>runs</em></strong> que vamos a presentar a continuación.</p>
+
+<h3 id="propiedad-runs-de-una-acción-javascript">Propiedad <em>runs</em> de una acción <em>JavaScript</em></h3>
+
+<p>Toda acción realiza una operación, esta se indica en la propiedad <strong><em>runs</em></strong> del archivo <strong>action.yaml</strong>.
+Esta propiedad contiene un objeto que describe qué archivo debe ejecutarse.
+Más concretamente, debe contener las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>using</em></strong></td>
+      <td>Versión de <strong>Node.js</strong> a usar: <strong><em>node12</em></strong> o <strong><em>node16</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>main</em></strong></td>
+      <td>Archivo principal como, por ejemplo, <em>index.js</em> o <em>dist/cjs/index.js</em>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">runs</span><span class="pi">:</span>
+  <span class="na">using</span><span class="pi">:</span> <span class="s">node16</span>
+  <span class="na">main</span><span class="pi">:</span> <span class="s">dist/cjs/index.js</span>
+</code></pre></div></div>
+
+<h2 id="implementación-de-la-acción">Implementación de la acción</h2>
+
+<p>A continuación, vamos a presentar los elementos claves de la implementación de una acción <strong>JavaScript</strong>.</p>
+
+<h3 id="dependencias-de-una-acción-javascript">Dependencias de una acción <em>JavaScript</em></h3>
+
+<p>Las acciones <strong>JavaScript</strong> suelen tener las siguientes dependencias:</p>
+
+<ul>
+  <li>
+    <p><strong>@actions/core</strong>, que permite obtener las entradas, fijar las salidas, etc.</p>
+  </li>
+  <li>
+    <p><strong>@actions/github</strong>, a través del cual acceder a los contextos de <strong>GitHub Actions</strong>.</p>
+  </li>
+  <li>
+    <p>También es posible encontrar otras implementadas por el equipo de <strong>Github Actions</strong> como, por ejemplo, <strong>@actions/io</strong> y <strong>@actions/http-client</strong>.</p>
+  </li>
+</ul>
+
+<p>Se deben importar como sigue:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ESM</span>
+<span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">core</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@actions/core</span><span class="dl">"</span>
+<span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">github</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@actions/github</span><span class="dl">"</span>
+
+<span class="c1">// CJS</span>
+<span class="kd">const</span> <span class="nx">core</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@actions/core</span><span class="dl">"</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">github</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@actions/github</span><span class="dl">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="archivo-principal-de-la-acción">Archivo principal de la acción</h3>
+
+<p>El <strong>archivo principal</strong> (<em>main file</em>) de la acción, indicado en la propiedad <strong><em>main</em></strong> del archivo <strong>action.yaml</strong>, debe contener el <em>script</em> que tiene que ejecutar <strong>GitHub Actions</strong> cada vez que se invoque la acción.
+He aquí un ejemplo ilustrativo extraído de la acción <strong>siacodelabs/download-from-skynet</strong>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span><span class="nx">run</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./run</span><span class="dl">"</span>
+
+<span class="nf">run</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>En el módulo <em>./run</em>, encontramos la función que contiene la lógica de la acción:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">core</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@actions/core</span><span class="dl">"</span>
+<span class="k">import</span> <span class="p">{</span><span class="nx">SkynetClient</span><span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@skynetlabs/skynet-nodejs</span><span class="dl">"</span>
+
+<span class="cm">/**
+ * Runs the action.
+ */</span>
+<span class="k">export</span> <span class="k">async</span> <span class="kd">function</span> <span class="nf">run</span><span class="p">():</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="c1">// (1) get parameters</span>
+    <span class="kd">const</span> <span class="nx">portal</span> <span class="o">=</span> <span class="nx">core</span><span class="p">.</span><span class="nf">getInput</span><span class="p">(</span><span class="dl">"</span><span class="s2">portal</span><span class="dl">"</span><span class="p">)</span>
+    <span class="kd">const</span> <span class="nx">skylink</span> <span class="o">=</span> <span class="nx">core</span><span class="p">.</span><span class="nf">getInput</span><span class="p">(</span><span class="dl">"</span><span class="s2">skylink</span><span class="dl">"</span><span class="p">)</span>
+    <span class="kd">const</span> <span class="nx">localPath</span> <span class="o">=</span> <span class="nx">core</span><span class="p">.</span><span class="nf">getInput</span><span class="p">(</span><span class="dl">"</span><span class="s2">path</span><span class="dl">"</span><span class="p">)</span>
+
+    <span class="c1">// (2) download</span>
+    <span class="kd">const</span> <span class="nx">skynet</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SkynetClient</span><span class="p">(</span><span class="nx">portal</span><span class="p">)</span>
+    <span class="k">await</span> <span class="nx">skynet</span><span class="p">.</span><span class="nf">downloadFile</span><span class="p">(</span><span class="nx">localPath</span><span class="p">,</span> <span class="nx">skylink</span><span class="p">)</span>
+  <span class="p">}</span> <span class="nf">catch </span><span class="p">(</span><span class="na">err</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">core</span><span class="p">.</span><span class="nf">setFailed</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Para facilitar las pruebas, se define la función <em>run()</em>, o la que prefiera, en un archivo distinto al principal.
+Aunque, como puede observar en muchas acciones disponibles como, por ejemplo, <strong>actions/setup-python</strong>, puede definirlo todo en el propio archivo principal.
+Personalmente, prefiero mantener las cosas separadas para facilitar, así, las pruebas de unidad.</p>
+
+<h3 id="valores-de-las-entradas-de-la-acción">Valores de las entradas de la acción</h3>
+
+<p>Para acceder al valor de una entrada, usaremos las siguientes funciones del paquete <strong>@actions/core</strong>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Devuelve el valor de una entrada en texto.
+ * 
+ * @param name - Nombre de la entrada a devolver.
+ * @returns Valor de la entrada.
+ */</span>
+<span class="kd">function</span> <span class="nf">getInput</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="kr">string</span>
+
+<span class="cm">/**
+ * Devuelve el valor de una entrada multilínea.
+ * 
+ * @param name - Nombre de la entrada a devolver.
+ * @returns Array con las distintas líneas de la entrada.
+ */</span>
+<span class="kd">function</span> <span class="nf">getMultilineInput</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="kr">string</span><span class="p">[]</span>
+
+<span class="cm">/**
+ * Devuelve el valor de una entrada booleana.
+ * 
+ * Los siguientes valores se consideran válidos:
+ * true, True, TRUE, false, False y FALSE.
+ * 
+ * @param name - Nombre de la entrada a devolver.
+ * @returns Valor como un booleano.
+ * @throws {@link TypeError} Si el valor de la entrada no es válido.
+ */</span>
+<span class="kd">function</span> <span class="nf">getBooleanInput</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="nx">bool</span>
+</code></pre></div></div>
+
+<p>Ejemplo:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">portal</span> <span class="o">=</span> <span class="nx">core</span><span class="p">.</span><span class="nf">getInput</span><span class="p">(</span><span class="dl">"</span><span class="s2">portal</span><span class="dl">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="valores-de-las-salidas-de-la-acción">Valores de las salidas de la acción</h3>
+
+<p>Para fijar el valor de una salida, usaremos la función <strong><em>setOutput()</em></strong> del paquete <strong>@actions/core</strong>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Fija el valor de una salida de la acción.
+ * 
+ * @param name - Nombre de la salida a fijar.
+ * @param value - Valor a fijar.
+ */</span>
+<span class="kd">function</span> <span class="nf">setOutput</span><span class="p">(</span><span class="nx">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">value</span><span class="p">:</span> <span class="kr">any</span><span class="p">):</span> <span class="k">void</span>
+</code></pre></div></div>
+
+<p>Ejemplo:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">core</span><span class="p">.</span><span class="nf">setOutput</span><span class="p">(</span><span class="dl">"</span><span class="s2">skylink</span><span class="dl">"</span><span class="p">,</span> <span class="nx">skylink</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="código-de-salida-de-la-acción">Código de salida de la acción</h3>
+
+<p>Toda acción devuelve un <strong>código de salida</strong> (<em>exit code</em>) con el que indica cómo terminó: con éxito o con fallo.
+De manera predeterminada, la acción devuelve el código de salida cero (0), o sea, todo ha ido bien.
+Si necesitamos indicar que algo ha ido mal, hay que devolver el código de salida uno, así como un mensaje de error.
+Para este segundo caso, podemos usar la función <strong><em>setFailed()</em></strong> del paquete <strong>@actions/core</strong>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Notifica al ejecutor que se ha producido algún
+ * tipo de error, el cual se describe con el
+ * mensaje dado.
+ * 
+ * @param message - Mensaje de error.
+ */</span>
+<span class="kd">function</span> <span class="nf">setFailed</span><span class="p">(</span><span class="nx">message</span><span class="p">:</span> <span class="kr">string</span> <span class="o">|</span> <span class="nb">Error</span><span class="p">):</span> <span class="k">void</span>
+</code></pre></div></div>
+
+<p>Ejemplo:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">core</span><span class="p">.</span><span class="nf">setFailed</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="impresión-de-mensajes-de-una-acción">Impresión de mensajes de una acción</h3>
+
+<p>Las acciones <strong>JavaScript</strong> pueden utilizar varias funciones del paquete <strong>@actions/core</strong> para mostrar mensajes de <em>log</em>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Muestra un mensaje de información.
+ * 
+ * @param message - Mensaje de información a mostrar.
+ */</span>
+<span class="kd">function</span> <span class="nf">info</span><span class="p">(</span><span class="nx">message</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="k">void</span>
+
+<span class="cm">/**
+ * Muestra un mensaje de depuración.
+ *
+ * @param message - Mensaje de depuración a mostrar.
+ */</span>
+<span class="kd">function</span> <span class="nf">debug</span><span class="p">(</span><span class="nx">message</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="k">void</span>
+
+<span class="cm">/**
+ * Muestra un mensaje de aviso.
+ * 
+ * @param message - Mensaje de aviso o error a mostrar.
+ */</span>
+<span class="kd">function</span> <span class="nf">warning</span><span class="p">(</span><span class="nx">message</span><span class="p">:</span> <span class="kr">string</span> <span class="o">|</span> <span class="nb">Error</span><span class="p">):</span> <span class="k">void</span>
+
+<span class="cm">/**
+ * Mensaje de error a mostrar.
+ * 
+ * @param message - Mensaje de error a mostrar.
+ */</span>
+<span class="kd">function</span> <span class="nf">error</span><span class="p">(</span><span class="nx">message</span><span class="p">:</span> <span class="kr">string</span> <span class="o">|</span> <span class="nb">Error</span><span class="p">):</span> <span class="k">void</span>
+</code></pre></div></div>
+
+<h2 id="empaquetado-de-una-acción-javascript">Empaquetado de una acción <em>JavaScript</em></h2>
+
+<p>Las acciones <strong>JavaScript</strong> deben empaquetarse, como mínimo, con los siguientes archivos:
+<strong>action.yaml</strong>, <strong>package.json</strong>, <strong>package-lock.json</strong>, <strong>README.md</strong> y el archivo principal, además del contenido de la carpeta <strong>node_modules</strong>.</p>
+
+<h2 id="pruebas-automatizadas">Pruebas automatizadas</h2>
+
+<p>Las acciones <strong>JavaScript</strong> deben automatizar sus pruebas de unidad, de integración y sistema.
+Esto es inherente a todo software que desarrollemos.
+Puede utilizar cualquier biblioteca de pruebas como, por ejemplo, <strong>@akromio/expected</strong>, <strong>@akromio/doubles</strong> y <strong>Mocha</strong>.</p>
+
+<p>Con las pruebas de integración, es importante tener en cuenta lo siguiente:</p>
+
+<ul>
+  <li>
+    <p>Las entradas se deben pasar como variables de entorno.
+Antes de invocar la acción a probar, debemos configurar las variables de entorno relacionadas con las pruebas.
+Veámoslo mediante un sencillo ejemplo:</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">test</span><span class="p">(</span><span class="dl">"</span><span class="s2">if skylink exists, this must be downloaded</span><span class="dl">"</span><span class="p">,</span> <span class="nf">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// (1) arrange</span>
+  <span class="kd">const</span> <span class="nx">uploadLocalPath</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">"</span><span class="s2">../../tests/data/hello-world.txt</span><span class="dl">"</span><span class="p">)</span>
+  <span class="kd">const</span> <span class="nx">skynet</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SkynetClient</span><span class="p">(</span><span class="nx">portal</span><span class="p">)</span>
+  <span class="kd">const</span> <span class="nx">skylink</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">skynet</span><span class="p">.</span><span class="nf">uploadFile</span><span class="p">(</span><span class="nx">uploadLocalPath</span><span class="p">)</span>
+
+  <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">INPUT_PORTAL</span> <span class="o">=</span> <span class="nx">portal</span>
+  <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">INPUT_PATH</span> <span class="o">=</span> <span class="nx">localPath</span>
+  <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">INPUT_SKYLINK</span> <span class="o">=</span> <span class="nx">skylink</span>
+
+  <span class="c1">// (2) act</span>
+  <span class="k">await</span> <span class="nf">run</span><span class="p">()</span>
+
+  <span class="c1">// (3) assessment</span>
+  <span class="nx">expected</span><span class="p">.</span><span class="nf">file</span><span class="p">(</span><span class="nx">localPath</span><span class="p">).</span><span class="nf">equalToFile</span><span class="p">(</span><span class="nx">uploadLocalPath</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre></div>    </div>
+
+    <p>Las variables de entorno relacionadas con los valores de las entradas tienen un nombre con el formato <strong><em>INPUT_nombreEntrada</em></strong>.
+El nombre de la entrada en mayúsculas.
+En el ejemplo anterior, las entradas son <em>portal</em>, <em>path</em> y <em>skylink</em>, cuyos valores se pasan mediante las variables de entorno <em>INPUT_PORTAL</em>, <em>INPUT_PATH</em> e <em>INPUT_SKYLINK</em>, respectivamente.</p>
+  </li>
+  <li>
+    <p>Recuerde que las acciones tienen un código de salida, el cual puede ser cero o uno.
+Para comprobar este código de salida, hay que utilizar la propiedad <strong><em>exitCode</em></strong> del objeto <strong>process</strong>.
+Ejemplo:</p>
+
+    <div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nf">test</span><span class="p">(</span><span class="dl">"</span><span class="s2">if skylink doesn't exist, process.exitCode must be set to 1</span><span class="dl">"</span><span class="p">,</span> <span class="nf">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// (1) arrange</span>
+  <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">INPUT_PORTAL</span> <span class="o">=</span> <span class="nx">portal</span>
+  <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">INPUT_PATH</span> <span class="o">=</span> <span class="nx">localPath</span>
+  <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">INPUT_SKYLINK</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">sia://unknown</span><span class="dl">"</span>
+
+  <span class="c1">// (2) act</span>
+  <span class="k">await</span> <span class="nf">run</span><span class="p">()</span>
+
+  <span class="c1">// (3) assessment</span>
+  <span class="nf">expected</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">exitCode</span><span class="p">).</span><span class="nf">equalTo</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="flujos-de-trabajo">Flujos de trabajo</h2>
+
+<p>En una acción <strong>JavaScript</strong>, las cosas no son muy diferentes a las de una acción compuesta.
+En primer lugar, hay que probar el código <strong>JavaScript</strong> mediante pruebas de unidad y, en segundo lugar, la propia acción en su conjunto.
+En este segundo caso, la acción la invocaremos como hemos visto con las compuestas, mediante <code class="language-plaintext highlighter-rouge">./</code>.
+Como ejemplo, eche un vistazo a los flujos de trabajo de la acción <strong>siacodelabs/download-from-skynet</strong>, <a href="https://github.com/siacodelabs/download-from-skynet">https://github.com/siacodelabs/download-from-skynet</a>.</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

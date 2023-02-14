@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Estrategias de ramificación | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Estrategias de ramificación" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Qué son las estrategias de ramificación de Git y cómo alinearlas para facilitar el uso de CI/CD." />
+<meta property="og:description" content="Qué son las estrategias de ramificación de Git y cómo alinearlas para facilitar el uso de CI/CD." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Estrategias de ramificación" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Qué son las estrategias de ramificación de Git y cómo alinearlas para facilitar el uso de CI/CD.","headline":"Estrategias de ramificación","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/devsecops-con-github-actions-ed-nodejs/estrategias-de-ramificaci%C3%B3n"},"url":"/libros/devsecops-con-github-actions-ed-nodejs/estrategias-de-ramificaci%C3%B3n"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/devsecops-con-github-actions-ed-nodejs'>Dev(Sec)Ops con GitHub Actions (Ed. Node.js)</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Estrategias de ramificación</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>16 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Las estrategias de ramificación son importantísimas cuando desarrollamos software, sobre todo si es en equipo.
+Lo más importante es que todos trabajen igual para publicar los cambios en el repositorio <strong>Git</strong>, lo que requiere que todos comprendan la forma de trabajo de la organización en cuanto a ramificación <strong>Git</strong> se refiere.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es una estrategia de ramificación.</p>
+  </li>
+  <li>
+    <p>Qué tipos de ramas se suelen utilizar.</p>
+  </li>
+  <li>
+    <p>Cómo utilizar la estrategia troncal que actualmente se está erigiendo como la más utilizada por la comunidad <strong>Dev(Sec)Ops</strong>.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>Una <strong>rama</strong> (<em>branch</em>) es una secuencia de cambios aislada que deriva o emerge de un punto concreto de otra rama considerada su origen.
+Gracias a las ramas, podemos aislar una secuencia de cambios relacionados con algo particular sin que interfiera con otros cambios relacionados con otros aspectos o funcionalidades.
+Una vez realizados los cambios, lo que hacemos es someterlos a la revisión y aprobación del equipo con objeto de autorizar su integración en la otra rama, sea cual sea esta.</p>
+
+<p>Groso modo, podemos definir varios tipos de ramas, desde un punto de vista funcional:</p>
+
+<ul>
+  <li>
+    <p><strong>Rama consolidada</strong> (<em>consolidated branch</em>), aquella que contiene cambios definitivos y estables como, por ejemplo, la rama principal.</p>
+  </li>
+  <li>
+    <p><strong>Ramas en progreso</strong> (<em>in-progress branch</em>), aquella que contiene trabajo en progreso, no definitivo como, por ejemplo, las ramas de nuevas funcionalidades o de corrección de error.</p>
+  </li>
+</ul>
+
+<p>Para mantener más controladas las ramas, los procesos de cambios y la forma de trabajo, se suele utilizar estrategias de ramificación.</p>
+
+<p>Una <strong>estrategia de ramificación</strong> (<em>branching strategy</em>) consiste en un conjunto de reglas que debe seguir el equipo de desarrollo para realizar los cambios en el repositorio <strong>Git</strong>, de la manera más óptima y eficiente posible.
+Fija las reglas del juego para que el equipo trabaje de la misma forma a la hora de subir cambios al repositorio <strong>Git</strong>, en nuestro caso, de <strong>GitHub</strong>.
+Por ejemplo, puede fijar convenios de nombres a usar en las ramas, de dónde deben emerger las nuevas ramas, qué tipos de ramas puede haber e incluso que sólo se pueda actualizar la rama troncal (<em>master</em> o <em>main</em>) mediante una solicitud de integración (<em>pull request</em>).</p>
+
+<p>Cada organización puede definir su propia estrategia, de entre todas las existentes, o incluso definir la suya propia.
+Se recomienda usar una estrategia estandarizada, consistente y simple, para que el cambio de una persona de un equipo a otro sea más sencillo.
+La estrategia elegida debe estar alineada con <strong>CI/CD</strong> para no dificultar su uso.
+Es importante que tenga claro varias cosas:</p>
+
+<ul>
+  <li>
+    <p>La estrategia puede acelerar o ralentizar el desarrollo y la puesta en producción.
+Puede afectar al tiempo de espera (<em>lead time</em>) y a la frecuencia de entrega (<em>delivery frequency</em>).</p>
+  </li>
+  <li>
+    <p>La estrategia a elegir dependerá del producto y la política de publicación o puesta en producción.
+Por esta razón, es posible que una misma organización tenga la necesidad de utilizar estrategias distintas en proyectos diferentes.
+No es lo común, pero puede suceder.</p>
+  </li>
+</ul>
+
+<p>Entre otras estrategias, encontramos <strong>Gitflow</strong>, <strong>GitHub Flow</strong> y <strong>GitLab Flow</strong>.</p>
+
+<h2 id="tipos-de-ramas">Tipos de ramas</h2>
+
+<p>Por lo general, independientemente de la estrategia elegida, atendiendo al objeto o propósito de cada rama, se suelen clasificar en ramas principales, de implementación o de lanzamiento.
+La idea de las estrategias de ramificación es determinar qué tipos de ramas se deben utilizar, cuándo se debe utilizar cada tipo, qué tipo de rama se debe tomar como origen de otra y cómo fusionar las ramas para asentar los cambios.</p>
+
+<h3 id="ramas-principales">Ramas principales</h3>
+
+<p>Una <strong>rama principal</strong> (<em>main branch</em>) es aquella que se considera esencial o fundamental en el repositorio <strong>Git</strong>.
+Se considera como más importante.
+Este tipo de ramas contiene cambios realizados y aceptados por el equipo.
+Sus principales características son:</p>
+
+<ul>
+  <li>
+    <p>Debe ser construible limpiamente sin necesidad de esperar a que se le traslade ningún cambio extra para poder hacerlo.
+O sea, debe estar lista para usarse en un entorno como  producción o pruebas según el tipo de rama principal.</p>
+  </li>
+  <li>
+    <p>Debe pasar las pruebas.
+Tras toda integración de un cambio en la rama principal, las pruebas deben pasar.
+No es negociable.</p>
+  </li>
+  <li>
+    <p>Por lo general, suelen requerir que una integración de cambio se realice mediante una <em>PR</em> (<em>pull request</em>).</p>
+  </li>
+</ul>
+
+<p>Se distingue entre la rama troncal y la de desarrollo, aunque la de desarrollo no se usa en todas las estrategias de ramificación.
+A pesar de todo, es importante conocerla.</p>
+
+<p>La <strong>rama troncal</strong> (<em>trunk branch</em> o <em>master branch</em>) contiene los cambios aceptados para su despliegue en producción.
+Así, se consigue un buen punto de partida para otras ramas.
+Además de permitir que se pueda publicar una nueva versión del producto de inmediato, si así lo requiere o necesita la organización, sin recibir objeciones del equipo de desarrollo.</p>
+
+<p>Por otra parte, tenemos la <strong>rama de desarrollo</strong> (<em>development branch</em>), aquella que contiene cambios realizados durante una iteración de desarrollo.
+Este tipo de rama suele albergar varios cambios relacionados para alcanzar una nueva versión del producto.</p>
+
+<p>Debido a la importancia de las ramas principales, necesitamos regular o controlar cómo se integran los cambios realizados por el equipo en ellas.
+No se puede hacer alegremente, hay que hacerlo bajo un proceso estandarizado que todos debemos conocer.</p>
+
+<h3 id="ramas-de-implementación-o-soporte">Ramas de implementación o soporte</h3>
+
+<p>Por otra parte, tenemos las <strong>ramas de implementación</strong> (<em>implementation branches</em>), o <strong>ramas de soporte</strong> (<em>support branches</em>), que tienen como objeto el desarrollo de un cambio particular, la implementación de algo como, por ejemplo, una nueva funcionalidad o un parche.
+La idea es que un cambio no se realice sobre una rama principal, sino sobre una rama dedicada que posteriormente integraremos en la rama principal.
+Esto permite que varias personas del equipo puedan trabajar conjuntamente en tareas distintas sin molestar a nadie con sus cambios intermedios.
+Se clasifican, a su vez, en ramas de función y de corrección.</p>
+
+<p>Una <strong>rama de función</strong> (<em>feature branch</em>) contiene los cambios realizados para implementar <em>una</em> determinada funcionalidad.
+Cuando necesitamos añadir nueva funcionalidad o hacer un cambio que no sea resolver un fallo, lo haremos mediante una rama de este tipo.
+En cambio, una <strong>rama de corrección</strong> (<em>hotfix branch</em>) contiene el código necesario para atender o resolver un determinado <em>bug</em>.</p>
+
+<p>Es muy recomendable que la estrategia de ramificación utilice un <strong>convenio de nombramiento</strong> (<em>naming convention</em>), es decir, unos formatos de nombre para las ramas que ayuden a describir lo que intentan implementar, hacer o resolver.
+La idea es que viendo el nombre de la rama tengamos la capacidad de saber qué se ha hecho o se está haciendo en ella.
+Generalmente consiste en añadir un prefijo que describa el tipo de rama, seguido de un título descriptivo del cambio como, por ejemplo:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tipo de rama</th>
+      <th>Formato</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Rama de función</td>
+      <td><strong><em>feature/breve-descripción</em></strong>.</td>
+    </tr>
+    <tr>
+      <td>Rama de <em>hotfix</em></td>
+      <td><strong><em>hotfix/breve-descripción</em></strong> o <strong><em>bugfix/breve-descripción</em></strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Cuando se utiliza esta manera de dividir el título en secciones separadas por barras (<code class="language-plaintext highlighter-rouge">/</code>), se dice que se ha tomado la decisión de agrupar los cambios en directorios.
+Digamos que esto permite agrupar fácilmente en <em>directorios virtuales</em> los cambios realizados.
+Todas las ramas funcionales se encontrarán bajo el directorio virtual <em>feature</em> y las de <em>hotfix</em> bajo su homónimo.</p>
+
+<p>También se suele utilizar convenios de nombres para las confirmaciones, para así indicar qué se ha implementado en ese <em>commit</em>.
+En este caso, se suele utilizar formatos como los siguientes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tipo de cambio</th>
+      <th>Prefijo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Nueva funcionalidad</td>
+      <td><strong><em>feat: breve descripción</em></strong>.</td>
+    </tr>
+    <tr>
+      <td>Añadidura de nuevas pruebas</td>
+      <td><strong><em>test: breve descripción</em></strong>.</td>
+    </tr>
+    <tr>
+      <td>Añadidura de documentación</td>
+      <td><strong><em>docs: breve descripción</em></strong>.</td>
+    </tr>
+    <tr>
+      <td>Cambio rutinario que no afecta al código de producción</td>
+      <td><strong><em>chore: breve descripción</em></strong>.</td>
+    </tr>
+    <tr>
+      <td>Refactorización</td>
+      <td><strong><em>refactor: breve descripción</em></strong>.</td>
+    </tr>
+    <tr>
+      <td>Código para resolver un parche</td>
+      <td><strong><em>fix: breve descripción</em></strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Los cambios rutinarios hacen referencia a cambios que no afectan al código que acaba en producción como, por ejemplo, los cambios de configuración.</p>
+
+<p>Si necesitamos o deseamos indicar el ámbito del cambio, es decir, el componente o paquete afectado por el cambio si estamos usando un monorepo, lo podemos indicar entre el tipo de cambio y los dos puntos (<code class="language-plaintext highlighter-rouge">:</code>) como, por ejemplo, <em>feat(api): descripción</em>.</p>
+
+<p>Debe quedar claro que cuando creamos una rama, en ella, podemos trabajar haciendo diversos cambios.
+Tras cada uno de ellos, podemos hacer un <em>commit</em>, asentando así el cambio y guardándolo.
+Para llevar a cabo el cambio de la rama, generalmente, dividiremos el cambio en pequeñas unidades manejables y los iremos implementando y confirmando.
+La idea es que cada confirmación (<em>commit</em>) refleje el cambio en el que hemos trabajado dentro del cambio más grande que representa la rama.</p>
+
+<p>Algunas organizaciones suelen añadir un prefijo extra que indica la persona que ha creado la rama y que se encargará de ella.
+En el caso de <strong>GitHub</strong>, podemos usar el nombre de usuario.
+Así, por ejemplo, para una rama de función podríamos tener un formato como <strong><em>usuario/feature/breve-descripción</em></strong> o <strong><em>users/usuario/feature/breve-descripción</em></strong>.
+Lo que más le guste.</p>
+
+<h3 id="ramas-de-lanzamiento">Ramas de lanzamiento</h3>
+
+<p>Finalmente, tenemos las <strong>ramas de lanzamiento</strong> (<em>release branches</em>) que representan el lanzamiento de una nueva versión del producto.
+Contienen los cambios necesarios para llevar a cabo el lanzamiento como, por ejemplo, la fijación de la versión, etc.
+Cada nueva versión dispone de su propia rama de lanzamiento.
+Y suelen tener un formato de nombre como <strong><em>release/versión</em></strong>.</p>
+
+<h2 id="estrategias-de-ramificación">Estrategias de ramificación</h2>
+
+<p>Ya sabemos que una estrategia de ramificación no es más que una manera de organizar las ramas del repositorio <strong>Git</strong>, además de fijar las reglas de integración de cambios en las ramas principales.
+Ya hemos visto distintos tipos de ramas que se suelen utilizar hoy en día.
+Pero los tipos utilizables los marcan las distintas estrategias.</p>
+
+<p>Vamos a presentar un par de estrategias muy sencillas y aceptadas hoy en día.
+Son fáciles de aprender y usar.
+Son estrategias troncales, es decir, centradas en una única rama principal, la troncal.</p>
+
+<h3 id="github-flow">GitHub Flow</h3>
+
+<p><strong>GitHub Flow</strong> es una estrategia de ramificación troncal, si la comparamos con otra como <strong>Gitflow</strong> muy utilizada pero que parece estar cayendo poco a poco en desuso por su complejidad.
+Es una estrategia que funciona bastante bien si no tenemos que mantener varias versiones al mismo tiempo.</p>
+
+<p><strong>GitHub Flow</strong> sólo tiene una rama principal, la troncal.
+Generalmente, esta rama es la que tiene el nombre <em>master</em> o <em>main</em>.</p>
+
+<p>Por otra parte, tenemos las ramas de implementación: las de función y las de corrección.
+Estas siempre emergen de la rama troncal.
+Así pues, cada vez que vayamos a trabajar en una nueva implementación, tendremos que crear su rama usando la troncal como origen.</p>
+
+<p>La forma de trabajo es muy simple, permite el uso de <strong>CI/CD</strong> y, de ahí, que se utilice mucho hoy en día.
+Vamos a resumirla.
+En primer lugar, tenemos la rama troncal.
+Cada vez que necesitamos hacer un cambio para añadir nueva funcionalidad o resolver un <em>bug</em>, generamos una nueva rama usando la troncal como origen y trabajaremos en ella.
+Cuando terminemos, publicaremos la rama y generaremos una solicitud de integración (<em>pull request</em>) para que el equipo apruebe los cambios.
+Una vez el equipo ha aprobado los cambios, la integraremos en la rama troncal.
+Una vez integrada una rama de implementación en la principal, hay que <em>suprimirla</em> del repositorio.
+No olvidemos que las pruebas, en la rama principal, deben pasar <em>siempre</em> después de una integración de cambios.</p>
+
+<h3 id="desarrollo-troncal">Desarrollo troncal</h3>
+
+<p>El <strong>desarrollo troncal</strong> (<em>trunk-based development</em>) es una estrategia de ramificación que tiene como objeto integrar con frecuencia pequeños cambios en la rama troncal (o <em>master</em>).
+Es muy utilizado por la comunidad <strong>DevOps</strong>.</p>
+
+<p>Al igual que <strong>GitHub Flow</strong>, dispone de una única rama principal, la <em>master</em> o <em>main</em>.
+Recordemos que esta rama siempre debe estar lista para ser publicada sin necesidad de esperar nuevos cambios para hacerla publicable.</p>
+
+<p>Cada rama de función representa un determinado cambio realizado por alguien del equipo.
+Emerge de la rama principal.
+Una vez terminado el trabajo, se solicita al equipo que revise los cambios de la rama mediante una solicitud de integración.
+Si se aprueban, se integran en la rama troncal.</p>
+
+<p>A la hora de realizar un nuevo lanzamiento, lo que se hace es crear una rama de lanzamiento que emerja de la rama troncal.
+Esta rama fijará la versión a publicar y lo dejará todo listo para su publicación.
+No añade nuevas características, sólo se encarga de representar una nueva versión.</p>
+
+<p>¿Qué ocurre si se detecta un <em>bug</em> y hay que resolverlo rápidamente para sacar una nueva versión para que los usuarios se actualicen?
+Al igual que <strong>GitHub Flow</strong>, se creará una rama de <em>hotfix</em> que tenga como raíz la rama troncal, la diferencia con <strong>GitHub Flow</strong> es que esa rama después hay que integrarla tanto con la rama troncal como con la rama de lanzamiento.
+Recuerde que en <strong>GitHub Flow</strong> se integra únicamente con la troncal, ya que no existe la rama de lanzamiento.</p>
+
+<p>Para la integración de ramas de <em>hotfix</em> en la rama de lanzamiento correspondiente, lo mejor es hacer un <em>cherry-picking</em>, presentado en una lección posterior.</p>
+
+<p>La razón para utilizar como origen de la rama de corrección la troncal es que todo <em>bug</em> debe ser reproducible en la rama troncal.
+Pero hay que integrarlo también en la de lanzamiento, porque las publicaciones de nuevas versiones sólo se pueden hacer desde ramas de lanzamiento.
+Así pues, una vez implementados los cambios, se solicitará una revisión y se integrará en las ramas troncal y de lanzamiento para que ambas ramas estén actualizadas.
+Por un lado, cualquier nueva rama que emerja de la troncal tendrá resuelto el problema.
+Por otro lado, se integra con la de lanzamiento para que los usuarios puedan descargar la nueva versión y, así, resolver el fallo.
+Y como está fijado por la estrategia, esto lo haremos a partir de la rama de lanzamiento de la versión en cuestión.
+No crearemos una rama de lanzamiento nueva, sino que seguiremos con la rama de lanzamiento, pero con el número de versión incrementado en su sección de parche (<em>patch</em>).</p>
+
+<p>Esta integración en la rama de lanzamiento en la que se detectó el problema hay que hacerlo sólo si vamos a realizar publicaciones de emergencia de tipo parche.
+Si el bug se resuelve y se publicará tranquilamente en una versión futura, no hace falta que se integre también con la rama de lanzamiento actual.</p>
+
+<p>Es muy importante tener claro que de una rama de lanzamiento no emergen ramas de función.
+Estas sólo emergen de la rama troncal.
+La rama de lanzamiento representa una determinada versión que sólo se actualizará con <em>hotfix</em>, previamente integrados en la rama troncal.</p>
+
+<p>Podemos resumir la estrategia en lo siguiente:</p>
+
+<ul>
+  <li>
+    <p>Existe una única rama principal.
+No se utilizan las ramas de desarrollo, sólo la troncal.</p>
+  </li>
+  <li>
+    <p>Las ramas de función tienen como punto de partida la rama troncal.
+No pueden hacerlo de ningún otro tipo de rama.</p>
+  </li>
+  <li>
+    <p>Las ramas de corrección emergen también de la rama troncal y se combinan en ella.
+Pero si necesitan publicarse en la versión actual, también en la de lanzamiento correspondiente mediante <em>cherry picking</em>.</p>
+  </li>
+  <li>
+    <p>Las ramas de lanzamiento se utilizan para representar versiones <em>major</em> o <em>minor</em> de un producto.
+Son instantáneas de la rama troncal.
+Aunque pueden tener versiones de parches cuyos cambios se realizan mediante ramas de corrección.</p>
+  </li>
+</ul>
+
+<p>Un aspecto muy importante del desarrollo troncal es que las revisiones de código deben ser más o menos sincrónicas.
+Como son necesarias para la combinación con la rama troncal, se ha observado que cuanto más se tarde en ella mayor probabilidad de aparición de conflictos.
+Esto quiere decir que la revisión tiene prioridad sobre otros trabajos.</p>
+
+<p>Si durante el desarrollo se integra un cambio en la rama troncal que hace que el <em>flujo de CI</em> falle, se debe dejar lo que se esté haciendo para atender el problema.
+Si el problema no se puede resolver rápidamente, en unos minutos, el cambio debe deshacerse para dejar la rama troncal en el estado anterior donde el <em>flujo CI</em> no fallaba.
+A continuación, hay que resolver el problema y volver a intentarlo.
+Recuerde que la rama troncal es sagrada y debe estar siempre en un estado estable donde el <em>flujo de integración continua</em> no falle, lo que garantiza que se pueda publicar mediante una rama de lanzamiento sin problemas.</p>
+
+<p>Algunos estudios realizados por <strong>DevOps Research and Assessment</strong> muestran que no se recomienda que haya más de tres ramas activas en el repositorio y que los cambios a realizar deben poder llevarse a cabo en horas, nada de varios días de trabajo para implementar lo que necesitamos.</p>
+
+<p>Una de las principales ventajas de esta estrategia de ramificación es que los desarrolladores trabajamos con el código más recientemente aprobado.
+Y teniendo en cuenta que se debe aprobar e integrar rápidamente, esto significa que trabajará con el código más actualizado.</p>
+
+<h2 id="integración-de-cambios-en-la-rama-troncal">Integración de cambios en la rama troncal</h2>
+
+<p>Cuando se trabaja en equipo, los estándares, las estrategias y los convenios están a la orden del día.
+Básicamente, tienen como objeto garantizar que todo el equipo siga unas buenas prácticas o, al menos, la forma de trabajo fijada por la organización.
+Hemos visto que la rama troncal es de vital importancia, pues contiene todos los cambios aceptados y llevados a buen puerto.
+Por desgracia, las personas no somos perfectas, y esperar que todos tengamos la capacidad de acordarnos de lo que hicimos hace unos meses es muy difícil, quien escribe se encuentra en este pequeño o gran grupo, desconozco su tamaño.
+Por esta razón, debemos ser organizados y seguir un convenio extra.</p>
+
+<p>Cada vez que hacemos un cambio en la rama troncal, lo haremos a través de una solicitud de integración.
+Una vez aprobada la solicitud, hay que describir exactamente lo que se va a integrar.
+Esto hace que el <em>merge</em>, con el que haremos finalmente la integración, tenga un formato muy descriptivo.
+Uno utilizado y aceptado, pero no el único, es el siguiente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tipoDeCambio(ámbitoSiNecesario): título descriptivo del cambio
+
+Párrafos con una breve descripción del cambio.
+Cada uno de ellos puede contener tantas frases como sea necesario,
+la idea es ayudar a que cualquiera entienda, tiempo después, el cambio
+sin necesidad de tener que analizar todos los cambios realizados en el código.
+</code></pre></div></div>
+
+<p>Aunque esté trabajando individualmente intente coger este hábito.
+El trabajo en equipo no es fácil, principalmente debido a las manías de cada uno de nosotros.
+Si no nos ayudamos los unos a los otros, si sólo pensamos en nosotros mismos y en nuestra comodidad o capacidades intelectuales, la cosa todavía será más difícil.
+De ahí que las organizaciones deban fijar la forma de trabajo que los miembros del equipo deben seguir.
+Algunas veces la compartiremos y otras no lo haremos, pero hay que seguirla por el bien de todos.</p>
+
+<p>Si el cambio genera incompatibilidades con la API actual, se recomienda indicar <strong><em>BREAKING CHANGE:</em></strong> al comienzo del primer párrafo de descripción de los cambios realizados.
+Esto ayudará a darnos cuenta de que en el momento de la publicación de la nueva versión debemos hacer un incremento del número menor.</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

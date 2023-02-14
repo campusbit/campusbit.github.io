@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Uso de Jekyll con Docker | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Uso de Jekyll con Docker" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Cómo utilizar la imagen de Jekyll en Docker para generar y visualizar sitios webs estáticos." />
+<meta property="og:description" content="Cómo utilizar la imagen de Jekyll en Docker para generar y visualizar sitios webs estáticos." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Uso de Jekyll con Docker" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Cómo utilizar la imagen de Jekyll en Docker para generar y visualizar sitios webs estáticos.","headline":"Uso de Jekyll con Docker","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/publicaci%C3%B3n-de-sitios-webs-est%C3%A1ticos-con-github-pages/uso-de-jekyll-con-docker"},"url":"/libros/publicaci%C3%B3n-de-sitios-webs-est%C3%A1ticos-con-github-pages/uso-de-jekyll-con-docker"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/publicación-de-sitios-webs-estáticos-con-github-pages'>Publicación de sitios webs estáticos con GitHub Pages</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Uso de Jekyll con Docker</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>17 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>En ocasiones, trabajar en local con <strong>Jekyll</strong> y, a continuación, subir los cambios a <strong>GitHub</strong> para la generación automática del sitio web es muy útil.
+Así, podemos visualizar el resultado antes de su puesta en producción en <strong>GitHub Pages</strong>.
+El objeto de esta lección es mostrar cómo hacerlo.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Cómo utilizar una imagen de <strong>Docker</strong> para trabajar con <strong>Jekyll</strong> en local.</p>
+  </li>
+  <li>
+    <p>Cómo usar los comandos <strong>bundle</strong> y <strong>jekyll</strong>.</p>
+  </li>
+  <li>
+    <p>Qué es el archivo <strong>Gemfile</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo publicar un sitio <strong>Jekyll</strong> local en la red <strong>Tor</strong>.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>En algunos proyectos, resulta extremadamente útil visualizar el sitio web en local, en vez de subirlo a <strong>GitHub Pages</strong> y ver cómo queda.
+No suele ser buena práctica desplegar el sitio en producción y ver si nos gustan los cambios realizados, mientras los usuarios tienen acceso a él.
+Por esta razón, es recomendable saber trabajar con <strong>Jekyll</strong> en local.
+Y la mejor manera de hacerlo es con <strong>Docker</strong>, concretamente con la imagen <strong>jekyll/jekyll</strong>, la cual se encuentra en el <strong>registro oficial de <em>Docker</em></strong>, <a href="https://hub.docker.com/r/jekyll/jekyll">https://hub.docker.com/r/jekyll/jekyll</a>.</p>
+
+<p>Esta imagen presenta varias etiquetas como, por ejemplo, <strong><em>latest</em></strong>, <strong><em>4</em></strong> o <strong><em>pages</em></strong>.
+En nuestro caso, usaremos <strong><em>pages</em></strong>, cuyo tamaño aproximado, en el momento de escribir estas líneas, es de <strong>110M</strong>.</p>
+
+<h2 id="descarga-de-la-imagen">Descarga de la imagen</h2>
+
+<p>En primer lugar, descargaremos la imagen del registro como sigue:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>docker pull jekyll/jekyll:pages
+</code></pre></div></div>
+
+<h2 id="ejecución-de-sitios-webs-con-la-imagen-de-docker">Ejecución de sitios webs con la imagen de <em>Docker</em></h2>
+
+<p>El comando <strong>jekyll</strong> viene con varios comandos como, por ejemplo, <strong>jekyll build</strong> o <strong>jekyll serve</strong>.
+<strong>jekyll build</strong> lo que hace es generar el sitio web estático.
+En cambio, <strong>jekyll serve</strong> lo genera y, además, ejecuta el servidor web <strong>WEBrick</strong> con el que lo sirve en el puerto <strong>4000</strong>.
+Este servidor no es el que utiliza <strong>GitHub Pages</strong>, pero sí el usado por <strong>Jekyll</strong> de manera predeterminada.
+Cualquier configuración que pongamos en el archivo de configuración <strong>_config.yaml</strong> en su propiedad <strong>webrick</strong> no se tendrá en cuenta en <strong>GitHub Pages</strong>.
+No lo olvide.</p>
+
+<p>La manera más sencilla de ejecutar <strong>Jekyll</strong> desde un contenedor de <strong>Docker</strong> es mediante el siguiente comando:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>docker run <span class="nt">--name</span> jekyll <span class="nt">-p</span> 4000:4000 <span class="nt">-it</span> <span class="nt">--rm</span> <span class="se">\</span>
+  <span class="nt">-v</span> <span class="nv">$PWD</span>:/srv/jekyll <span class="se">\</span>
+  jekyll/jekyll:pages <span class="se">\</span>
+  bash <span class="nt">-c</span> <span class="s2">"bundle update &amp;&amp; bundle exec jekyll s --verbose --trace --host 0.0.0.0 --incremental"</span>
+</code></pre></div></div>
+
+<p>Si todo va bien, en el <em>log</em>, debería ver algo similar a:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[2023-01-28 01:59:55] DEBUG unmount .
+[2023-01-28 01:59:55] DEBUG Jekyll::Commands::Serve::Servlet is mounted on .
+    Server address: http://0.0.0.0:4000
+[2023-01-28 01:59:55] INFO  WEBrick::HTTPServer#start: pid=41 port=4000
+  Server running... press ctrl-c to stop.
+</code></pre></div></div>
+
+<h2 id="punto-de-montaje-del-directorio-del-sitio">Punto de montaje del directorio del sitio</h2>
+
+<p>En primer lugar, como el código del sitio se encuentra en local, lo que tenemos que tener claro es que hay que montar un volumen en el contenedor que haga referencia a nuestro directorio del sitio.
+Este montaje lo haremos en <strong>/srv/jekyll</strong> que es donde <strong>Jekyll</strong> espera encontrar el directorio del sitio como, por ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-v $PWD:/srv/jekyll
+</code></pre></div></div>
+
+<h2 id="archivo-gemfile">Archivo <em>Gemfile</em></h2>
+
+<p>Cuando ejecutamos el sitio web en local, necesitaremos un <strong>archivo <em>Gemfile</em></strong> (<em>Gemfile file</em>), ubicado en el directorio del sitio, un archivo <strong>Ruby</strong>, lenguaje en el que se encuentra escrito <strong>Jekyll</strong>, el cual proporciona metadatos sobre el sitio como, por ejemplo, las dependencias a instalar.
+No es muy complejo y le puede bastar con algo como lo siguiente:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">source</span> <span class="s2">"https://rubygems.org"</span>
+
+<span class="c1"># Jekyll</span>
+<span class="n">gem</span> <span class="s2">"jekyll"</span><span class="p">,</span> <span class="s2">"~&gt; 3.9.3"</span>
+<span class="n">gem</span> <span class="s2">"minima"</span><span class="p">,</span> <span class="s2">"~&gt; 2.5.1"</span>
+<span class="n">gem</span> <span class="s2">"kramdown-parser-gfm"</span><span class="p">,</span> <span class="s2">"~&gt; 1.1.0"</span>
+
+<span class="c1"># Local webserver</span>
+<span class="n">gem</span> <span class="s2">"webrick"</span>
+
+<span class="c1"># Plugins</span>
+<span class="n">group</span> <span class="ss">:jekyll_plugins</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s2">"jekyll-remote-theme"</span><span class="p">,</span> <span class="s2">"~&gt; 0.4.3"</span>
+  <span class="n">gem</span> <span class="s2">"jekyll-feed"</span><span class="p">,</span> <span class="s2">"~&gt; 0.15.1"</span>
+  <span class="n">gem</span> <span class="s2">"jekyll-sitemap"</span><span class="p">,</span> <span class="s2">"~&gt; 1.4.0"</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>Cada vez que utilice un <em>plugin</em>, no olvide venir aquí y añadir su gema (<em>gem</em>), la cual se suele indicar en la documentación del propio <em>plugin</em>.
+Una <strong>gema</strong> (<em>gem</em>) no es más que el paquete que implementa una funcionalidad en <strong>Ruby</strong>.
+Es como un paquete de <strong>NPM</strong>.
+Con las gemas, en <strong>Jekyll</strong>, se implementan tanto funcionalidades como temas.</p>
+
+<p>Adicionalmente, cuando haya arrancado el servidor, aparecerá un archivo <strong>Gemfile.lock</strong>, su objetivo es similar al <strong>package-lock.json</strong> de <strong>Node.js</strong>.</p>
+
+<p>Si necesita conocer las versiones exactas de las dependencias actuales de <strong>GitHub Pages</strong>, consulte <a href="https://pages.github.com/versions">https://pages.github.com/versions</a>.</p>
+
+<h2 id="comando-bundle">Comando <em>bundle</em></h2>
+
+<p>El comando <strong>bundle</strong>, que viene de fábrica con la imagen de <strong>Docker</strong>, es un gestor de paquetes de <strong>Ruby</strong>.
+Nada más comenzar la ejecución, indique que realice una actualización con <strong>bundle update</strong>.
+Por otra parte, ejecute el comando <strong>jekyll</strong> con el comando <strong>bundle exec</strong>.</p>
+
+<h2 id="comando-jekyll-build">Comando <em>jekyll build</em></h2>
+
+<p>El comando <strong>jekyll build</strong>, también conocido como <strong>jekyll b</strong>, tiene como objeto generar la web a partir del directorio del sitio.
+Debido a que <strong>jekyll serve</strong> realiza esta función y además sirve en local el sitio web generado, es posible que no lo use más que en contadas ocasiones.
+Personalmente, lo uso cuando tengo un proyecto en el que entre la generación y el servicio tengo que hacer alguna cosa como, por ejemplo, copiar algún archivo extra al directorio <strong><em>_site</em></strong> generado.</p>
+
+<h2 id="comando-jekyll-serve">Comando <em>jekyll serve</em></h2>
+
+<p>El comando <strong>jekyll serve</strong>, también ejecutable mediante <strong>jekyll s</strong>, lo que hace es generar el sitio web a partir del directorio del sitio y, a continuación, servirlo, en nuestro caso, con <strong>WEBrick</strong>.
+<strong>Jekyll</strong> genera el sitio web estático en el directorio <strong>_site</strong> del directorio del sitio.
+Adicionalmente, también genera otros directorios y archivos en el directorio del sitio como, por ejemplo, <strong>.jekyll-cache</strong>, <strong>.sass-cache</strong> y <strong>.jekyll-metadata</strong>.
+Es común que tengamos estos directorio en el <strong>.gitignore</strong>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_site/
+.jekyll-cache/
+.sass-cache/
+.jekyll-metadata
+</code></pre></div></div>
+
+<p>Debemos ejecutar el comando con <strong>bundle exec</strong> y es recomendable conocer las siguientes opciones de <strong>jekyll serve</strong>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Opción</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">--host 0.0.0.0</code></td>
+      <td>Indica la dirección IP donde escuchará. Indique <strong>0.0.0.0</strong> si está ejecutando <strong>Jekyll</strong> en un contenedor y necesita acceder desde su propio equipo.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">--incremental</code></td>
+      <td>Indica que, en caso de cambio de una página o artículo, sólo regenere esa página o artículo afectado.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">--verbose</code></td>
+      <td>Proporciona información de <em>log</em> de <strong>Jekyll</strong> por la terminal.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">--trace</code></td>
+      <td>En caso de que se produzca un error, indicará dónde se produjo.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>jekyll s</strong> monitoriza el directorio del sitio, montado en <strong>/srv/jekyll</strong>, y regenera todo el sitio cada vez que se produzca un cambio.
+Con la opción <code class="language-plaintext highlighter-rouge">--incremental</code> o <code class="language-plaintext highlighter-rouge">-I</code>, sólo regenerará la página o artículo cambiado.
+En ocasiones, esto es muy útil, pero en otras no lo es tanto, porque sólo se centra en la página o artículo que hemos modificado.
+En caso de duda, le recomiendo que <em>no</em> use la opción <code class="language-plaintext highlighter-rouge">--incremental</code>, aunque muy probablemente acabará usándola a medida que se encuentre cómodo con <strong>Jekyll</strong> y su idiosincrasia.</p>
+
+<p>En el momento de escribir estas líneas, cualquier cambio al archivo de configuración no se tiene en cuenta.
+Esto nos obligará a tener que reiniciar <strong>Jekyll</strong>.
+Por favor, téngalo muy en cuenta.</p>
+
+<p>No olvide que el servidor web de <strong>Jekyll</strong> escucha en el puerto <strong>4000</strong>.</p>
+
+<h3 id="opción---skip-initial-build">Opción <code class="language-plaintext highlighter-rouge">--skip-initial-build</code></h3>
+
+<p>Cuando se usa el comando <strong>jekyll build</strong> antes del servicio, es muy común utilizar la opción <code class="language-plaintext highlighter-rouge">--skip-initial-build</code> del comando <strong>jekyll serve</strong>.
+Esta opción lo que hace es omitir la construcción del sitio realizada durante su arranque, pero <em>no</em> así las automáticas llevadas a cabo cuando se detecta un cambio en algún archivo del directorio del sitio.</p>
+
+<h2 id="comando-jekyll-clean">Comando <em>jekyll clean</em></h2>
+
+<p>Como hemos visto en el apartado anterior, el comando <strong>jekyll</strong> genera varios archivos y directorios con la web estática final.
+Es posible que en ocasiones tengamos la necesidad de limpiar estos directorios y archivos para comenzar de nuevo.
+Esto es muy sencillo de hacer con el comando <strong>jekyll clean</strong>.</p>
+
+<p>Así pues y visto lo visto, no es raro crear el contenedor de <strong>Jekyll</strong> como sigue:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>docker run <span class="nt">--name</span> jekyll <span class="nt">-p</span> 4000:4000 <span class="nt">-it</span> <span class="nt">--rm</span> <span class="se">\</span>
+  <span class="nt">-v</span> <span class="nv">$PWD</span>:/srv/jekyll <span class="se">\</span>
+  jekyll/jekyll:pages <span class="se">\</span>
+  bash <span class="nt">-c</span> <span class="s2">"bundle update &amp;&amp; bundle exec jekyll clean &amp;&amp; bundle exec jekyll s --verbose --trace --host 0.0.0.0"</span>
+</code></pre></div></div>
+
+<h2 id="publicación-de-sitio-jekyll-en-la-red-tor">Publicación de sitio <em>Jekyll</em> en la red <em>Tor</em></h2>
+
+<p><strong>Internet</strong> es una gran red de dispositivos principalmente para la compartición de contenido.
+Atendiendo a si el contenido se encuentra indexado en los motores de búsqueda, se divide en tres importantes áreas:
+la red superficial, la red profunda y la red oscura.</p>
+
+<p>La <strong>red superficial</strong> (<em>surface net</em>, <em>surface web</em> o <em>clearnet</em>) es aquella que contiene todo el contenido que se encuentra indexado en los buscadores y, por lo tanto, es accesible por todo el mundo.
+Se estima que menos del 10% del contenido se encuentra en esta red.</p>
+
+<p>Por otra parte, tenemos contenido que no es accesible a menos que estemos suscritos o sepamos de su existencia.
+No se encuentra indexado en los buscadores y, por lo tanto, tiene un acceso limitado.
+Por ejemplo, si el sitio web usa un <strong>CAPTCHA</strong>, no se podrá indexar, porque ese es su objetivo.
+Concretamente, un <strong>CAPTCHA</strong> (<em>completely automated public Turing test to tell computers and humans apart, prueba de Turing completamente automática y pública para diferenciar ordenadores de humanos</em>) es una prueba que somete al usuario a un desafío que debe resolver para poder acceder a su contenido.
+Así, se consigue que los motores de búsqueda no puedan indexar su contenido, ya que no podrán resolver el desafío y el servidor web no les permitirá su acceso.
+Son fáciles de resolver por nosotros los humanos, pero difíciles de resolver por las máquinas.
+Ejemplo:</p>
+
+<p><img src="img/recaptcha.png" alt="Ejemplo de CAPTCHA" /></p>
+
+<p>Aquí comienza la <strong>red profunda</strong> (<em>deep net</em> o <em>deep web</em>).
+Todo contenido que <em>no</em> se encuentre indexado en un buscador se dice que pertenece a la red o web profunda.
+El 90% del contenido se encuentra dentro de esta red.
+Muy probablemente esté pensando en cosas malas, pero no tiene por qué ser así.
+Como acabamos de ver, todo sitio que usa un <strong>CAPTCHA</strong> no se indexa y pertenece a esta área de <strong>Internet</strong>.
+También forman parte de esta red sus datos bancarios, financieros o de compras.
+¿Por qué?
+Porque puede acceder a ellos mediante <strong>Internet</strong> pero no son indexables, son privados y mantenidos internamente por su entidad bancaria, financiera o comercio, impidiendo que los buscadores los puedan publicar en <strong>Internet</strong>.
+Con su información académica pasa lo mismo.
+La información de portales de TV o noticias, que para ver su contenido necesitamos una cuenta, también pertenece a esta área de <strong>Internet</strong>.
+Muy probablemente, el término no es el más adecuado porque le da un cierto <em>toque</em> tenebroso y peligroso, pero es el que es.
+Posiblemente si en vez de web profunda se hubiese utilizado <strong>web privada</strong> (<em>private web</em>), las cosas serían algo diferentes.
+Tenga en cuenta que a la red profunda pertenece todo contenido que no se encuentra en los buscadores pero se puede acceder de alguna forma.
+Puede ser contenido inofensivo a pesar de lo que podría parecer que sugiere su nombre.</p>
+
+<p>Finalmente, tenemos la <strong>red oscura</strong> (<em>darknet</em> o <em>dark web</em>), aquella área intencionada de la red profunda cuyo acceso requiere el uso de alguna aplicación especial.
+Aquí, existe tanto contenido ofensivo como inofensivo.
+No todo es malo, pero sí lo hay: mafiosos, terroristas, narcotraficantes, vendedores de armas, chantajistas, saboteadores, etc.
+Pero ojo, también hay disidentes y activistas por la libertad de expresión que, debido a la situación de sus países, utilizan la red oscura para informar o comunicarse.</p>
+
+<p><strong>Tor</strong> (<em>the onion router</em>, el enrutador cebolla) es una red oscura que busca el anonimato y privacidad de sus usuarios.
+Para ello, usa una técnica que ayuda a mantener este anonimato y, así, que sus usuarios sean difíciles de identificar.
+Se diseñó en el <strong>US Naval Research Laboratory</strong> para proteger las comunicaciones de la inteligencia de EE.UU.
+También se conoce como <strong>red cebolla</strong> (<em>onion network</em>) debido a su forma de trabajar.
+El objeto de esta red es que los emisores no envíen, como ocurre en la red superficial y en la red profunda, sus mensajes de manera directa al destinatario.
+En su lugar, lo hacen por una ruta alternativa que pasa por unos nodos intermedios especiales, conocidos como <strong>nodos Tor</strong> (<em>Tor nodes</em> o <em>Tor routers</em>), cuya función es ocultar u ofuscar la procedencia del mensaje y de esta manera no se sepa de dónde viene ni adónde va.
+Es importante tener claro que esta ruta la decide el equipo emisor, de ahí que necesite una aplicación especial para poder acceder a la red y poder acceder al dispositivo destino.
+Ya no basta con un navegador cualquiera, debe ser uno que pueda decidir estas rutas y así conectar a la red.
+Personalmente, utilizo <strong>Brave</strong>, <a href="https://brave.com">https://brave.com</a>, que permite el acceso a <strong>Internet</strong>, tanto a la red superficial como profunda, así como a la <strong>red Tor</strong> a través de su menú <strong><em>New private windows with Tor</em></strong>.</p>
+
+<p>Vamos a concretar un poco más.
+El emisor del mensaje o de la solicitud HTTP(S) cifra su mensaje, aplicándole varias capas cifradas.
+Cada capa pertenece a un <strong>nodo Tor</strong> y la cifra con la clave pública de ese nodo para que sólo él pueda descifrarla.
+Así pues, si el mensaje debe pasar por <em>X</em> nodos, habrá <em>X</em> capas, cada una cifrada con la clave pública del nodo correspondiente que como usa cifrado asimétrico, sólo su clave privada correspondiente podrá descifrar.</p>
+
+<p>Observemos que una <strong>capa</strong> (<em>layer</em>) no es más que una especie de envoltorio que cubre el resto del mensaje.
+De ahí el término <strong>cebolla</strong> (<em>onion</em>), porque cada capa asociada a un <strong>nodo Tor</strong> está envolviendo el resto de capas hasta llegar al centro que contiene el mensaje real.
+Cada capa se asocia a un <strong>nodo Tor</strong> y contiene instrucciones de quién es el siguiente nodo al que hay que dirigir el mensaje.
+Por lo tanto, el emisor coge su mensaje y lo va envolviendo en capas del último <strong>nodo Tor</strong> al primero que conforma la ruta de entrega.
+El último nodo, la primera capa, será finalmente el que hará llegar el mensaje a su destinatario real.
+A este último nodo se le conoce formalmente como <strong>nodo salida</strong> (<em>exit node</em>).
+Cada capa sólo indica el siguiente salto y como cada nodo hace <em>suyo</em> el mensaje, la ruta que va siguiendo el mensaje hasta llegar al destinatario es más difícil de rastrear.</p>
+
+<p>Debido a la cantidad de capas aplicadas, el mensaje debe saltar por muchos más nodos en <strong>Internet</strong> que un mensaje normal.
+Esto hace que la red cebolla sea bastante más lenta y presente latencias mucho mayores.</p>
+
+<h3 id="servicios-ocultos">Servicios ocultos</h3>
+
+<p>Cada servicio publicado en una <strong>red Tor</strong> se conoce formalmente como <strong>servicio oculto</strong> (<em>hidden service</em>) o <strong>servicio cebolla</strong> (<em>onion service</em>).
+Estos servicios necesitan su par de claves asimétricas, o sea, una clave pública y su pareja privada.
+Estas claves las crea automáticamente <strong>tor</strong> cuando arrancamos el servicio, pero es importante saber que existen.</p>
+
+<p>Antes de continuar, debemos indicar que para acceder a un sitio en una <strong>red Tor</strong> necesitaremos un <strong>dominio <em>.onion</em></strong> (<em>.onion domain</em>).
+No se compran como ocurre con los dominios <em>.es</em>, <em>.com</em>, <em>.net</em>, etc.
+Ni tampoco tienen un nombre muy descriptivo de su contenido, son opacos, generados aleatoriamente por nuestro <strong>tor</strong>.
+Por ejemplo, en la prueba que veremos en breve, nuestro dominio de acceso es algo tan feo como <em>aidtecorzvrymfy3oqz6qz2vufsa3qdvrroi3zeundfse5l6segksxqd.onion</em>.
+Estos nombres se registran automáticamente en la <strong>red Tor</strong> y así permiten que los navegadores puedan acceder a ellos.</p>
+
+<h3 id="instalación-de-tor">Instalación de <em>Tor</em></h3>
+
+<p>Una vez tenemos claro que es <strong>Tor</strong>, necesitamos instalar en nuestro equipo la aplicación <strong>tor</strong> con la que poder publicar nuestro contenido en esta red.
+En el caso de <strong>Ubuntu</strong>, la instalación es muy sencilla:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>tor
+</code></pre></div></div>
+
+<p>Una vez instalado, comprobaremos que tenemos acceso al programa <strong>tor</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>which tor
+<span class="nv">$ </span>tor <span class="nt">--version</span>
+</code></pre></div></div>
+
+<h3 id="configuración-del-servicio-oculto">Configuración del servicio oculto</h3>
+
+<p>Una vez tenemos instalado <strong>tor</strong>, lo siguiente es configurarlo.
+Para ello, debemos comprender cómo funcionan las cosas.
+En primer lugar, en nuestro caso, vamos a publicar un sitio web <strong>Jekyll</strong> cuyo contenido se encuentra en un contenedor local.
+Más concretamente, este contenedor expone el puerto <strong>4000</strong>.
+Básicamente, hay que decirle a <strong>tor</strong> lo siguiente:</p>
+
+<ul>
+  <li>
+    <p>El servicio oculto a publicar en la <strong>red Tor</strong>.
+En nuestro caso, <strong>localhost:4000</strong>.</p>
+  </li>
+  <li>
+    <p>En qué puerto del equipo local vamos a publicar el servicio oculto en la red cebolla.
+Puede ser en el propio <strong>4000</strong> o en otro, en nuestro caso, usaremos el <strong>18181</strong>.</p>
+  </li>
+</ul>
+
+<p>Una vez tenemos claras las cosas, lo que hacemos es editar el archivo de configuración <strong>/etc/tor/torrc</strong>.
+En este archivo, puede encontrar muchos parámetros de configuración para cada uno de los cuales hay una breve descripción.
+Vamos a centrarnos en <strong><em>HiddenServiceDir</em></strong> y <strong><em>HiddenServicePort</em></strong>.</p>
+
+<p>El parámetro <strong><em>HiddenServiceDir</em></strong> indica el directorio dónde <strong>tor</strong> debe almacenar la información de configuración de nuestro servicio oculto.
+Puede usarse cualquier directorio, pero por convenio y buenas prácticas, utilizaremos un subdirectorio de <strong>/var/lib/tor</strong>.
+Mientras que con <strong><em>HiddenServicePort</em></strong> indicaremos el puerto donde se encuentra nuestro servicio oculto, en nuestro caso, nuestro servidor <strong>Jekyll</strong>, o sea, donde tenemos expuesto el contenedor de <strong>Docker</strong> en local.</p>
+
+<p>Así pues, realizaremos la siguiente configuración:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HiddenServiceDir /var/lib/tor/hidden_service_jekyll
+HiddenServicePort 18181 localhost:4000
+</code></pre></div></div>
+
+<p>La modificación de este archivo requiere ser <strong>root</strong>.
+He aquí sus permisos:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/etc/tor<span class="nv">$ </span>ll
+total 16
+<span class="nt">-rw-r--r--</span> 1 root root 8898 feb 11 08:15 torrc
+<span class="nt">-rw-r--r--</span> 1 root root 2087 ago 21  2020 torsocks.conf
+/etc/tor<span class="nv">$ </span>
+</code></pre></div></div>
+
+<p>Podemos tener tantos servicios ocultos como necesitemos.
+Pero siempre cada uno de ellos en su propio directorio, no hay que compartirlo entre ellos.
+Si publicamos dos sitios webs con dos contenedores <strong>Jekyll</strong> distintos, podríamos tener dos servicios ocultos configurados como sigue:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HiddenServiceDir /var/lib/tor/hidden_service_jekyll1
+HiddenServicePort 18181 localhost:4000
+
+HiddenServiceDir /var/lib/tor/hidden_service_jekyll2
+HiddenServicePort 18182 localhost:4001
+</code></pre></div></div>
+
+<h3 id="claves-del-servicio-oculto">Claves del servicio oculto</h3>
+
+<p>Recordemos que <strong>Tor</strong> utiliza criptografía asimétrica, lo que significa que necesita un par de claves propias para realizar el cifrado y descifrado de su contenido.
+Las claves públicas de los <strong>enrutadores de <em>Tor</em></strong> los obtendrá de un directorio publicado por la red.
+No tenemos que indicar nada en particular para obtener estas claves ni la lista de enrutadores disponibles.
+Ya lo hace el propio <strong>tor</strong> por nosotros.</p>
+
+<p>Estas claves se almacenan en el directorio indicado en el parámetro <strong><em>HiddenServiceDir</em></strong> y se generan automáticamente al arrancar <strong>tor</strong>.
+Así pues, una vez arrancado <strong>tor</strong>, iremos al directorio del servicio oculto y veremos que se ha creado y dispone de contenido:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># rearrancamos el servicio tor y sus servicios ocultos</span>
+<span class="nv">$ </span><span class="nb">sudo </span>service tor restart
+<span class="nv">$ </span>service tor status
+
+<span class="c"># consulta del directorio del servicio oculto</span>
+<span class="nv">$ </span><span class="nb">sudo </span>su
+root<span class="nv">$ </span>ll /var/lib/tor/hidden_service_jekyll
+total 24
+drwx--S--- 3 debian-tor debian-tor 4096 feb 11 08:24 ./
+drwx--S--- 4 debian-tor debian-tor 4096 feb 11 08:25 ../
+drwx--S--- 2 debian-tor debian-tor 4096 feb 11 08:24 authorized_clients/
+<span class="nt">-rw-------</span> 1 debian-tor debian-tor   63 feb 11 08:24 <span class="nb">hostname</span>
+<span class="nt">-rw-------</span> 1 debian-tor debian-tor   64 feb 11 08:24 hs_ed25519_public_key
+<span class="nt">-rw-------</span> 1 debian-tor debian-tor   96 feb 11 08:24 hs_ed25519_secret_key
+</code></pre></div></div>
+
+<p>Los archivos finalizados en <em>key</em> contienen nuestro par de claves asimétricas.
+Mientras que el <strong>archivo <em>hostname</em></strong> (<em>hostname hostname</em>) contiene el dominio cebolla que permite el acceso a nuestro <strong>servicio oculto</strong> mediante la <strong>red Tor</strong>.
+Ejemplo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root<span class="nv">$ </span><span class="nb">cat</span> /var/lib/tor/hidden_service_jekyll/hostname
+aidtecorzvrymfy3oqz6qz2vufsa3qdvrroi3zeundfse5l6segksxqd.onion
+</code></pre></div></div>
+
+<p>Si ahora abrimos nuestro <strong>navegador Tor</strong>, en mi caso, <strong>Brave</strong>, y solicitamos <em>http://aidtecorzvrymfy3oqz6qz2vufsa3qdvrroi3zeundfse5l6segksxqd.onion:18181</em>, tendremos acceso al sitio a través de la <strong>red Tor</strong>.</p>
+
+<p>Puede suprimir el directorio del servicio cebolla cuando quiera.
+En el siguiente arranque del servicio, se generará otra vez con su nuevo par de claves asimétricas y su nuevo dominio cebolla.
+Pero si rearranca el servicio y existe el directorio, reutilizará esas claves y ese dominio cebolla.</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

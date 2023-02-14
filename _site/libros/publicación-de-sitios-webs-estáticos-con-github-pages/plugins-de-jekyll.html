@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Plugins de Jekyll | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Plugins de Jekyll" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Qué son los plugins de Jekyll y cómo usarlos." />
+<meta property="og:description" content="Qué son los plugins de Jekyll y cómo usarlos." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Plugins de Jekyll" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Qué son los plugins de Jekyll y cómo usarlos.","headline":"Plugins de Jekyll","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/publicaci%C3%B3n-de-sitios-webs-est%C3%A1ticos-con-github-pages/plugins-de-jekyll"},"url":"/libros/publicaci%C3%B3n-de-sitios-webs-est%C3%A1ticos-con-github-pages/plugins-de-jekyll"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/publicación-de-sitios-webs-estáticos-con-github-pages'>Publicación de sitios webs estáticos con GitHub Pages</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Plugins de Jekyll</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>10 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>La extensibilidad de cualquier producto de software suele ser clave para su éxito.
+Por suerte, <strong>Jekyll</strong> permite extender su funcionalidad mediante <em>plugins</em> y temas.
+El objeto de la presente lección es indagar un poco más en los <em>plugins</em> para comprender cómo configurarlos y, así, poder utilizarlos.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es un <em>plugin</em>.</p>
+  </li>
+  <li>
+    <p>Cómo se indican los <em>plugins</em> utilizados por nuestro sitio web.</p>
+  </li>
+  <li>
+    <p>Cómo permitir el uso de la propiedad <strong><em>remote_theme</em></strong> en el archivo de configuración <strong>_config.yaml</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo generar automáticamente el archivo de mapa del sitio, <strong>sitemap.xml</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo generar metadatos <strong>SEO</strong> para mejorar el posicionamiento del contenido en los buscadores.</p>
+  </li>
+  <li>
+    <p>Qué <em>plugin</em> utilizar para generar el archivo índice de un sitio web a partir del <strong>README.md</strong> del proyecto.</p>
+  </li>
+  <li>
+    <p>Qué <em>plugin</em> utilizar para realizar redirecciones de URL mediante metaelementos de <strong>HTML</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo añadir avatares de cuentas de usuario de <strong>GitHub</strong> a nuestro contenido.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>Un <strong><em>plugin</em></strong> es un componente que proporciona funcionalidad extra a <strong>Jekyll</strong>.
+Se pueden usar tanto para añadir variables o etiquetas a <strong>Liquid</strong> como para proporcionar funcionalidad con la que generar contenido en el sitio web.
+Así, por ejemplo, mediante el <em>plugin</em> <strong>jekyll-sitemap</strong> se genera automáticamente el archivo <strong>sitemap.xml</strong> del sitio.
+Un sitio puede utilizar tantos <em>plugins</em> como necesite, siempre que sean compatibles con la versión de <strong>Jekyll</strong> utilizada.</p>
+
+<p>Para conocer los <em>plugins</em> soportados nativamente por <strong>GitHub Pages</strong>, puede consultar <a href="https://pages.github.com/versions">https://pages.github.com/versions</a>.</p>
+
+<h2 id="configuración-de-plugins">Configuración de <em>plugins</em></h2>
+
+<p>Los <em>plugins</em> se indican en la propiedad <strong><em>plugins</em></strong> del archivo <strong>_config.yaml</strong>.
+Veamos un ejemplo ilustrativo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">plugins</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">jekyll-remote-theme</span>
+  <span class="pi">-</span> <span class="s">jekyll-sitemap</span>
+</code></pre></div></div>
+
+<h2 id="plugin-jekyll-remote-theme"><em>Plugin</em> <em>jekyll-remote-theme</em></h2>
+
+<p>El <strong><em>plugin</em> <em>jekyll-remote-theme</em></strong> (<em>jekyll-remote-theme plugin</em>) permite utilizar la propiedad <strong><em>remote_theme</em></strong> en el archivo <strong>_config.yaml</strong> para utilizar temas de manera remota.
+Hay temas que sólo pueden utilizarse de esta manera.
+Personalmente, utilizo siempre esta propiedad, en vez de <strong><em>theme</em></strong>.</p>
+
+<h2 id="plugin-jekyll-sitemap"><em>Plugin</em> <em>jekyll-sitemap</em></h2>
+
+<p>El <strong>archivo de mapa de sitio</strong> (<em>sitemap file</em>) es un archivo <strong>XML</strong> que informa a los motores de búsqueda de los recursos del sitio web que deseamos indexe.
+Lista los URLs que deseamos consideren sus rastreadores.
+Su objetivo es ayudarles a encontrar más fácilmente los recursos del sitio web sin necesidad de analizarlo completamente.
+Por ejemplo, si ha decidido indexar su sitio web en <strong>Google</strong>, puede usar la <strong>Google Search Console</strong>, <a href="https://search.google.com/search-console">https://search.google.com/search-console</a> e indicárselo en <strong><em>Indexación &gt; Sitemaps</em></strong>, lo que hará que el rastreador encole las páginas que en él aparecen:</p>
+
+<p><img src="img/mapa-de-sitio-en-google-search-console.png" alt="Notificación del archivo del sitio a la *Google Search Console*" /></p>
+
+<p>Este archivo debe tener el nombre <strong>sitemap.xml</strong> y se debe ubicar en la raíz del sitio web, para que así puedan encontrarlo los rastreadores de los buscadores.
+En un <strong>sitio web <em>Jekyll</em></strong>, podemos generarlo nosotros mismos o bien pedirle a <strong>Jekyll</strong> que lo genere automáticamente.
+Para este segundo caso, utilizaremos el <strong><em>plugin jekyll-sitemap</em></strong> (<em>jekyll-sitemap plugin</em>) que ubicaremos en la propiedad <strong><em>plugins</em></strong> del archivo de configuración <strong>_config.yaml</strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">plugins</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">jekyll-sitemap</span>
+</code></pre></div></div>
+
+<p>Cada vez que se genere el sitio web, se generará también el archivo del sitio.
+Una vez desplegado el sitio en <strong>GitHub Pages</strong>, puede echarle un vistazo en <em>https://su-dominio/sitemap.xml</em>.</p>
+
+<p>El elemento principal del archivo es <strong>&lt;urlset&gt;</strong>, el cual actúa como contenedor de los URLs de los recursos indexables del sitio.
+Este contiene tantos elementos <strong>&lt;url&gt;</strong> como sea necesario, cada uno de los cuales representa un URL a indexar y, a su vez, puede contener los siguientes elementos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Elemento</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>&lt;loc&gt;</strong></td>
+      <td>Contiene el URL a indexar.</td>
+    </tr>
+    <tr>
+      <td><strong>&lt;changefreq&gt;</strong></td>
+      <td>Indica la frecuencia con la que se actualiza la página: <strong><em>always</em></strong>, <strong><em>hourly</em></strong>, <strong><em>daily</em></strong>, <strong><em>weekly</em></strong>, <strong><em>monthly</em></strong>, <strong><em>yearly</em></strong> o <strong><em>never</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong>&lt;lastmod&gt;</strong></td>
+      <td>Fecha y hora de la última modificación como, por ejemplo, <em>2023-01-19T09:20:17+00:00</em>.</td>
+    </tr>
+    <tr>
+      <td><strong>&lt;priority&gt;</strong></td>
+      <td>Valor, entre <strong>0.0</strong> y <strong>1.0</strong>, que indica la prioridad de escaneo del recurso con respecto al resto. Solicita que los de mayor prioridad se indexen antes que los de menor prioridad.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>El elemento <strong>&lt;lastmod&gt;</strong> tomará su valor de la propiedad <strong><em>last_modified_at</em></strong> del encabezamiento de la página o de la propiedad <strong><em>date</em></strong> del <em>post</em>.</p>
+
+<p>He aquí un sencillo ejemplo ilustrativo, extraído del sitio web oficial de <strong>Jekyll</strong>, que puede encontrar en <a href="https://jekyllrb.com/sitemap.xml">https://jekyllrb.com/sitemap.xml</a>:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;urlset</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="na">xmlns=</span><span class="s">"http://www.sitemaps.org/schemas/sitemap/0.9"</span> <span class="na">xsi:schemaLocation=</span><span class="s">"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;url&gt;</span>
+    <span class="nt">&lt;loc&gt;</span>https://jekyllrb.com/docs/assets/<span class="nt">&lt;/loc&gt;</span>
+    <span class="nt">&lt;lastmod&gt;</span>2023-01-18T23:06:06-08:00<span class="nt">&lt;/lastmod&gt;</span>
+  <span class="nt">&lt;/url&gt;</span>
+  <span class="nt">&lt;url&gt;</span>
+    <span class="nt">&lt;loc&gt;</span>https://jekyllrb.com/docs/code_of_conduct/<span class="nt">&lt;/loc&gt;</span>
+    <span class="nt">&lt;lastmod&gt;</span>2023-01-18T23:06:06-08:00<span class="nt">&lt;/lastmod&gt;</span>
+  <span class="nt">&lt;/url&gt;</span>
+  <span class="nt">&lt;url&gt;</span>
+    <span class="nt">&lt;loc&gt;</span>https://jekyllrb.com/docs/collections/<span class="nt">&lt;/loc&gt;</span>
+    <span class="nt">&lt;lastmod&gt;</span>2023-01-18T23:06:06-08:00<span class="nt">&lt;/lastmod&gt;</span>
+  <span class="nt">&lt;/url&gt;</span>
+  <span class="nt">&lt;url&gt;</span>
+    <span class="nt">&lt;loc&gt;</span>https://jekyllrb.com/docs/community/bug/<span class="nt">&lt;/loc&gt;</span>
+    <span class="nt">&lt;lastmod&gt;</span>2023-01-18T23:06:06-08:00<span class="nt">&lt;/lastmod&gt;</span>
+  <span class="nt">&lt;/url&gt;</span>
+  <span class="c">&lt;!-- ... --&gt;</span>
+  <span class="nt">&lt;url&gt;</span>
+    <span class="nt">&lt;loc&gt;</span>https://jekyllrb.com/news/releases/<span class="nt">&lt;/loc&gt;</span>
+  <span class="nt">&lt;/url&gt;</span>
+  <span class="nt">&lt;url&gt;</span>
+    <span class="nt">&lt;loc&gt;</span>https://jekyllrb.com/resources/<span class="nt">&lt;/loc&gt;</span>
+  <span class="nt">&lt;/url&gt;</span>
+  <span class="nt">&lt;url&gt;</span>
+    <span class="nt">&lt;loc&gt;</span>https://jekyllrb.com/showcase/<span class="nt">&lt;/loc&gt;</span>
+  <span class="nt">&lt;/url&gt;</span>
+  <span class="nt">&lt;url&gt;</span>
+    <span class="nt">&lt;loc&gt;</span>https://jekyllrb.com/team/<span class="nt">&lt;/loc&gt;</span>
+  <span class="nt">&lt;/url&gt;</span>
+<span class="nt">&lt;/urlset&gt;</span>
+</code></pre></div></div>
+
+<h3 id="exclusión-de-un-documento-del-mapa-del-sitio">Exclusión de un documento del mapa del sitio</h3>
+
+<p>Si necesitamos excluir algún recurso del mapa del sitio, no hay más que añadir la propiedad <strong><em>sitemap</em></strong> a <strong><em>false</em></strong> a su encabezamiento (<em>front matter</em>).</p>
+
+<h2 id="plugin-jekyll-seo-tag"><em>Plugin</em> <em>jekyll-seo-tag</em></h2>
+
+<p>El <strong>posicionamiento en buscadores</strong> (<strong>SEO</strong>, <em>search engine optimization</em>) consiste en tener en cuenta algunas cosas para mejorar el posicionamiento del sitio y su contenido en los resultados de las búsquedas, ya sea en <strong>Google</strong>, <strong>Bing</strong> o <strong>Brave Search</strong>.
+Además de disponer de un buen contenido, muy groso modo, consiste en estructurar y usar correctamente los elementos <strong>HTML</strong> del contenido y añadir algunos metadatos extras.
+Mediante el <strong><em>plugin</em> <em>jekyll-seo-tag</em></strong> (<em>jekyll-seo-tag plugin</em>), los metadatos se pueden añadir automáticamente a los <strong>archivos HTML</strong> generados por <strong>Jekyll</strong>.</p>
+
+<p>Este <em>plugin</em> utiliza algunas propiedades del sitio para añadir esos metadatos extras al <strong>HTML</strong> generado como, por ejemplo, <strong><em>title</em></strong>, <strong><em>tagline</em></strong>, <strong><em>description</em></strong>, <strong><em>locale</em></strong> y <strong><em>author</em></strong>.
+Veamos un ejemplo de salida generada por el <em>plugin</em>:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Begin Jekyll SEO tag v2.8.0 --&gt;</span>
+<span class="nt">&lt;title&gt;</span>Akromio | Suite de automatización para equipos de IT<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"generator"</span> <span class="na">content=</span><span class="s">"Jekyll v3.9.3"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">property=</span><span class="s">"og:title"</span> <span class="na">content=</span><span class="s">"Akromio"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">property=</span><span class="s">"og:locale"</span> <span class="na">content=</span><span class="s">"es_ES"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"description"</span> <span class="na">content=</span><span class="s">"Akromio es una suite de automatización de tareas para desarrolladores de software, administradores y pentesters."</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">property=</span><span class="s">"og:description"</span> <span class="na">content=</span><span class="s">"Akromio es una suite de automatización de tareas para desarrolladores de software, administradores y pentesters."</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"canonical"</span> <span class="na">href=</span><span class="s">"https//akromio.com/"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">property=</span><span class="s">"og:url"</span> <span class="na">content=</span><span class="s">"https//akromio.com/"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">property=</span><span class="s">"og:site_name"</span> <span class="na">content=</span><span class="s">"Akromio"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">property=</span><span class="s">"og:type"</span> <span class="na">content=</span><span class="s">"website"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"twitter:card"</span> <span class="na">content=</span><span class="s">"summary"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">property=</span><span class="s">"twitter:title"</span> <span class="na">content=</span><span class="s">"Akromio"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"twitter:site"</span> <span class="na">content=</span><span class="s">"@siacodelabs"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"twitter:creator"</span> <span class="na">content=</span><span class="s">"@siacodelabs"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"application/ld+json"</span><span class="nt">&gt;</span>
+<span class="p">{</span><span class="dl">"</span><span class="s2">@context</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">https://schema.org</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">@type</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">WebSite</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">description</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">Akromio es una suite de automatización de tareas para desarrolladores de software, administradores y pentesters.</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">headline</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">akromio</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">name</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">Akromio</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">url</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">https//akromio.com/</span><span class="dl">"</span><span class="p">}</span><span class="nt">&lt;/script&gt;</span>
+<span class="c">&lt;!-- End Jekyll SEO tag --&gt;</span>
+</code></pre></div></div>
+
+<h3 id="propiedad-twitter">Propiedad <em>twitter</em></h3>
+
+<p>Si el sitio tiene asociada una cuenta de <strong>Twitter</strong>, puede indicarla mediante la propiedad <strong><em>twitter</em></strong> del archivo <strong>_config.yaml</strong>.
+Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">twitter</span><span class="pi">:</span>
+  <span class="na">card</span><span class="pi">:</span> <span class="s">summary</span>
+  <span class="na">username</span><span class="pi">:</span> <span class="s">siacodelabs</span> <span class="c1"># nombre de la cuenta de twitter</span>
+</code></pre></div></div>
+
+<h2 id="plugin-jekyll-readme-index"><em>Plugin</em> <em>jekyll-readme-index</em></h2>
+
+<p>De manera predeterminada, el archivo <strong>README</strong> del proyecto del sitio no lo procesa <strong>Jekyll</strong>, por lo que no formará parte del sitio web final.
+Para añadirlo como la página de inicio, podemos utilizar el <strong><em>plugin</em> <em>jekyll-readme-index</em></strong> (<em>jekyll-redirect-from plugin</em>).</p>
+
+<p>Por un lado, lo añadiremos a la propiedad <strong><em>plugins</em></strong> del archivo <strong>_config.yaml</strong> de nuestro sitio.
+Por otro lado, podemos configurarlo mediante la propiedad <strong><em>readme_index</em></strong> de este mismo archivo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">plugins</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">jekyll-readme-index</span>
+  <span class="c1">#...</span>
+
+<span class="na">readme_index</span><span class="pi">:</span>
+  <span class="na">enabled</span><span class="pi">:</span> <span class="kc">true</span>
+  <span class="na">remove_originals</span><span class="pi">:</span> <span class="kc">true</span>
+  <span class="na">with_frontmatter</span><span class="pi">:</span> <span class="kc">false</span>
+</code></pre></div></div>
+
+<p>Con la propiedad <strong><em>enabled</em></strong>, indicamos si el <em>plugin</em> se encuentra activado y debe hacer su trabajo.
+Mediante <strong><em>remove_originals</em></strong>, lo que hacemos es indicar si <em>no</em> debe añadirse el archivo estático <strong>README.md</strong> al resultado final del sitio web.
+Si indicamos <strong><em>false</em></strong>, tendremos tanto <strong>README.md</strong> como <strong>index.html</strong>;
+en cambio, si asignamos el valor <strong><em>true</em></strong>, sólo el <strong>index.html</strong> generado por <strong>Jekyll</strong>.</p>
+
+<h2 id="plugin-jekyll-redirect-from"><em>Plugin</em> <em>jekyll-redirect-from</em></h2>
+
+<p>Una <strong>redirección de URL</strong> (<em>URL redirection</em>), también conocida como <strong>reenvío de URL</strong> (<em>URL forwarding</em>), es un mecanismo para permitir que un determinado recurso tenga asociado más de un URL o para notificar que se ha movido a otra dirección.
+Esto último es de especial importancia si la página está ya indexada en un buscador y deseamos indicarle que la hemos cambiado de sitio.</p>
+
+<p>Estas redirecciones se pueden hacer básicamente de dos formas, desde el servidor o mediante un <strong>metaelemento HTML</strong> de la página web que redirige.
+Si es desde el servidor, se utilizará una respuesta <strong>HTTP 3xx</strong>;
+en cambio, cuando se usa un <strong>metaelemento de HTML</strong>, lo siguiente:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Refresh"</span> <span class="na">content=</span><span class="s">"0; url=url-donde-se-encuentra-el-recurso"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>En <strong>Jekyll</strong>, sólo es posible la segunda opción, el metaelemento.
+Y en nuestro caso, tenemos dos opciones, generar una <strong>página HTML</strong> con el metaelemento de redirección;
+o bien, solicitarle a <strong>Jekyll</strong> que lo haga por nosotros.
+Esta segunda forma es la más sencilla y se hace con el <strong><em>plugin</em> <em>jekyll-redirect-from</em></strong> (<em>jekyll-redirect-from plugin</em>).
+Con este <em>plugin</em>, podemos hacer dos cosas:</p>
+
+<ul>
+  <li>
+    <p>Redirigir a otra página dentro del mismo sitio.</p>
+  </li>
+  <li>
+    <p>Redirigir a otra página de otro sitio.</p>
+  </li>
+</ul>
+
+<h3 id="redirect_from"><em>redirect_from</em></h3>
+
+<p>Cuando se usa el <em>plugin</em> <strong>jekyll-redirect-from</strong>, podemos utilizar dos propiedades personalizadas en los encabezamientos de las páginas dirigentes.
+Una de estas propiedades es <strong><em>redirect_from</em></strong> con la que indicamos que el archivo de contenido debe generarse con los URLs indicados en ella.
+Por ejemplo, supongamos la siguiente página con el siguiente encabezamiento:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s">Título de la página</span>
+<span class="na">permalink</span><span class="pi">:</span> <span class="s">/ruta/original</span>
+<span class="na">redirect_from</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">/otra/ruta/dentro/del/sitio</span>
+  <span class="pi">-</span> <span class="s">/esta/es/otra/mas/</span>
+<span class="nn">---</span>
+
+Contenido Markdown.
+</code></pre></div></div>
+
+<p>En este caso, se generarán tres <strong>archivos HTML</strong>:</p>
+
+<ul>
+  <li>
+    <p>El del archivo de contenido en la ruta indicada en la propiedad <strong><em>permalink</em></strong>, o sea, en <em>/ruta/original</em>.
+Esta contendrá el contenido indicado en la página.</p>
+  </li>
+  <li>
+    <p>Uno dirigente en la primera redirección, es decir, en <em>/otra/ruta/dentro/del/sitio</em>.
+Sólo contendrá el metaelemento redirigiendo a <em>/ruta/original</em>.</p>
+  </li>
+  <li>
+    <p>Otro dirigente en la segunda redirección, esto es, en <em>/esta/es/otra/mas/index.html</em>.
+Cuando la redirección termina en una barra (<code class="language-plaintext highlighter-rouge">/</code>), se añade el sufijo <strong>index.html</strong> a lo indicado.
+Esta también contiene solo el metaelemento redirigiendo a <em>/ruta/original</em>.</p>
+  </li>
+</ul>
+
+<p>Las páginas dirigentes o de redirección contendrán los siguientes elementos:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"canonical"</span> <span class="na">href=</span><span class="s">"http://valor-de-site-url-y-baseurl/ruta/original"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;script&gt;</span><span class="nx">location</span><span class="o">=</span><span class="dl">"</span><span class="s2">http://valor-de-site-url-y-baseurl/ruta/original</span><span class="dl">"</span><span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"refresh"</span> <span class="na">content=</span><span class="s">"0; url=http://valor-de-site-url-y-baseurl/ruta/original"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"robots"</span> <span class="na">content=</span><span class="s">"noindex"</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<h3 id="redirect_to"><em>redirect_to</em></h3>
+
+<p>La otra propiedad que podemos utilizar es <strong><em>redirect_to</em></strong> que sirve para indicar que se redirija a otro URL tanto dentro como fuera del sitio.
+No necesitan contenido, son simplemente archivos con un encabezamiento como, por ejemplo:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s">Título del recurso</span>
+<span class="na">permalink</span><span class="pi">:</span> <span class="s">/ruta/en/nuestro/sitio</span>
+<span class="na">redirect_to</span><span class="pi">:</span> <span class="s">/otra/ruta</span>
+<span class="c1"># redirect_to: https://dominio/ruta/en/este/dominio</span>
+<span class="nn">---</span>
+</code></pre></div></div>
+
+<h2 id="plugin-jekyll-avatar"><em>Plugin</em> <em>jekyll-avatar</em></h2>
+
+<p>Mediante el <strong><em>plugin</em> <em>jekyll-avatar</em></strong> (<em>jekyll-avatar plugin</em>) se puede acceder al avatar de una <strong>cuenta de <em>GitHub</em></strong>.
+Genera una etiqueta en <strong>Liquid</strong> con la que poder acceder al avatar de un determinado usuario como sigue:</p>
+
+<div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{%</span><span class="w"> </span><span class="nt">avatar</span><span class="w"> </span>propiedades<span class="w"> </span><span class="p">%}</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Tipo de datos</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>user</em></strong></td>
+      <td>Texto</td>
+      <td>Nombre de la cuenta de usuario.</td>
+    </tr>
+    <tr>
+      <td><strong><em>size</em></strong></td>
+      <td>Número</td>
+      <td>Tamaño de la imagen.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Ejemplo:</p>
+
+<div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{%-</span><span class="w"> </span><span class="nt">for</span><span class="w"> </span><span class="nv">username</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nv">avatars</span><span class="w"> </span><span class="p">-%}</span>
+  <span class="p">{%</span><span class="w"> </span><span class="nt">avatar</span><span class="w"> </span><span class="na">user</span><span class="o">=</span>{{username}}<span class="w"> </span><span class="na">size</span><span class="o">=</span><span class="mi">50</span><span class="w"> </span><span class="p">%}</span>
+<span class="p">{%-</span><span class="w"> </span><span class="nt">endfor</span><span class="w"> </span><span class="p">-%}</span>
+</code></pre></div></div>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Servicios | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Servicios" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Cómo utilizar servicios de bases de datos en GitHub Actions como, por ejemplo, Redis, PostgreSQL o MongoDB." />
+<meta property="og:description" content="Cómo utilizar servicios de bases de datos en GitHub Actions como, por ejemplo, Redis, PostgreSQL o MongoDB." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Servicios" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Cómo utilizar servicios de bases de datos en GitHub Actions como, por ejemplo, Redis, PostgreSQL o MongoDB.","headline":"Servicios","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/devsecops-con-github-actions-ed-nodejs/servicios"},"url":"/libros/devsecops-con-github-actions-ed-nodejs/servicios"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/devsecops-con-github-actions-ed-nodejs'>Dev(Sec)Ops con GitHub Actions (Ed. Node.js)</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Servicios</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>6 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>La utilización de motores de bases de datos o servicios webs disponibles en imágenes de <strong>Docker</strong> es de vital importancia en toda plataforma <strong>CI/CD</strong>.
+<strong>GitHub Actions</strong> tiene la capacidad de crear contenedores de <strong>Docker</strong> que pueden proporcionar componentes necesarios, por ejemplo, en las pruebas automatizadas de integración o de sistema.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es un servicio en <strong>GitHub Actions</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo se definen los servicios.</p>
+  </li>
+  <li>
+    <p>Cómo crear servicios para <strong>MongoDB</strong>, <strong>PostgreSQL</strong> y <strong>Redis</strong>.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>En <strong>GitHub Actions</strong>, un <strong>servicio</strong> (<em>service</em>) proporciona una aplicación en un contenedor <strong>Docker</strong>, accesible durante la ejecución del trabajo en el que se define.
+Por lo general, se utilizan para desplegar componentes necesarios como, por ejemplo, bases de datos o cachés, en las pruebas de integración automatizadas.
+Se crean automáticamente al comenzar la ejecución del trabajo y se destruyen también automáticamente al finalizar su ejecución.</p>
+
+<p>Los servicios se definen mediante la propiedad <strong><em>services</em></strong> de los trabajos.
+En ella, indicaremos los servicios que debe crear <strong>GitHub Actions</strong> y toda la configuración necesaria como, por ejemplo, la imagen de <strong>Docker</strong> que proporciona el servicio y la exposición de puertos.
+Veamos un ejemplo ilustrativo que nos sirva de punto de partida, con el que se arrancarán dos contenedores, uno con <strong>Redis</strong> y otro con <strong>PostgreSQL</strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="na">redis</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">6379:6379</span>
+  
+  <span class="na">postgresql</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">postgres</span>
+    <span class="na">env</span><span class="pi">:</span>
+      <span class="na">POSTGRES_PASSWORD</span><span class="pi">:</span> <span class="s">postgres</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">5432:5432</span>
+</code></pre></div></div>
+
+<h2 id="propiedad-services-de-los-trabajos">Propiedad <em>services</em> de los trabajos</h2>
+
+<p>Los contenedores de servicios que debe crear <strong>GitHub Actions</strong> se definen mediante la propiedad, de tipo objeto, <strong><em>services</em></strong> del trabajo que los usará.
+Cada propiedad, del valor de <strong><em>services</em></strong>, representa un servicio.<a href="https://github.com/npm/registry/blob/master/docs/download-counts.md"></a>
+El valor de la propiedad servicio debe ser un objeto y contiene su configuración.
+Entre sus propiedades más utilizadas, encontramos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>image</em></strong></td>
+      <td>Imagen de <strong>Docker</strong> a utilizar para crear el contenedor como, por ejemplo, <strong>mongo</strong>, <strong>postgres</strong> o <strong>redis</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>credentials</em></strong></td>
+      <td>Credenciales necesitadas por <strong>GitHub Actions</strong> para acceder al registro que contiene la imagen.</td>
+    </tr>
+    <tr>
+      <td><strong><em>env</em></strong></td>
+      <td>Variables de entorno a usar en el contenedor.</td>
+    </tr>
+    <tr>
+      <td><strong><em>ports</em></strong></td>
+      <td>Exposición de puertos del contenedor.</td>
+    </tr>
+    <tr>
+      <td><strong><em>options</em></strong></td>
+      <td>Opciones de <strong>docker</strong> a usar.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Para acceder a un servicio, indicaremos <strong><em>localhost</em></strong> como nombre.
+Esto es fácil de ver mediante el siguiente flujo de trabajo de ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Prueba de servicios</span>
+<span class="na">on</span><span class="pi">:</span> <span class="s">workflow_dispatch</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">prueba</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Probando el acceso a los servicios</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+
+    <span class="na">services</span><span class="pi">:</span>
+      <span class="na">redis</span><span class="pi">:</span>
+        <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+        <span class="na">ports</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="s">6379:6379</span>
+        <span class="na">options</span><span class="pi">:</span> <span class="pi">&gt;-</span>
+          <span class="s">--health-cmd "redis-cli ping"</span>
+          <span class="s">--health-interval 10s</span>
+          <span class="s">--health-timeout 5s</span>
+          <span class="s">--health-retries 5</span>
+    
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Instalación de redis-cli</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">sudo apt install redis-tools</span>
+        
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Ping al servicio Redis mediante localhost</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">redis-cli -h localhost -p ${{ job.services.redis.ports['6379'] }} PING</span>
+</code></pre></div></div>
+
+<p>El comando <strong>PING</strong> solicita al motor de <strong>Redis</strong> que devuelva <em>PONG</em> para, así, comprobar que tenemos acceso a él.
+Esto es fácil de comprobar en el resumen de ejecución del flujo:</p>
+
+<p><img src="img/acceso-a-servicio.png" alt="Acceso a un servicio mediante localhost" /></p>
+
+<h2 id="propiedad-services-del-contexto-job">Propiedad <em>services</em> del contexto <em>job</em></h2>
+
+<p>Recordemos que <strong>GitHub Actions</strong> proporciona el contexto <strong><em>job</em></strong> para acceder a datos del trabajo en curso.
+Este contexto contiene una propiedad <strong><em>services</em></strong> con la información de los servicios que tiene disponibles.
+A su vez, cada servicio dispone de una propiedad cuyo nombre es el nombre del servicio indicado en el trabajo y cuyo valor es un objeto que contiene las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>id</em></strong></td>
+      <td>Identificador del contenedor en el que se está ejecutando el servicio.</td>
+    </tr>
+    <tr>
+      <td><strong><em>network</em></strong></td>
+      <td>Identificador de la red del contenedor.</td>
+    </tr>
+    <tr>
+      <td><strong><em>ports</em></strong></td>
+      <td>Puertos expuestos por el servicio.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>La propiedad <strong><em>ports</em></strong> es de tipo objeto y contiene una propiedad para cada puerto expuesto donde su valor es el puerto en el que se expone.
+Por ejemplo, si el puerto expuesto es <em>8080</em>, pero se expone en el <em>80</em>, tendremos que acceder al <em>80</em>.
+La mejor manera de hacerlo sería mediante una expresión como <code class="language-plaintext highlighter-rouge">${{ job.services.web.ports['8080'] }}</code>;
+así, si cambiamos la exposición, no tendremos que modificar nada en ningún paso.</p>
+
+<h2 id="servicio-redis">Servicio <em>Redis</em></h2>
+
+<p>Para crear un servicio <strong>Redis</strong>, podemos utilizar la imagen <strong>redis</strong> como muestra el siguiente ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="na">redis</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">6379:6379</span>
+    <span class="na">options</span><span class="pi">:</span> <span class="pi">&gt;-</span>
+      <span class="s">--health-cmd "redis-cli ping"</span>
+      <span class="s">--health-interval 10s</span>
+      <span class="s">--health-timeout 5s</span>
+      <span class="s">--health-retries 5</span>
+</code></pre></div></div>
+
+<p>Si necesita <strong>Redis</strong> con el módulo <strong>RedisJSON</strong> cargado, puede utilizar la imagen <strong>redislabs/rejson</strong>, en vez de <strong>redis</strong>.</p>
+
+<h2 id="servicio-postgresql">Servicio <em>PostgreSQL</em></h2>
+
+<p>Para crear una instancia de <strong>PostgreSQL</strong>, usaremos:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="na">postgresql</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">postgres</span>
+    <span class="na">env</span><span class="pi">:</span>
+      <span class="na">POSTGRES_PASSWORD</span><span class="pi">:</span> <span class="s">postgres</span>
+    <span class="na">options</span><span class="pi">:</span> <span class="pi">&gt;-</span>
+      <span class="s">--health-cmd pg_isready</span>
+      <span class="s">--health-interval 10s</span>
+      <span class="s">--health-timeout 5s</span>
+      <span class="s">--health-retries 5</span>
+</code></pre></div></div>
+
+<p>Entre las variables de entorno que podemos configurar, recordemos, tenemos <strong>POSTGRES_USER</strong>, <strong>POSTGRES_PASSWORD</strong> y <strong>POSTGRES_DB</strong>.
+La lista completa se encuentra disponible en la imagen de <strong>Docker</strong>, [https://hub.docker.com/<em>/postgres](https://hub.docker.com/</em>/postgres).</p>
+
+<p>Veamos un flujo de trabajo de prueba:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">PostgreSQL</span>
+<span class="na">on</span><span class="pi">:</span> <span class="s">workflow_dispatch</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">ping</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Probando PostgreSQL</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    
+    <span class="na">services</span><span class="pi">:</span>
+      <span class="na">pg</span><span class="pi">:</span>
+        <span class="na">image</span><span class="pi">:</span> <span class="s">postgres</span>
+        <span class="na">ports</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="s">5432:5432</span>
+        <span class="na">env</span><span class="pi">:</span>
+          <span class="na">POSTGRES_PASSWORD</span><span class="pi">:</span> <span class="s">contraseña</span>
+        <span class="na">options</span><span class="pi">:</span> <span class="pi">&gt;-</span>
+          <span class="s">--health-cmd pg_isready</span>
+          <span class="s">--health-interval 10s</span>
+          <span class="s">--health-timeout 5s</span>
+          <span class="s">--health-retries 5</span>
+    
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Instalación de pg_isready</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">sudo apt install postgresql-client</span>
+    
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Ping a PostgreSQL</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">pg_isready -h localhost -p ${{ job.services.pg.ports['5432'] }}</span>
+</code></pre></div></div>
+
+<h2 id="servicio-mongodb">Servicio <em>MongoDB</em></h2>
+
+<p>Otro servicio muy utilizado hoy en día es <strong>MongoDB</strong>, el cual podemos crear mediante la imagen <strong>mongo</strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">MongoDB</span>
+<span class="na">on</span><span class="pi">:</span> <span class="s">workflow_dispatch</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">ping</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Probando MongoDB</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    
+    <span class="na">services</span><span class="pi">:</span>
+      <span class="na">mongo</span><span class="pi">:</span>
+        <span class="na">image</span><span class="pi">:</span> <span class="s">mongo</span>
+        <span class="na">ports</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="s">27017:27017</span>
+        <span class="na">env</span><span class="pi">:</span>
+          <span class="na">MONGO_INITDB_ROOT_USERNAME</span><span class="pi">:</span> <span class="s">root</span>
+          <span class="na">MONGO_INITDB_ROOT_PASSWORD</span><span class="pi">:</span> <span class="s">contraseña</span>
+    
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Instalación del shell de MongoDB</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">sudo apt install mongodb-org-shell</span>
+    
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Ping a MongoDB</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">cs=mongodb://localhost:${{ job.services.mongo.ports['27017'] }}</span>
+          <span class="s">mongo --host $cs --eval 'db.runCommand({ping: 1})'</span>
+</code></pre></div></div>
+
+<p>Para la lista completa de las posibles variables de entorno utilizables, eche un vistazo a [https://hub.docker.com/<em>/mongo](https://hub.docker.com/</em>/mongo).</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

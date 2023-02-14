@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Archivo de ítems de GitHub Projects | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Archivo de ítems de GitHub Projects" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Qué es y cómo se realiza el archivo de ítems en GitHub Projects." />
+<meta property="og:description" content="Qué es y cómo se realiza el archivo de ítems en GitHub Projects." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Archivo de ítems de GitHub Projects" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Qué es y cómo se realiza el archivo de ítems en GitHub Projects.","headline":"Archivo de ítems de GitHub Projects","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/organizaci%C3%B3n-del-trabajo-con-github-projects-y-github-issues/archivo-de-%C3%ADtems-de-github-projects"},"url":"/libros/organizaci%C3%B3n-del-trabajo-con-github-projects-y-github-issues/archivo-de-%C3%ADtems-de-github-projects"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/organización-del-trabajo-con-github-projects-y-github-issues'>Organización del trabajo con GitHub Projects y GitHub Issues</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Archivo de ítems de GitHub Projects</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>3 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Cuando el proyecto crece y es muy activo, el número de ítems aumenta rápidamente y puede resultar interesante archivar algunos de ellos para que no aparezcan en las vistas del proyecto o bien para que no se alcance el límite máximo marcado por <strong>GitHub</strong>.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es el archivo de ítems.</p>
+  </li>
+  <li>
+    <p>Cómo se realiza el archivo de ítems.</p>
+  </li>
+  <li>
+    <p>Cómo consultar los ítems archivados.</p>
+  </li>
+  <li>
+    <p>Cómo restaurar ítems archivados.</p>
+  </li>
+  <li>
+    <p>Cómo eliminar ítems archivados.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>Un proyecto puede tener hasta <strong>1200</strong> ítems sin archivar.
+Y como archivados, <strong>10000</strong>.
+Si se alcanza el tope de los archivados, deberá realizar una supresión para hacer hueco.</p>
+
+<p>El <strong>archivo</strong> (<em>archive</em>) es una operación mediante la cual se suprime el ítem de las vistas del proyecto y se lleva a una zona de almacenamiento que impide su modificación.
+Los ítems no archivados se muestran en las vistas del proyecto y se pueden modificar independientemente de su estatus actual.
+En cambio, los archivados ya no aparecen en las vistas y no se pueden modificar, aunque sí pueden consultarse y restaurarse.</p>
+
+<p>Es la organización y/o el proyecto quien determina cuándo se debe realizar el archivo de ítems.
+Algunas organizaciones pueden decidir que tras llevar un mes en el estatus <strong><em>Done</em></strong> deben archivarse.
+Otras pueden desear mantener las de las últimas iteraciones por si fuera necesario consultar los ítems fácil y rápidamente.</p>
+
+<h2 id="archivo-de-ítems">Archivo de ítems</h2>
+
+<p>El archivo de ítems es una operación por la que se mueve los ítems de un proyecto a un área especial donde no se pueden modificar.
+Al mismo tiempo, desaparecen de las vistas del proyecto.
+Este archivo puede realizarse de manera manual o automática mediante flujos de <strong>GitHub Projects</strong>.</p>
+
+<h3 id="archivo-manual-de-ítems">Archivo manual de ítems</h3>
+
+<p>El archivo manual puede hacerse a nivel de ítem individual o de estatus del proyecto.
+En caso de ítem individual, basta con editar el ítem y hacer clic en <strong><em>Archive</em></strong>, se puede hacer independientemente del estatus en el que se encuentre este:</p>
+
+<p><img src="img/archivo-de-ítem-de-proyecto.png" alt="Archivo de ítem de proyecto" /></p>
+
+<p>Si lo que deseamos es archivar todos los ítems que se encuentran en un determinado estatus, lo más habitual, mostraremos su menú contextual y, a continuación, seleccionaremos <strong><em>Archive all</em></strong>:</p>
+
+<p><img src="img/archivo-de-ítems-en-un-estatus.png" alt="Archivo de ítems en un determinado estatus" /></p>
+
+<h3 id="archivo-automático-de-ítems">Archivo automático de ítems</h3>
+
+<p>En ocasiones, puede ser útil archivar los ítems de manera automática mediante el flujo <strong><em>Auto-archive items</em></strong> del proyecto:</p>
+
+<p><img src="img/archivo-automático-mediante-flujo-del-proyecto.png" alt="Archivo automático mediante flujo del proyecto" /></p>
+
+<p>Mediante el filtro, se indica la condición que debe cumplir el ítem para su archivo.
+En el ejemplo anterior, se archivará todo ítem que tenga asociada una propuesta cerrada y no se haya actualizado en los últimos catorce días.</p>
+
+<p>Los archivos realizados de esta manera tendrán como usuario archivador <strong>github-project-automation</strong>.</p>
+
+<h2 id="consulta-de-los-ítems-archivados">Consulta de los ítems archivados</h2>
+
+<p>Para consultar los ítems archivados, haremos clic en los tres puntos (<code class="language-plaintext highlighter-rouge">...</code>) del proyecto y, a continuación, en <strong><em>Archived items</em></strong>:</p>
+
+<p><img src="img/menú-de-ítems-archivados.png" alt="Menú de ítems archivados" /></p>
+
+<h2 id="restauración-de-ítems">Restauración de ítems</h2>
+
+<p>La <strong>restauración</strong> (<em>restore</em>) es la operación mediante la cual devolvemos un ítem archivado a las vistas del proyecto.
+Se puede hacer individualmente o en grupo.</p>
+
+<h3 id="restauración-de-un-ítem">Restauración de un ítem</h3>
+
+<p>Para restaurar un único ítem, no hay más que ir a la lista de ítems archivados y, a continuación, hacer clic en los tres puntos (<code class="language-plaintext highlighter-rouge">...</code>) del item en cuestión y, en su menú contextual, seleccionar <strong><em>Restore</em></strong>:</p>
+
+<p><img src="img/restauración-de-ítem.png" alt="Restauración de un ítem" /></p>
+
+<h3 id="restauración-de-múltiples-ítems">Restauración de múltiples ítems</h3>
+
+<p>Para restaurar varios ítems, los seleccionaremos y, a continuación, haremos clic en <strong><em>Restore</em></strong>:</p>
+
+<p><img src="img/restauración-de-múltiples-ítems.png" alt="Restauración de múltiples ítems" /></p>
+
+<h2 id="supresión-de-ítems">Supresión de ítems</h2>
+
+<p>En los dos ejemplos anteriores, puede observar que podemos suprimir ítems archivados haciendo clic en <strong><em>Delete from project</em></strong>.
+Generalmente, no querrá hacerlo a menos que haya alcanzado el límite máximo que es <strong>10000</strong> en el momento de escribir estas líneas.</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

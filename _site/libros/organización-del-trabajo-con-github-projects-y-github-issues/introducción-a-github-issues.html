@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Introducción a GitHub Issues | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Introducción a GitHub Issues" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Introducción a GitHub Issues para la organización del trabajo en DevOps y DevSecOps, mejorando así nuestra productividad y eficiencia." />
+<meta property="og:description" content="Introducción a GitHub Issues para la organización del trabajo en DevOps y DevSecOps, mejorando así nuestra productividad y eficiencia." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Introducción a GitHub Issues" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Introducción a GitHub Issues para la organización del trabajo en DevOps y DevSecOps, mejorando así nuestra productividad y eficiencia.","headline":"Introducción a GitHub Issues","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/organizaci%C3%B3n-del-trabajo-con-github-projects-y-github-issues/introducci%C3%B3n-a-github-issues"},"url":"/libros/organizaci%C3%B3n-del-trabajo-con-github-projects-y-github-issues/introducci%C3%B3n-a-github-issues"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/organización-del-trabajo-con-github-projects-y-github-issues'>Organización del trabajo con GitHub Projects y GitHub Issues</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Introducción a GitHub Issues</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>21 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>La automatización de procesos es clave para el incremento de nuestra productividad y nuestra eficiencia, pero la planificación y la organización también juegan un papel importante para conseguirlo.
+Como vimos en la lección sobre <strong>GitHub Projects</strong>, tenemos que ser organizados y no tener que invertir mucho tiempo en determinar qué hacer de entre todas las cosas que tenemos pendientes.
+<strong>GitHub Projects</strong> y <strong>GitHub Issues</strong> son claves en esta planificación y organización.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es <strong>GitHub Issues</strong>.</p>
+  </li>
+  <li>
+    <p>Qué es una propuesta y para qué se usan.</p>
+  </li>
+  <li>
+    <p>Cómo crear propuestas.</p>
+  </li>
+  <li>
+    <p>Cómo suprimir propuestas.</p>
+  </li>
+  <li>
+    <p>Cómo crear plantillas de propuestas.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p><strong>GitHub Issues</strong> es un servicio gratuito proporcionado por <strong>GitHub</strong> que, junto con <strong>GitHub Projects</strong>, permite la planificación y la organización del trabajo.
+Es importante tener claro que ambas herramientas se complementan la una a la otra.
+<strong>GitHub Projects</strong> permite tener una visión más global del proyecto repartida entre los distintos repositorios con los que trabajamos.
+En cambio, <strong>GitHub Issues</strong> está centrada en un determinado repositorio.
+Se recomienda el uso de ambos servicios para llevar a cabo una mejora en la organización del trabajo de nuestro proyecto.</p>
+
+<p>De cara a <strong>GitHub Issues</strong>, una <strong><em>issue</em></strong>, en español traducido como <strong>propuesta</strong> o <strong>incidencia</strong>,  no es más que algo a realizar o proponer para su realización.
+Puede representar una notificación de un fallo en el software que habría que corregir, una idea que gustaría se realizara, una funcionalidad a llevar a cabo, etc.
+Podemos verlo también como un trabajo (<em>work</em>) que hay que realizar.
+La idea es que no deberíamos ponernos a trabajar en algo sin tener su correspondiente <em>issue</em> o propuesta.</p>
+
+<p>Por ejemplo, en el momento de escribir estas líneas, la redacción de este libro se realiza de la siguiente manera.
+Por un lado, tenemos un proyecto en <strong>GitHub Projects</strong> en el cual registramos las tareas o ítems propuestos, a realizar o a debatir para los libros de una determina serie editorial, en este caso, la de desarrollo de <em>backends</em> seguros.
+Para poder trabajar en algo, debe estar registrado en el proyecto, lo priorizamos para centrarnos, por un lado, en los más importantes con respecto a los de menos interés y, por otro lado, en los que tienen un hito más cercano.
+Una vez se termina un ítem, pasamos al siguiente, desplazando el ítem entre sus distintos estatus (<em>Backlog</em>, <em>Todo</em>, <em>In Progress</em> y <em>Done</em>).
+Cuando el ítem llega a <em>Todo</em>, no puede pasar a <em>In Progress</em> sin tener claro a qué repositorios va a afectar, por lo que habrá que crearle sus respectivas propuestas en los repositorios correspondientes con <strong>GitHub Issues</strong>.
+En nuestro caso, las propuestas se suelen crear primero y, a continuación, se asocian al proyecto correspondiente.
+Pero en ocasiones, es posible que se cree un ítem en el proyecto y, posteriormente, se cree su propuesta.
+La clave es que debe aparecer en el proyecto.
+Cuando llega su momento, se desplaza a <em>In Progress</em>, se tiene en cuenta los repositorios con los que hay que trabajar y manos a la obra.
+En este punto, se realiza el trabajo, se abre una solicitud de integración, se aprueba y se combina con la rama principal.
+Una vez hecho, se mueve a <em>Done</em>.
+¡Y a por la siguiente tarea!</p>
+
+<p>Siempre que hay una idea, se registra en el proyecto y, así, no se olvida.
+Si después se implementa o no, es otra historia.
+La clave es la planificación y la organización del trabajo para mejorar la productividad y reducir los tiempos muertos.</p>
+
+<p>Lo mismo que se hace en la redacción de un libro, se hace, claro está, en el desarrollo de software.
+Generalmente, es más marcada la cosa porque el software es mucho más difícil de desarrollar que la escritura de un libro.
+Para quien escribe, ambas son difíciles, pero si tuviera que elegir cuál de las dos lo es más, sin ninguna duda, el desarrollo y el mantenimiento de software ganarían por goleada.</p>
+
+<h2 id="concepto-de-propuesta-o-issue">Concepto de propuesta (o <em>issue</em>)</h2>
+
+<p>Básicamente, podemos ver una <strong>propuesta</strong> (<em>issue</em>) como una tarea a realizar.
+Actualmente, se puede abrir propuestas para solicitar información al proyecto, para notificar incidencias o fallos, proponer funcionalidades, etc.
+Y todas ellas, son correctas.
+Aunque para las relacionadas con la información del proyecto, igual es mejor recurrir a <strong>GitHub Discussions</strong>, centrando las propuestas en incidencias, fallos, funcionalidades y cosas que describan <em>algo</em> que hacer.</p>
+
+<p>A partir de ahora, utilizaremos principalmente el término <em>propuesta</em>, aunque en ocasiones usaremos también <em>issue</em>, porque son muchas las organizaciones que utilizan este término anglosajón, a pesar de la riqueza de nuestro maravilloso idioma.</p>
+
+<p>Las propuestas se componen de varios elementos:</p>
+
+<ul>
+  <li>
+    <p>Un <strong>identificador</strong> (<em>identifier</em>) numérico incremental para distinguirlo del resto de manera única e inequívoca.</p>
+
+    <p>Estos identificadores se usan en los comentarios precedidos de una almohadilla (<code class="language-plaintext highlighter-rouge">#</code>).
+Así, por ejemplo, en el siguiente ejemplo se muestra el título de una confirmación (<em>commit</em>) que indica la propuesta a la que está asociada: <em>feat(github-pages): added Liquid filters (#85)</em>. Es real y está extraída del repositorio del libro sobre <strong>GitHub Pages</strong>.</p>
+  </li>
+  <li>
+    <p>Un <strong>título</strong> (<em>title</em>) que describe brevemente el objeto de la propuesta.
+La redacción de esta lección tiene el siguiente título <em>lesson on GitHub Issues</em>, cuyo identificador es <em>#88</em>.</p>
+  </li>
+  <li>
+    <p>Una <strong>descripción</strong> (<em>description</em>), una exposición inicial más detallada del objeto de la propuesta.
+Aquí nos extenderemos todo lo necesario.
+Recuerde que es posible que la propuesta no la acabe implementando quien la creó.</p>
+  </li>
+  <li>
+    <p>Unas <strong>etiquetas</strong> (<em>labels</em>) que sirven para categorizar la propuesta como, por ejemplo, <em>enhancement</em> si estamos ante un cambio que añada funcionalidad nueva o una mejora, <em>bug</em> si está relacionada con una notificación de fallo, <em>documentation</em> si estamos ante una mejora de documentación en un proyecto de software, etc.</p>
+
+    <p>La redacción de esta lección se etiquetó como <em>enhancement</em> porque añade algo nuevo al libro.</p>
+  </li>
+  <li>
+    <p>Uno o más <strong>responsables</strong> (<em>asignees</em>), personas encargadas de llevarla a cabo y/o hacerle seguimiento según el tipo de propuesta.
+En este caso, el responsable de la propuesta para la redacción de esta lección fue un servidor.</p>
+  </li>
+  <li>
+    <p>Un <strong>proyecto</strong> (<em>project</em>), aquel de <strong>GitHub Projects</strong> que tiene asociada la propuesta.
+Recordemos que un ítem de proyecto puede tener asociadas varias propuestas del mismo o distinto repositorio.</p>
+  </li>
+  <li>
+    <p>Un <strong>hito</strong> (<em>milestone</em>) que indica en qué iteración se debe realizar.
+Es recomendable clasificar las propuestas en hitos para que no se escapen del que tienen asignado.
+Si las clasificamos en un hito u otro, cuando estemos trabajando en alcanzar uno determinado, cogeremos propuestas de ese hito y no de otro.</p>
+
+    <p>Pero ojo, es posible que su proyecto esté relacionado con varios repositorios.
+Este es el caso de <strong>Akromio</strong>.
+El proyecto gestiona, en un punto centralizado, los cambios a realizar en varios repositorios, porque todos ellos forman el proyecto y sus cambios deben administrarse y organizarse de manera conjunta.
+En este caso, para controlar el hito como tal, o la iteración en la que un ítem se debe implementar, no se realiza mediante <em>Milestone</em>, sino mediante un campo <em>When</em>.
+Cada proyecto es un mundo y hay que ser flexibles y saber adaptarse a las circunstancias.
+En el caso de <strong>Akromio</strong>, hacerlo mediante <em>Milestone</em> conllevaría tener que registrar el mismo hito en todos los repositorios.
+Teniendo en cuenta que el proyecto tiene asociados más de diez repositorios, se hace inviable.</p>
+  </li>
+  <li>
+    <p>Una o más <strong>solicitudes de integración</strong> (<em>pull requests</em>) con las que se integrarán los cambios realizados durante la implementación de la propuesta en la rama correspondiente.</p>
+
+    <p>Lo bueno de asignar solicitudes de integración a las propuestas es que cuando se cierra la solicitud automáticamente se cierra también la propuesta.
+Así, evita tener que ir a las propuestas y marcarlas como cerradas.
+Incluso si la propuesta está asociada a un proyecto, esto mandará el ítem asociado a la columna <em>Done</em> también de manera automática.
+En el caso de los ítems de proyecto, realmente esto es así debido a los <strong>flujos de trabajo de <em>GitHub Projects</em></strong> que presentaremos más adelante en el libro.</p>
+  </li>
+</ul>
+
+<h2 id="estado-de-las-propuestas">Estado de las propuestas</h2>
+
+<p>El <strong>estado de una propuesta</strong> (<em>issue state</em>) indica la situación en la que se encuentra.
+Básicamente, <strong>abierta</strong> (<em>opened</em>) pendiente de atender o en proceso de desarrollo;
+y <strong>cerrada</strong> (<em>closed</em>), realizada o descartada por la razón que sea.</p>
+
+<h2 id="creación-de-una-propuesta">Creación de una propuesta</h2>
+
+<p>La creación de propuestas se puede hacer de muchas maneras.
+Nosotros vamos a presentar las principales, pero hay más como, por ejemplo, el comando <strong>gh issue create</strong> si necesita hacerlo de manera automatizada mediante un flujo de trabajos de <strong>GitHub Actions</strong>.</p>
+
+<h3 id="creación-de-propuesta-desde-un-ítem-de-proyecto">Creación de propuesta desde un ítem de proyecto</h3>
+
+<p>Si tenemos un ítem ya en un proyecto de <strong>GitHub Projects</strong>, la manera más sencilla de crear su correspondiente propuesta es como sigue:</p>
+
+<ol>
+  <li>
+    <p>Ir al proyecto que contiene el ítem para el que deseamos crear su propuesta asociada.</p>
+  </li>
+  <li>
+    <p>Hacer clic en el título del ítem, lo que abrirá su formulario de edición.</p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>Convert to issue</em></strong>, en el panel derecho del formulario, lo que abrirá un menú contextual con los repositorios a los que tiene acceso:</p>
+
+    <p><img src="img/convierte-a-propuesta.png" alt="Creación de propuesta desde un ítem de proyecto" /></p>
+  </li>
+  <li>
+    <p>Seleccionar el repositorio donde deseamos crear la propuesta.</p>
+
+    <p>Si no aparece en la lista, escribir parte de su nombre en el cuadro <strong><em>Search repositories</em></strong> para que filtre aquellos que tengan ese texto.</p>
+  </li>
+</ol>
+
+<p>En este punto, la propuesta ya se ha creado y el formulario del ítem del proyecto mostrará una versión compuesta del proyecto y la propuesta.
+La asignación de responsables, las etiquetas y el hito, por ejemplo, están enlazados a la propuesta, cualquier cambio en este formulario se traslada automáticamente a la propuesta.
+En cambio, otros campos como la prioridad hacen referencia al ítem del proyecto.</p>
+
+<p>Para abrir la propuesta asociada al ítem del proyecto, haga clic en <strong><em>Open in new tab</em></strong>:</p>
+
+<p><img src="img/apertura-de-propuesta-desde-ítem-de-proyecto.png" alt="Apertura de propuesta desde ítem de proyecto" /></p>
+
+<h3 id="creación-de-propuesta-desde-el-repositorio-de-github">Creación de propuesta desde el repositorio de <em>GitHub</em></h3>
+
+<p>En muchas ocasiones, las propuestas se crean antes que sus ítems correspondientes del proyecto.
+Esto puede suceder cuando proviene de una persona externa que no tiene acceso al proyecto, pero sí al repositorio.
+En estos casos, el proceso a seguir es el siguiente:</p>
+
+<ol>
+  <li>
+    <p>Ir al <strong>repositorio de <em>GitHub</em></strong>.</p>
+  </li>
+  <li>
+    <p>Ir a la pestaña <strong><em>Issues</em></strong>.</p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>New issue</em></strong> y rellenar la propuesta.</p>
+  </li>
+</ol>
+
+<p>Cuando llegue el momento, puede asociar la propuesta al proyecto correspondiente haciendo clic en <strong><em>Projects</em></strong>:</p>
+
+<p><img src="img/asignación-de-propuesta-a-proyecto.png" alt="Asignación de propuesta a un proyecto" /></p>
+
+<p>Si tiene activado el flujo <strong>Item added to project</strong> del proyecto, al nuevo ítem se le asignará el estatus ahí indicado o, lo que es lo mismo, se añadirá a la columna correspondiente del tablero del proyecto.
+Ahora bien, si este flujo lo tiene desactivado, inicialmente se moverá a una columna inicial que no es <strong><em>Backlog</em></strong>.
+Pero puede moverla en la propia propuesta tras asignarle el proyecto.</p>
+
+<h2 id="supresión-de-propuesta">Supresión de propuesta</h2>
+
+<p>Es posible suprimir una propuesta.
+La manera más sencilla es mediante <strong>GitHub</strong>, editando la propuesta y haciendo clic en <strong><em>Delete issue</em></strong>.</p>
+
+<p>También puede hacerlo mediante el comando <strong>gh issue delete</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gh issue delete identificador
+</code></pre></div></div>
+
+<h2 id="plantillas-de-propuesta">Plantillas de propuesta</h2>
+
+<p>Una <strong>plantilla de propuesta</strong> (<em>issue template</em>) es una descripción de un tipo de propuesta.
+No es lo mismo notificar un <em>bug</em> que proponer una mejora o funcionalidad.
+Por esta razón, se recomienda crear estas plantillas personalizadas en el repositorio para que las aperturas de nuevas propuestas proporcionen toda la información deseada según su tipo.</p>
+
+<p>Estas plantillas se redactan en <strong>YAML</strong>, antiguamente en <strong>Markdown</strong>, y deben ubicarse en el directorio <strong>.github/ISSUE_TEMPLATE</strong> de la rama predeterminada del repositorio.
+Recordemos que la rama predeterminada suele ser <strong><em>master</em></strong> o <strong><em>main</em></strong>, según los convenios de la organización.
+El proyecto <strong>Akromio</strong>, <a href="https://github.com/akromio">https://github.com/akromio</a>, utiliza plantillas;
+por ejemplo, consulte su repositorio <strong>nodejs-akromio</strong>, <a href="https://github.com/akromio/nodejs-akromio">https://github.com/akromio/nodejs-akromio</a>, como punto de partida.
+También puede consultar otros proyectos como <a href="https://github.com/Azure/azure-sdk-for-net">https://github.com/Azure/azure-sdk-for-net</a>.</p>
+
+<p>Actualmente, los <em>repositorios privados</em> no soportan las plantillas de propuestas en la versión gratuita de <strong>GitHub</strong>.</p>
+
+<p>A continuación, se muestra un ejemplo para la notificación de un <em>bug</em>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># archivo: .github/ISSUE_TEMPLATE/bug-report.yaml</span>
+
+<span class="na">name</span><span class="pi">:</span> <span class="s">Bug report</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Create a report for a bug</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">[Bug]</span><span class="nv"> </span><span class="s">"</span>
+<span class="na">labels</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">bug</span><span class="pi">]</span>
+<span class="na">body</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">input</span>
+    <span class="na">id</span><span class="pi">:</span> <span class="s">package</span>
+    <span class="na">attributes</span><span class="pi">:</span>
+      <span class="na">label</span><span class="pi">:</span> <span class="s">Package name and version</span>
+      <span class="na">description</span><span class="pi">:</span> <span class="s">Name and version of the package used</span>
+      <span class="na">placeholder</span><span class="pi">:</span> <span class="s">ex. @owner/package-name x.y.z</span>
+    <span class="na">validations</span><span class="pi">:</span>
+      <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>
+  
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">textarea</span>
+    <span class="na">id</span><span class="pi">:</span> <span class="s">environment</span>
+    <span class="na">attributes</span><span class="pi">:</span>
+      <span class="na">label</span><span class="pi">:</span> <span class="s">Environment</span>
+      <span class="na">description</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">Please, provide info on your environment such as, for example,</span>
+        <span class="s">your Node.js, OS, etc.</span>
+      <span class="na">placeholder</span><span class="pi">:</span> <span class="s">Environment</span>
+    <span class="na">validations</span><span class="pi">:</span>
+      <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>
+
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">textarea</span>
+    <span class="na">id</span><span class="pi">:</span> <span class="s">background</span>
+    <span class="na">attributes</span><span class="pi">:</span>
+      <span class="na">label</span><span class="pi">:</span> <span class="s">Bug description</span>
+      <span class="na">description</span><span class="pi">:</span> <span class="s">Please, provide the description of issue you're seeing.</span>
+      <span class="na">placeholder</span><span class="pi">:</span> <span class="s">Description</span>
+    <span class="na">validations</span><span class="pi">:</span>
+      <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>
+  
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">textarea</span>
+    <span class="na">id</span><span class="pi">:</span> <span class="s">expected</span>
+    <span class="na">attributes</span><span class="pi">:</span>
+      <span class="na">label</span><span class="pi">:</span> <span class="s">Expected behavior</span>
+      <span class="na">description</span><span class="pi">:</span> <span class="s">Please, provide a description of the expected behavior.</span>
+      <span class="na">placeholder</span><span class="pi">:</span> <span class="s">Expected</span>
+    <span class="na">validations</span><span class="pi">:</span>
+      <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>
+
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">textarea</span>
+    <span class="na">id</span><span class="pi">:</span> <span class="s">repro-steps</span>
+    <span class="na">attributes</span><span class="pi">:</span>
+      <span class="na">label</span><span class="pi">:</span> <span class="s">Reproduction Steps</span>
+      <span class="na">description</span><span class="pi">:</span> <span class="s">Please, include minimal steps to reproduce the problem if possible.</span>
+  
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">dropdown</span>
+    <span class="na">id</span><span class="pi">:</span> <span class="s">priority</span>
+    <span class="na">attributes</span><span class="pi">:</span>
+      <span class="na">label</span><span class="pi">:</span> <span class="s">Priority</span>
+      <span class="na">description</span><span class="pi">:</span> <span class="s">Please, select the priority level for you</span>
+      <span class="na">options</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">Critical</span>
+        <span class="pi">-</span> <span class="s">High</span>
+        <span class="pi">-</span> <span class="s">Medium</span>
+        <span class="pi">-</span> <span class="s">Low</span>
+
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">textarea</span>
+    <span class="na">id</span><span class="pi">:</span> <span class="s">logs</span>
+    <span class="na">attributes</span><span class="pi">:</span>
+      <span class="na">label</span><span class="pi">:</span> <span class="s">Relevant log output</span>
+      <span class="na">description</span><span class="pi">:</span> <span class="s">Please, copy and paste any relevant log output if possible</span>
+      <span class="na">render</span><span class="pi">:</span> <span class="s">shell</span>
+</code></pre></div></div>
+
+<h3 id="formatos-de-las-plantillas">Formatos de las plantillas</h3>
+
+<p>Cada plantilla se creará en su propio archivo <strong>YAML</strong> dentro de <strong>.github/ISSUE_TEMPLATE</strong>.
+Este archivo debe contener las siguientes propiedades.</p>
+
+<h4 id="propiedad-name">Propiedad <em>name</em></h4>
+
+<p>Mediante la propiedad <strong><em>name</em></strong> se indica el nombre de la plantilla, el que se mostrará al usuario cuando vaya a crear una nueva propuesta.
+Debería ser el identificador del tipo de propuesta como, por ejemplo, <em>Bug report</em>, <em>Enhancement request</em> o <em>Feature request</em>.
+Cuando vaya a crear una propuesta, le aparecerá la lista de plantillas existente para que seleccione aquella que mejor se adapta a sus necesidades:</p>
+
+<p><img src="img/selección-de-la-plantilla-de-propuesta-a-utilizar.png" alt="Selección de la plantilla de propuesta a utilizar" /></p>
+
+<h4 id="propiedad-description">Propiedad <em>description</em></h4>
+
+<p>La propiedad <strong><em>description</em></strong> proporciona una breve descripción de la plantilla.
+Tiene como objeto ayudar al usuario a determinar si es la plantilla que debe usar.
+En el ejemplo anterior, es lo que se muestra bajo el nombre de la plantilla.</p>
+
+<h4 id="propiedad-title">Propiedad <em>title</em></h4>
+
+<p>Con la propiedad <strong><em>title</em></strong>, indicamos el prefijo que se asociará a toda propuesta creada a partir de la plantilla.
+Por ejemplo, si la plantilla es para la notificación de un defecto, <em>bug</em> o fallo, podríamos desear que tuviera el prefijo <em>[Bug]</em>.
+Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">[Bug]</span><span class="nv"> </span><span class="s">"</span>
+</code></pre></div></div>
+
+<h4 id="propiedad-labels">Propiedad <em>labels</em></h4>
+
+<p>La propiedad <strong><em>labels</em></strong> contiene las etiquetas predeterminadas para las propuestas creadas a partir de la plantilla.
+Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">labels</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">bug</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<h4 id="propiedad-assignees">Propiedad <em>assignees</em></h4>
+
+<p>Con la propiedad <strong><em>assignees</em></strong>, podemos indicar los responsables iniciales de las propuestas generadas con la plantilla.
+Debe ser el identificador de la <strong>cuenta de <em>GitHub</em></strong> del responsable.
+Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">assignees</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">tú</span><span class="pi">,</span> <span class="nv">yo</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<h4 id="propiedad-body">Propiedad <em>body</em></h4>
+
+<p>La descripción de las propuestas se indica en la propiedad <strong><em>body</em></strong>.
+Consiste en un array de elementos donde cada uno de ellos proporciona una sección de información que conoceremos como <strong>campos de datos</strong> (<em>data fields</em>).
+Se puede indicar tantos campos como sea necesario y todo dependerá del tipo de propuesta que se vaya a hacer.
+No pediremos la misma información para una notificación de <em>bug</em> que para una solicitud de nueva funcionalidad.</p>
+
+<h5 id="campos-de-área-de-texto">Campos de área de texto</h5>
+
+<p>Un campo con el que el usuario pueda introducir un texto puede ser de una única fila o múltiples.
+Para uno de una única fila, utilizaremos un elemento similar al siguiente:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">type</span><span class="pi">:</span> <span class="s">input</span>
+<span class="na">attributes</span><span class="pi">:</span>
+  <span class="na">label</span><span class="pi">:</span> <span class="s">título de la sección</span>
+  <span class="na">description</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">breve descripción a mostrar al usuario</span>
+    <span class="s">con el objeto de la sección e incluso</span>
+    <span class="s">ejemplos si fuera necesario</span>
+  <span class="na">placeholder</span><span class="pi">:</span> <span class="s">texto de ejemplo que se mostrará al usuario</span>
+  <span class="na">value</span><span class="pi">:</span> <span class="s">texto inicial modificable por el usuario</span>
+</code></pre></div></div>
+
+<p>El <em>placeholder</em> se utiliza para presentar al usuario un ejemplo o texto más descriptivo en la caja de texto donde debe escribir.</p>
+
+<p>Para uno de varias filas:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">type</span><span class="pi">:</span> <span class="s">textarea</span>
+<span class="na">attributes</span><span class="pi">:</span>
+  <span class="na">label</span><span class="pi">:</span> <span class="s">título de la sección</span>
+  <span class="na">description</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">breve descripción a mostrar al usuario</span>
+    <span class="s">con el objeto de la sección e incluso</span>
+    <span class="s">ejemplos si fuera necesario</span>
+  <span class="na">render</span><span class="pi">:</span> <span class="s">markdown</span>  <span class="c1"># lenguaje en el que se redactará</span>
+  <span class="na">placeholder</span><span class="pi">:</span> <span class="s">texto de ejemplo que se mostrará al usuario</span>
+  <span class="na">value</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">Un texto inicial que se considerará</span>
+    <span class="s">como escrito por el usuario pero que puede</span>
+    <span class="s">modificar. Generalmente, una plantilla de lo</span>
+    <span class="s">que deseamos de quien crea la propuesta.</span>
+</code></pre></div></div>
+
+<h5 id="cajas-de-verificación">Cajas de verificación</h5>
+
+<p>Para una sección en la que el usuario debe confirmar uno o más posibles valores mediante cajas de verificación, usaremos:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">type</span><span class="pi">:</span> <span class="s">checkboxes</span>
+<span class="na">id</span><span class="pi">:</span> <span class="s">identificador</span>
+<span class="na">attributes</span><span class="pi">:</span>
+  <span class="na">label</span><span class="pi">:</span> <span class="s">título de la sección</span>
+  <span class="na">description</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">breve descripción a mostrar al usuario</span>
+    <span class="s">con el objeto de la sección</span>
+  <span class="na">options</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">label</span><span class="pi">:</span> <span class="s">texto de la opción </span><span class="m">1</span>
+      <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>  <span class="c1"># o false</span>
+
+    <span class="pi">-</span> <span class="na">label</span><span class="pi">:</span> <span class="s">texto de la opción </span><span class="m">2</span>
+      <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span> <span class="c1"># o false</span>
+</code></pre></div></div>
+
+<h5 id="desplegable">Desplegable</h5>
+
+<p>Para un desplegable del que el usuario debe seleccionar uno o más valores:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">type</span><span class="pi">:</span> <span class="s">dropdown</span>
+<span class="na">id</span><span class="pi">:</span> <span class="s">identificador</span>
+<span class="na">attributes</span><span class="pi">:</span>
+  <span class="na">label</span><span class="pi">:</span> <span class="s">título de la sección</span>
+  <span class="na">description</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">breve descripción a mostrar al usuario</span>
+    <span class="s">con el objeto de la sección</span>
+  <span class="na">multiple</span><span class="pi">:</span> <span class="kc">true</span>  <span class="c1"># o false</span>
+  <span class="na">options</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">opción </span><span class="m">1</span>
+    <span class="pi">-</span> <span class="s">opción </span><span class="m">2</span>
+    <span class="pi">-</span> <span class="s">opción </span><span class="m">3</span>
+</code></pre></div></div>
+
+<h5 id="texto-de-descripción">Texto de descripción</h5>
+
+<p>Es posible mostrar un texto al usuario, pero que no forme parte de su propuesta mediante un elemento como el siguiente:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">type</span><span class="pi">:</span> <span class="s">markdown</span>
+<span class="na">attributes</span><span class="pi">:</span>
+  <span class="na">value</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">el texto a mostrar al usuario en Markdown</span>
+</code></pre></div></div>
+
+<h5 id="validaciones">Validaciones</h5>
+
+<p>Los campos de datos de una propuesta pueden tener una propiedad de <strong>validación</strong> (<em>validation</em>), una restricción que debe cumplir el campo.
+Para indicarle a <strong>GitHub</strong> que el usuario debe proporcionar una determinada información, o sea, tiene que suministrar un valor para el campo, utilizaremos la <strong>validación requerida</strong> (<em>required validation</em>).
+De manera predeterminada, todos los campos son opcionales.
+He aquí un ejemplo con el que el usuario deberá seleccionar una opción de un desplegable:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">type</span><span class="pi">:</span> <span class="s">dropdown</span>
+<span class="na">id</span><span class="pi">:</span> <span class="s">priority</span>
+<span class="na">attributes</span><span class="pi">:</span>
+  <span class="na">label</span><span class="pi">:</span> <span class="s">Priority</span>
+  <span class="na">description</span><span class="pi">:</span> <span class="s">Please, select the priority level for you</span>
+  <span class="na">options</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">Critical</span>
+    <span class="pi">-</span> <span class="s">High</span>
+    <span class="pi">-</span> <span class="s">Medium</span>
+    <span class="pi">-</span> <span class="s">Low</span>
+<span class="na">validations</span><span class="pi">:</span>
+  <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>
+</code></pre></div></div>
+
+<h3 id="creación-de-propuestas-a-partir-de-plantillas">Creación de propuestas a partir de plantillas</h3>
+
+<p>Si el repositorio define plantillas de propuestas, cuando hagamos clic en <strong><em>Issues &gt; New issue</em></strong>, <strong>GitHub</strong> listará las plantillas disponibles y nos pedirá que elijamos una de ellas.
+He aquí un ejemplo:</p>
+
+<p><img src="img/selección-de-la-plantilla-de-propuesta-a-utilizar.png" alt="Selección de plantilla para nueva propuesta" /></p>
+
+<p>En caso de que ninguna le resulte adecuada, puede crear una propuesta sin usar plantilla haciendo clic en <strong><em>Open a blank issue</em></strong>.</p>
+
+<h2 id="comentarios-de-una-propuesta">Comentarios de una propuesta</h2>
+
+<p>Cuando alguien hace una propuesta, podemos hacer cualquier tipo de comentario.
+Un <strong>comentario</strong> (<em>comment</em>) no es más que una solicitud de más información, una explicación o consideración adicional que pueda aportar información extra o un punto de vista complementario o alternativo a lo que se está proponiendo.
+Una propuesta no es algo estático que debe aceptarse tal cual.
+Abre un debate sobre su idoneidad y su perfilado que puede conducir a su cierre porque se considera innecesaria o inadecuada o bien a su aceptación con toda la información necesaria encima de la mesa.</p>
+
+<p>Los comentarios se ubican justo debajo de la descripción de la incidencia.
+Se redactan en <strong>Markdown</strong> y pueden hacer referencia a:</p>
+
+<ul>
+  <li>
+    <p>Otras propuestas mediante <strong>#númeroPropuesta</strong>.</p>
+  </li>
+  <li>
+    <p>Personas con <strong>@nombreCuentaGitHub</strong>.</p>
+  </li>
+</ul>
+
+<p>Le adjunto un ejemplo de propuesta con comentarios para que pueda hacerse una idea si no lo ha hecho nunca:
+<a href="https://github.com/Azure/azure-sdk-for-net/issues/32833">https://github.com/Azure/azure-sdk-for-net/issues/32833</a>.</p>
+
+<h2 id="eventos-de-github-actions-relacionados-con-las-propuestas">Eventos de <em>GitHub Actions</em> relacionados con las propuestas</h2>
+
+<p>Al igual que hicimos en la lección <strong>Introducción a <em>GitHub Projects</em></strong>, vamos a presentar algunos eventos disparadores de <strong>flujos de trabajo de <em>GitHub Actions</em></strong>.
+Si necesita reaccionar ante un evento relacionado con las propuestas, puede volver aquí y echar un vistazo de nuevo.</p>
+
+<h3 id="evento-issues">Evento <em>issues</em></h3>
+
+<p>El <strong>evento <em>issues</em></strong> (<em>issues event</em>) se genera cada vez que ocurre algo relacionado con una propuesta.
+Mediante su propiedad <strong><em>types</em></strong>, la cual consiste en un array de textos, podemos afinar ante lo que deseamos reaccionar.
+Entre sus posibles valores encontramos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Valor</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>opened</em></strong></td>
+      <td>Se acaba de crear una propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>reopened</em></strong></td>
+      <td>Se acaba de reabrir una propuesta cerrada.</td>
+    </tr>
+    <tr>
+      <td><strong><em>closed</em></strong></td>
+      <td>Se acaba de cerrar una propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>deleted</em></strong></td>
+      <td>Se acaba de suprimir una propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>assigned</em></strong></td>
+      <td>Se acaba de asignar una propuesta a alguien.</td>
+    </tr>
+    <tr>
+      <td><strong><em>unassigned</em></strong></td>
+      <td>Se acaba de desasignar una propuesta a alguien.</td>
+    </tr>
+    <tr>
+      <td><strong><em>labeled</em></strong></td>
+      <td>Se acaba de asignar una etiqueta a una propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>unlabeled</em></strong></td>
+      <td>Se acaba de quitar una etiqueta a una propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>locked</em></strong></td>
+      <td>Se acaba de bloquear una propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>unlocked</em></strong></td>
+      <td>Se acaba de desbloquear una propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>milestoned</em></strong></td>
+      <td>Se acaba de asignar un hito a una propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>demilestoned</em></strong></td>
+      <td>Se acaba de desasignar el hito de una propuesta.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>En el siguiente ejemplo, indicamos que el flujo de trabajo de <strong>GitHub Actions</strong> se ejecutará automáticamente cuando se cree una propuesta o se le asigne un hito:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span>
+  <span class="na">issues</span><span class="pi">:</span>
+    <span class="na">types</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">opened</span><span class="pi">,</span> <span class="nv">milestoned</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>La información sobre el evento se encontrará en la propiedad <strong><em>event.issue</em></strong> del contexto <strong><em>github</em></strong>.
+Esta propiedad de tipo objeto contiene, entre otras, las siguientes propiedades que describen el evento:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>repository</em></strong></td>
+      <td>Objeto repositorio que donde se encuentra la propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>number</em></strong></td>
+      <td>Identificador numérico de la propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>title</em></strong></td>
+      <td>Título de la propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>body</em></strong></td>
+      <td>Contenido de la propuesta</td>
+    </tr>
+    <tr>
+      <td><strong><em>assignees</em></strong></td>
+      <td>Quienes tienen asignada la propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>state</em></strong></td>
+      <td>Estado de la propuesta: <strong><em>CLOSED</em></strong> u <strong><em>OPEN</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>locked</em></strong></td>
+      <td>Valor booleano que indica si la propuesta está bloqueada.</td>
+    </tr>
+    <tr>
+      <td><strong><em>url</em></strong></td>
+      <td>URL de la propuesta.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="evento-issue_comment">Evento <em>issue_comment</em></h3>
+
+<p>El <strong>evento <em>issue_comment</em></strong> (<em>issue_comment event</em>) se utiliza para disparar el flujo de trabajo cuando se produce alguna cosa relacionada con un comentario de una propuesta del repositorio.
+El evento también se puede perfilar con su propiedad <strong><em>types</em></strong>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Valor</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>created</em></strong></td>
+      <td>Se acaba de crear un comentario de una propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>edited</em></strong></td>
+      <td>Se acaba de editar un comentario de una propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>deleted</em></strong></td>
+      <td>Se acaba de suprimir un comentario de una propuesta.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span>
+  <span class="na">issue_comment</span><span class="pi">:</span>
+    <span class="na">types</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">created</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>La propiedad <strong><em>event</em></strong> del contexto <strong><em>github</em></strong> proporciona un objeto con los datos del evento en cuestión, entre algunas de sus propiedades encontramos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>repository</em></strong></td>
+      <td>Objeto representativo del repositorio de la propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>issue</em></strong></td>
+      <td>Objeto representativo de la propuesta afectada por el comentario.</td>
+    </tr>
+    <tr>
+      <td><strong><em>author</em></strong></td>
+      <td>Nombre del usuario de GitHub que hizo algo en el comentario.</td>
+    </tr>
+    <tr>
+      <td><strong><em>body</em></strong></td>
+      <td>Contenido del comentario en <strong>Markdown</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>bodyText</em></strong></td>
+      <td>Contenido del comentario en texto plano.</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

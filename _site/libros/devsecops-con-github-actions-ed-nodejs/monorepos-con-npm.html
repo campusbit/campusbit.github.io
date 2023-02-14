@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Monorepos con NPM | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Monorepos con NPM" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Una descripción de los monorepos y su uso en Node.js con NPM y Lerna en GitHub Actions." />
+<meta property="og:description" content="Una descripción de los monorepos y su uso en Node.js con NPM y Lerna en GitHub Actions." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Monorepos con NPM" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Una descripción de los monorepos y su uso en Node.js con NPM y Lerna en GitHub Actions.","headline":"Monorepos con NPM","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/devsecops-con-github-actions-ed-nodejs/monorepos-con-npm"},"url":"/libros/devsecops-con-github-actions-ed-nodejs/monorepos-con-npm"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/devsecops-con-github-actions-ed-nodejs'>Dev(Sec)Ops con GitHub Actions (Ed. Node.js)</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Monorepos con NPM</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>16 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>El desarrollo de software no es una tarea sencilla, sobre todo cuando el proyecto es grande o lo desarrollan varias personas.
+En <strong>Node.js</strong>, debido a las dependencias entre paquetes locales en desarrollo, se complica un poco más.
+Por lo que necesitamos alguna forma de desarrollo que sea fácil de aprender, de usar y que proporcione versatilidad y mejore la productividad, eficiencia y mantenimiento.
+Además, debe facilitar o encajar perfectamente con el uso de <strong>CI/CD</strong>.
+Y para esto se utilizan los monorepos y, en caso de <strong>Node.js</strong>, con <strong>npm</strong> en particular, con el uso de los <strong>espacios de trabajo</strong> (<em>workspaces</em>).</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es un monorepo y por qué se usan.</p>
+  </li>
+  <li>
+    <p>Cómo usar <strong>npm</strong> y <strong>Lerna</strong> para el desarrollo con monorepos.</p>
+  </li>
+  <li>
+    <p>Un ejemplo de uso de los propietarios de código de <strong>GitHub</strong>.</p>
+  </li>
+  <li>
+    <p>Propiedades típicas que deben aparecer en el archivo <strong>package.json</strong> de un paquete atendiendo a su tipo.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>Un <strong>repositorio</strong> (<em>repository</em>), o <strong>repo</strong>, no es más que un lugar donde almacenar nuestro trabajo y registrar los cambios.
+Cuando un proyecto dispone de varios paquetes, es importante organizar su desarrollo.
+Para estos casos, podemos usar dos enfoques, el uso de monorepos o los repos múltiples.</p>
+
+<p>El <strong>desarrollo mediante monorepo</strong> (<em>monorepo-style development</em>) es una manera de desarrollar proyectos que se implementan en varios paquetes relacionados, cada uno con su propias responsabilidades y funcionalidades.
+La idea es desarrollar varios paquetes relacionados, ya sean todos los del proyecto o algunos de ellos, mediante un <em>único</em> repositorio.
+Estos paquetes del repositorio suelen depender unos de otros y otros de unos.
+Esto es algo muy importante, al menos en <strong>Node.js</strong>, porque la gestión de dependencias de paquetes bajo desarrollo puede llegar a generar grandes dolores de cabeza y, en ocasiones, provocar mucha frustración.</p>
+
+<p>En cambio, el <strong>desarrollo mediante múltiples repos</strong> (<em>multirepos-style development</em>) consiste en dedicar un repositorio a cada módulo independiente.</p>
+
+<p>La diferencia es muy sencilla.
+Con los monorepos utilizamos un único repositorio para varios paquetes.
+Mientras que con multirepos utilizamos un repositorio para cada paquete.
+Esto, que puede parecer intrascendente, es de mucha importancia cuando se detecta un fallo o <em>bug</em>.
+Si estamos trabajando mediante monorepos, el fallo se corregirá y se arreglará para todo el contenido del monorepo, pudiendo, en ocasiones, saltar de inmediato a otros paquetes desarrollados dentro de ese mismo monorepo.
+Esto hará que se tenga que resolver de inmediato.
+En cambio, si lo hacemos en repositorios distintos, habrá que ir a cada repositorio, actualizar la dependencia y volver a ejecutar sus pruebas para, así, poder detectar si la corrección del fallo ha tenido algún efecto colateral o secundario en esos paquetes dependientes.</p>
+
+<p>Los monorepos mejoran el desarrollo, el mantenimiento, la eficiencia y la productividad.
+Y pueden contener paquetes del mismo o distinto proyecto, pudiendo trabajar en ellos uno o más equipos.</p>
+
+<p>En este punto y antes de continuar, por favor, eche un vistazo al siguiente proyecto, el cual se ha desarrollado mediante un monorepo, concretamente usando <strong>npm</strong>, y dispone de varios paquetes: <a href="https://github.com/akromio/nodejs-expected">https://github.com/akromio/nodejs-expected</a>, una colección de bibliotecas de aserción para su uso en pruebas automatizadas como, por ejemplo, de unidad o integración.
+En el directorio <strong>packages</strong>, puede encontrar los distintos paquetes.</p>
+
+<p>Resumiendo, un <strong>monorepo</strong> es un repositorio para el desarrollo de paquetes relacionados y dependientes entre sí.
+No es más que un repositorio que contiene el desarrollo de varios paquetes.
+No significa que todo el proyecto tenga que desarrollarse mediante un único monorepo, podemos hacerlo con varios, aunque podría ser así si el proyecto es de pequeño o mediano tamaño.</p>
+
+<p>En muchas ocasiones, cuando desarrollamos un proyecto de software, tras un análisis y diseño previos, nos damos cuenta que su desarrollo será más fácil, productivo y eficaz si lo dividimos en partes más pequeñas, manejables e independientes que si lo hacemos como un único todo.
+En <strong>Node.js</strong>, esto significa implementar el proyecto en varios paquetes, cada uno con unas responsabilidades, características y funciones bien claras y definidas.
+El problema es que si cada paquete lo implementamos en su propio proyecto, las dependencias entre los paquetes del proyecto pueden hacer su implementación un poco costosa.
+Para resolver el problema, surgen los monorepos, mediante un único repositorio, implementamos todos los paquetes, aunque lo hacemos como paquetes independientes y no como un gran paquete.</p>
+
+<p>Cuando trabajamos con monorepos, necesitaremos usar un programa de desarrollo conocido formalmente como <strong>herramienta de monorepo</strong> (<em>monorepo tool</em>).
+Hay muchas disponibles, siendo <strong>Lerna</strong> y <strong>npm</strong> las más utilizadas por la comunidad de <strong>Node.js</strong>.
+En nuestro caso, nos vamos a centrar en <strong>npm</strong>, pues forma parte de nuestro día a día, reduciendo así la curva de aprendizaje.
+De manera excepcional, mostraremos <strong>Lerna</strong>, pero sólo aquellos comandos que resuelven deficiencias que hoy en día tiene <strong>npm</strong> que, muy probablemente, se resolverán en un futuro no muy lejano.
+Entre las características que, como mínimo, deben proporcionar, encontramos:</p>
+
+<ul>
+  <li>
+    <p>Gestión de las dependencias de los paquetes del monorepo y entre ellos mismos.</p>
+  </li>
+  <li>
+    <p>Instalación sencilla de dependencias.</p>
+  </li>
+  <li>
+    <p>Establecimiento de la versión de los paquetes del monorepo antes de su publicación.</p>
+  </li>
+  <li>
+    <p>Publicación de los paquetes del monorepo en un registro como, por ejemplo, <strong>NPM</strong>.</p>
+  </li>
+</ul>
+
+<h2 id="espacios-de-trabajo">Espacios de trabajo</h2>
+
+<p>Desde la versión <strong>7</strong>, <strong>npm</strong> proporciona la funcionalidad de <strong>espacios de trabajo</strong> (<em>workspaces</em>), la cual podemos utilizar para trabajar con monorepos.
+Para <strong>npm</strong>, un <strong>espacio de trabajo</strong> (<em>workspace</em>) representa un subdirectorio del proyecto que contiene un paquete.
+Al directorio del proyecto lo consideraremos como el monorepo;
+mientras que a los distintos espacios de trabajo como sus paquetes.</p>
+
+<h2 id="archivo-packagejson-del-monorepo">Archivo <em>package.json</em> del monorepo</h2>
+
+<p>Todo monorepo, que use <strong>npm</strong>, debe tener su propio archivo de metadatos <strong>package.json</strong>, independientemente del de los paquetes que contiene.
+Este archivo es similar a los de un paquete de <strong>Node.js</strong>, pero con algunas características:</p>
+
+<ul>
+  <li>
+    <p>Debe ser privado, es decir, debe tener su propiedad <strong>private</strong> a <strong>true</strong>.</p>
+  </li>
+  <li>
+    <p>Debe contener las dependencias de desarrollo específicas del monorepo.
+Esto incluye también dependencias de desarrollo comunes usadas por los paquetes del monorepo como, por ejemplo, <strong>mocha</strong>, <strong>typescript</strong>, etc.</p>
+  </li>
+  <li>
+    <p>Debe indicar la ubicación de los paquetes del monorepo mediante la propiedad <strong>workspaces</strong>.</p>
+  </li>
+</ul>
+
+<p>Veamos un ejemplo ilustrativo:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"monorepo"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"private"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"workspaces"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"packages/*"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"engines"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"node"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&gt;= 18"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"npm"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&gt;= 8"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"devDependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"@babel/cli"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^7.18.10"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"@babel/core"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^7.19.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"@babel/plugin-proposal-nullish-coalescing-operator"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^7.18.6"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"@babel/preset-env"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^7.19.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"@dogmalang/core"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^1.0.0-rc18.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"@types/node"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^18.7.15"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"@typescript-eslint/eslint-plugin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^5.36.2"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"@typescript-eslint/parser"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^5.36.2"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"c8"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^7.12.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"chai"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^4.3.6"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"eslint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^8.23.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"eslint-config-prettier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^8.5.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"eslint-plugin-prettier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^4.2.1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"mocha"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^10.0.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"prettier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^2.7.1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"typescript"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^4.8.2"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"clean"</span><span class="p">:</span><span class="w"> </span><span class="s2">"npm run env -ws -- rm -rf node_modules/"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"bootstrap"</span><span class="p">:</span><span class="w"> </span><span class="s2">"npm run clean &amp;&amp; npm i -ws"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"build"</span><span class="p">:</span><span class="w"> </span><span class="s2">"npm run -ws build"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"test"</span><span class="p">:</span><span class="w"> </span><span class="s2">"npm run -ws test"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"cov"</span><span class="p">:</span><span class="w"> </span><span class="s2">"npm run -ws cov"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>En la propiedad <strong><em>name</em></strong>, puede indicar cualquier nombre como el nombre del proyecto o, como en el ejemplo, simplemente <em>monorepo</em>.
+Para gustos, colores.</p>
+
+<p>La propiedad <strong><em>version</em></strong> la podemos utilizar para indicar la versión del monorepo.
+En este caso, en cada publicación, incrementaremos esta propiedad para que refleje la versión en la que estamos.
+Esta propiedad no es necesaria, pero sí recomendable, sobre todo si utiliza la opción <code class="language-plaintext highlighter-rouge">--include-workspace-root</code>, tal y como veremos más adelante.</p>
+
+<p>Mediante la propiedad <strong><em>scripts</em></strong>, podemos registrar <em>scripts</em> específicos del monorepo.</p>
+
+<p>En la propiedad <strong><em>workspaces</em></strong> del archivo de metadatos del monorepo, debemos indicar las rutas, relativas a la raíz del monorepo, donde se encuentran sus paquetes.
+Se puede usar comodines, tal y como muestra el ejemplo anterior.
+Por convenio, los paquetes del monorepo se suelen ubicar en su directorio <strong><em>packages</em></strong>.
+Dentro de este directorio, podemos crear subdirectorios que sirvan para agrupar los paquetes por algún tipo de característica o funcionalidad;
+o bien, ubicar todos los paquetes como hijos de <strong><em>packages</em></strong>.
+En el ejemplo anterior, todos los paquetes se encuentran en el directorio <strong><em>packages</em></strong>.
+Ahora bien, otras estructuras son posibles como, por ejemplo:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"workspaces"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"packages/libs/*"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"packages/plugins/*"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"packages/presets/*"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"packages/tools/*"</span><span class="p">,</span><span class="w">
+</span><span class="p">]</span><span class="err">,</span><span class="w">
+</span></code></pre></div></div>
+
+<p>En este último ejemplo, los paquetes se ubican en los directorios <em>packages/libs</em>, <em>packages/plugins</em>, <em>packages/presets</em> y <em>packages/tools</em>.
+Use aquella estructura que mejor se adapte a su situación.</p>
+
+<h2 id="instalación-de-dependencias-con-npm">Instalación de dependencias con <em>npm</em></h2>
+
+<p>Una de las características de <strong>npm</strong> es la instalación de dependencias.
+El comando <strong>npm install</strong>, abreviado como <strong>npm i</strong>, se utiliza, como ya sabemos, para instalar dependencias.
+Cuando lo usamos con paquetes de un monorepo, hay que recordar utilizarlo con algunas opciones extras.</p>
+
+<h3 id="opción---workspaces">Opción <code class="language-plaintext highlighter-rouge">--workspaces</code></h3>
+
+<p>Cuando se indica la opción <code class="language-plaintext highlighter-rouge">--workspaces</code>, abreviada como <code class="language-plaintext highlighter-rouge">-ws</code>, el comando se aplicará a <em>todos</em> los paquetes del monorepo.
+Tal y como veremos más adelante, también se tiene que usar con otros comandos como, por ejemplo, <strong>npm version</strong>, <strong>npm publish</strong> y <strong>npm run</strong>.</p>
+
+<p>El comando <strong>npm i -ws</strong> lo que hace es recorrer los distintos paquetes del monorepo, analizarlos, desarrollar el grafo de dependencias detectando cuáles son internas al monorepo, es decir, qué paquetes del monorepo dependen de otros del propio monorepo y, entonces, realizar la instalación de las dependencias, creando enlaces cuando sea necesario.
+No instala las dependencias del <strong>package.json</strong> del monorepo, sino las dependencias de los paquetes del monorepo ubicadas en sus correspondientes archivos <strong>package.json</strong>.</p>
+
+<p>Si deseamos que instale primero las dependencias del monorepo, es decir, las indicadas por el archivo de metadatos del monorepo, indicaremos también la opción <code class="language-plaintext highlighter-rouge">--include-workspace-root</code>.</p>
+
+<p>Así pues, cuando clonamos un monorepo, lo primero que haremos es instalar las dependencias del monorepo con el siguiente comando <strong>npm i</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i <span class="nt">-ws</span> <span class="nt">--include-workspace-root</span>
+</code></pre></div></div>
+
+<h3 id="instalación-de-dependencias-individuales">Instalación de dependencias individuales</h3>
+
+<p>Si durante el desarrollo necesitamos añadir una nueva dependencia, primero, tenemos que saber a qué se lo vamos a añadir.
+Puede ser una dependencia del monorepo o una de uno o más de sus paquetes.
+Atendiendo a qué, tendremos que hacerlo de una manera u otra.</p>
+
+<p>Si necesitamos añadir una dependencia al monorepo, usaremos el comando <strong>npm i</strong> sin las opciones de espacio de trabajo.
+Ubicados en el directorio raíz del monorepo, ejecutaremos el <strong>npm i</strong> correspondiente.
+Ejemplo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i <span class="nt">-D</span> mocha
+</code></pre></div></div>
+
+<p>Ahora bien, si necesitamos añadir una dependencia a <em>todos</em> los paquetes del monorepo, tendremos que indicar la opción <code class="language-plaintext highlighter-rouge">--workspaces</code>.
+En cambio, si sólo deseamos añadir la dependencia a un único paquete, usaremos la opción <code class="language-plaintext highlighter-rouge">--workspace</code> o <code class="language-plaintext highlighter-rouge">-w</code>, indicando el paquete en cuestión.
+El siguiente ejemplo muestra cómo instalar el paquete <em>@skynetlabs/skynet-nodejs</em> en el paquete <em>mi-paquete</em> del monorepo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i <span class="nt">-w</span> mi-paquete @skynetlabs/skynet-nodejs
+</code></pre></div></div>
+
+<p>Como nombre del paquete donde instalar la dependencia, se puede indicar el nombre del paquete o la ruta relativa al directorio del paquete.
+Lo que más le guste.</p>
+
+<p>Si necesitamos instalar un mismo paquete en varios del monorepo, podemos indicar una opción <code class="language-plaintext highlighter-rouge">-w</code> para cada uno de ellos.
+<em>No</em> hace falta ejecutar varias veces el comando, basta con indicar varias opciones <code class="language-plaintext highlighter-rouge">-w</code>, una para cada paquete.</p>
+
+<p>Si un paquete del monorepo depende de otro de ese mismo monorepo, debe instalar la dependencia como acabamos de ver.
+No lo olvide.
+Esto se debe a que <strong>npm i</strong> detecta que está ante una dependencia local y entonces realizará todo aquello que sea necesario para mantener el monorepo en buen estado, creando enlaces cuando sea necesario, en vez de instalando paquetes de algún registro remoto.</p>
+
+<h2 id="ejecución-de-scripts-con-npm">Ejecución de <em>scripts</em> con <em>npm</em></h2>
+
+<p>A veces, necesitamos ejecutar un determinado <em>script</em> en cada paquete del monorepo como, por ejemplo, cuando deseamos ejecutar la batería de pruebas de todos o algunos paquetes.
+<strong>npm</strong> permite hacer esto de manera muy sencilla con el comando <strong>npm run</strong>.</p>
+
+<h3 id="comando-npm-run">Comando <em>npm run</em></h3>
+
+<p>Mediante el comando <strong>npm run</strong> pedimos a <strong>npm</strong> que ejecute un determinado <em>script</em> de los indicados en el <strong>package.json</strong> de los paquetes del monorepo.
+Lo que hace es recorrer los archivos de metadatos de los paquetes, detectar quiénes lo tienen y, entonces, ejecutarlos.</p>
+
+<p>Su sintaxis básica es:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm run nombreScript
+</code></pre></div></div>
+
+<p>Por ejemplo, si deseamos ejecutar el <em>script build</em> en todos los paquetes, utilizaremos lo siguiente, no olvide el uso de la opción <code class="language-plaintext highlighter-rouge">--workspaces</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm run <span class="nt">-ws</span> build
+</code></pre></div></div>
+
+<p>Si sólo quiere ejecutarlo en un determinado paquete del monorepo, puede usar la opción <code class="language-plaintext highlighter-rouge">--workspace</code>, de manera similar a como hemos visto con otros comandos anteriormente.</p>
+
+<p>A veces, necesitamos pasar opciones extras al <em>script</em> indicado en el <strong>package.json</strong>.
+Podemos hacerlo, en el comando <strong>npm run</strong>, indicándolas al final de la línea de comandos tras un doble guion (<code class="language-plaintext highlighter-rouge">--</code>).
+Este guion doble actúa como marcador de inicio de las opciones extras que se deben añadir a lo indicado en el archivo de metadatos.
+Ejemplo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm run <span class="nb">test</span> <span class="nt">--</span> <span class="nt">--config</span> .mocharc.itg.yaml
+</code></pre></div></div>
+
+<p>¿Qué ocurre si un paquete del monorepo no contiene el <em>script</em> indicado?
+Sencillo, <strong>npm</strong> mostrará un mensaje de error para ese paquete, similar al siguiente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm ERR!   in workspace: nombre-paquete
+npm ERR!   at location: /ruta/al/paquete
+npm ERR! Lifecycle script `nombre-script` failed with error: 
+npm ERR! Error: Missing script: "nombre-script"
+</code></pre></div></div>
+
+<p>Para evitar este tipo de mensajes en aquellos paquetes que no definan el <em>script</em>, utilizaremos la opción <code class="language-plaintext highlighter-rouge">--if-present</code>.
+Ejemplo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm run <span class="nb">test</span>/itg <span class="nt">--if-present</span>
+</code></pre></div></div>
+
+<h3 id="npm-run-env">npm run env</h3>
+
+<p><strong>npm</strong> proporciona un <em>script</em> especial conocido como <strong>env</strong>, el cual podemos usar para listar las variables de entorno disponibles en un paquete.
+Con este <em>script</em>, si lo necesitamos, podemos ejecutar líneas de comandos en los paquetes del monorepo.
+No hay más que indicar un guion doble (<code class="language-plaintext highlighter-rouge">--</code>) y, a continuación, el comando a ejecutar.
+Vamos a ver un ejemplo.
+Supongamos que queremos suprimir un determinado directorio presente en los paquetes del monorepo, esto lo podemos hacer muy fácilmente como sigue:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm run <span class="nb">env</span> <span class="nt">--</span> <span class="nb">rm</span> <span class="nt">-rf</span> directorio
+</code></pre></div></div>
+
+<h2 id="propietarios-de-código">Propietarios de código</h2>
+
+<p><strong>GitHub</strong> proporciona una característica que se conoce como <strong>propietarios de código</strong> (<em>code owners</em>).
+Un <strong>propietario de código</strong> (<em>code owner</em>) es una persona o equipo que se responsabiliza de uno o más paquetes del proyecto.
+La idea es permitir que varios equipos puedan trabajar en el mismo monorepo, pero que un equipo <em>no</em> pueda <em>cambiar</em> o <em>actualizar</em> un paquete de otro, aunque tenga permiso para trabajar en el monorepo común.</p>
+
+<p>Lo que hay que hacer es definir el <strong>archivo CODEOWNERS</strong> (<em>CODEOWNERS file</em>), el cual fija los distintos propietarios de código y los paquetes de los que son responsables.
+Este archivo de texto hay que ubicarlo en el directorio <strong>.github</strong> del proyecto, o sea, definiremos los propietarios de código en <strong>.github/CODEOWNERS</strong>.
+Cada línea define un paquete y quiénes son sus responsables.
+Realmente, define una ruta del proyecto de tal manera que todo lo que cuelga de ella es responsabilidad de los usuarios indicados.
+Esto generalmente suele ser la ruta de un paquete.</p>
+
+<p>La sintaxis de cada línea es la siguiente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ruta propietario(s)
+</code></pre></div></div>
+
+<p>Cada propietario se debe indicar mediante su <strong>nombre de usuario de GitHub</strong> precedido de una arroba (<code class="language-plaintext highlighter-rouge">@</code>).
+Si hay que fijar varios, usaremos el espacio como separador.
+Si como ruta indicamos un asterisco (<code class="language-plaintext highlighter-rouge">*</code>), estaremos indicando todo el proyecto; ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* @tú @yo
+</code></pre></div></div>
+
+<p>Para indicar un determinado paquete, he aquí un ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/packages/nombre-paquete/ @tú @yo
+</code></pre></div></div>
+
+<p>En ocasiones, puede ser útil restringir la propiedad a extensiones de archivo, en vez de a directorios como en el caso anterior.
+Ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*.js @tú
+*.go @yo
+</code></pre></div></div>
+
+<p>Los propietarios de código se tienen en cuenta en:</p>
+
+<ul>
+  <li>
+    <p>Las solicitudes de integración.</p>
+  </li>
+  <li>
+    <p>La protección de ramas.</p>
+  </li>
+</ul>
+
+<h2 id="tipos-de-paquete">Tipos de paquete</h2>
+
+<p>El <strong>tipo de paquete</strong> (<em>package type</em>) refleja el objeto del paquete.
+Básicamente, los paquetes de <strong>NPM</strong> se suelen clasificar como:</p>
+
+<ul>
+  <li>
+    <p><strong>Paquete de biblioteca</strong> (<em>library package</em>), aquel que presenta una API para su reutilización por otros.
+Este tipo de paquetes suelen definir las propiedades <strong><em>main</em></strong>, <strong><em>exports</em></strong>, <strong><em>browser</em></strong>, <strong><em>module</em></strong> y <strong><em>types</em></strong>.</p>
+  </li>
+  <li>
+    <p><strong>Paquete de línea de comandos</strong> (<em>CLI package</em>), aquel que proporciona una o más aplicaciones de línea de comandos.
+En este caso, habrá que definir la propiedad <strong><em>bin</em></strong>.</p>
+  </li>
+  <li>
+    <p><strong>Paquete de aplicación</strong> (<em>application package</em>), aquel que proporciona un servicio como, por ejemplo, un servicio web privado.
+En este caso, no olvidar poner la propiedad <strong><em>private</em></strong> a <strong><em>true</em></strong>.</p>
+  </li>
+</ul>
+
+<h2 id="comando-npm-prune">Comando <em>npm prune</em></h2>
+
+<p>Una <strong>paquete extraño</strong> (<em>extraneous package</em>) es aquel que aparece en nuestro directorio <strong>node_modules</strong>, pero no así en el archivo de metadatos.
+Puede producirse, por ejemplo, si lo instalamos como dependencia, pero lo hacemos sin actualizar el archivo <strong>package.json</strong>.
+Este tipo de paquetes no son recomendables porque pueden conducir a que se utilicen sólo en nuestro entorno de desarrollo personal,
+pero que por suerte, nos saltarán posteriormente en la integración continua al no instalarse debido a que no se listan entre nuestras dependencias.</p>
+
+<p>El comando <strong>npm prune</strong> lo que hace es eliminar estos paquetes.
+Para ello, puede utilizar las siguientes sintaxis:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># suprime los paquetes extraños del monorepo</span>
+npm prune <span class="nt">--workspaces</span>
+npm prune <span class="nt">--workspaces</span> <span class="nt">--include-workspace-root</span>
+
+<span class="c"># suprime los paquetes extraños del paquete indicado del monorepo</span>
+npm prune <span class="nt">--workspace</span> nombrePaquete
+</code></pre></div></div>
+
+<p>La opción <code class="language-plaintext highlighter-rouge">--dry-run</code> se utiliza para saber lo que haría el comando si no estuviera esta opción.</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

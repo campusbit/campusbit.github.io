@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Publicación de acciones personalizadas | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Publicación de acciones personalizadas" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Cómo publicar acciones personalizadas en GitHub Actions." />
+<meta property="og:description" content="Cómo publicar acciones personalizadas en GitHub Actions." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Publicación de acciones personalizadas" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Cómo publicar acciones personalizadas en GitHub Actions.","headline":"Publicación de acciones personalizadas","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/devsecops-con-github-actions-ed-nodejs/publicaci%C3%B3n-de-acciones-personalizadas"},"url":"/libros/devsecops-con-github-actions-ed-nodejs/publicaci%C3%B3n-de-acciones-personalizadas"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/devsecops-con-github-actions-ed-nodejs'>Dev(Sec)Ops con GitHub Actions (Ed. Node.js)</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Publicación de acciones personalizadas</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>7 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Para finalizar las lecciones relacionadas con las acciones personalizadas, vamos a indagar en cómo publicarlas.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Cómo publicar una acción personalizada en el <strong><em>marketplace</em> de GitHub</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo suprimir una versión de una acción personalizada del <strong><em>marketplace</em> de GitHub</strong>.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>El <strong><em>marketplace</em> de GitHub</strong> (<em>GitHub marketplace</em>) es un sitio público donde podemos publicar acciones personalizadas.
+Las acciones aquí registradas se pueden utilizar en nuestros flujos de trabajo.
+Por lo que se han convertido en el lugar donde publicar aquellas acciones que deseamos compartir con la comunidad.</p>
+
+<h2 id="proceso-de-publicación">Proceso de publicación</h2>
+
+<p>Para publicar una acción, es necesario generar una etiqueta y un <strong>lanzamiento de GitHub</strong> para, a continuación, realizar una publicación manual.
+El etiquetado y el lanzamiento se pueden hacer manual o automáticamente, pero actualmente la publicación en el <em>marketplace</em> debe hacerse manualmente desde un lanzamiento ya creado.</p>
+
+<p>La etiqueta, recordemos, es lo que indicaremos en las acciones cuando las invoquemos.
+Por ejemplo, si invocamos la acción <strong>siacodelabs/setup-antlr</strong> como <em>siacodelabs/setup-antlr4@v2</em>, lo que estamos indicando es la versión publicada con la etiqueta <em>v2</em>.
+Por convenio, las etiquetas de las acciones personalizadas siguen los formatos <strong><em>vX</em></strong> y <strong><em>vX.Y.Z</em></strong> como, por ejemplo, <em>v1</em> o <em>v1.2.3</em>.</p>
+
+<p>Groso modo, el proceso consiste en:</p>
+
+<ol>
+  <li>
+    <p>Generar una etiqueta para la versión actual en el repositorio.</p>
+  </li>
+  <li>
+    <p>Crear un <strong>lanzamiento de GitHub</strong> de la acción para su publicación en el <em>marketplace</em>.</p>
+  </li>
+  <li>
+    <p>Realizar una publicación manual del lanzamiento en el <em>marketplace</em>.</p>
+  </li>
+</ol>
+
+<p>Si el proceso lo realiza manualmente, el lanzamiento y la publicación se pueden hacer en un único paso.</p>
+
+<h3 id="primera-publicación-en-el-marketplace-de-github">Primera publicación en el <em>marketplace de GitHub</em></h3>
+
+<p>La primera publicación de la acción es especial.
+En este caso, encontrará un mensaje en el repositorio que indica si desea publicar la acción:</p>
+
+<p><img src="img/publish-action.png" alt="Mensaje de publicación en el *marketplace*" /></p>
+
+<p>Haga clic en <strong><em>Draft a release</em></strong> para llevar a cabo la publicación y siga los pasos de una publicación manual que se describen a continuación.</p>
+
+<h3 id="publicación-manual">Publicación manual</h3>
+
+<p>Al comienzo, la manera más sencilla de publicar es hacerlo todo manualmente.
+Es la que menos dolores de cabeza genera, porque es muy sencilla, pero no es automática que es lo que debemos intentar cuando trabajamos con <strong>CI/CD</strong>.
+A pesar de todo, vamos a presentar el proceso porque ayuda a comprender lo que habrá que automatizar posteriormente mediante un flujo de lanzamiento:</p>
+
+<ol>
+  <li>
+    <p>Crear una etiqueta en el repositorio, por ejemplo, mediante el comando <strong>git</strong>:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git tag <span class="nt">-a</span> v1 <span class="nt">-m</span> <span class="s2">"release: v1"</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Publicar la etiqueta en el repositorio remoto de <strong>GitHub</strong>:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push origin <span class="nt">--tags</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Ir al portal web de <strong>GitHub</strong>.</p>
+  </li>
+  <li>
+    <p>Ir al repositorio de <strong>GitHub</strong>.</p>
+  </li>
+  <li>
+    <p>Ir a la sección de etiquetas:</p>
+
+    <p><img src="img/tags.png" alt="Sección de etiquetas" /></p>
+  </li>
+  <li>
+    <p>Mostrar el menú contextual de la etiqueta que representa la versión a publicar haciendo clic en los tres puntos (<code class="language-plaintext highlighter-rouge">...</code>):</p>
+
+    <p><img src="img/tag-contextual-menu.png" alt="Menú contextual de una etiqueta no publicada" /></p>
+  </li>
+  <li>
+    <p>Hacer clic en el elemento <strong><em>Create release</em></strong> del menú, lo que mostrará un formulario para la generación de un lanzamiento.</p>
+  </li>
+  <li>
+    <p>Comprobar que no existe ningún conflicto en el archivo <strong><em>action.yaml</em></strong>.
+Si existe, resolverlo y comenzar de nuevo.</p>
+  </li>
+  <li>
+    <p>Elegir la categoría principal a la que asociar la acción como, por ejemplo, <strong><em>Backup Utilities</em></strong>, <strong><em>Code quality</em></strong>, <strong><em>Community</em></strong>, <strong><em>Deployment</em></strong>, etc.
+Puede elegir otra categoría adicional, aunque esta segunda es opcional.</p>
+  </li>
+  <li>
+    <p>Comprobar que la etiqueta a publicar es la deseada.</p>
+  </li>
+  <li>
+    <p>Fijar un título que describa la versión a publicar.
+Es libre, ponga lo que mejor describa su lanzamiento.
+En caso de duda, puede consultar los lanzamientos de <strong>actions/setup-node</strong> o <strong>actions/setup-python</strong>.</p>
+  </li>
+  <li>
+    <p>Seleccionar <strong><em>Set as the latest release</em></strong> si estamos ante la última versión, lo más probable.</p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>Publish release</em></strong>.</p>
+  </li>
+</ol>
+
+<p>Si todo ha ido bien, y ha seleccionado también <strong><em>Release this Action to the GitHub Marketplace</em></strong> en lo alto del formulario, en el lanzamiento verá un enlace con el texto <strong><em>Marketplace</em></strong> que le llevará a la acción en el <em>marketplace</em>.
+He aquí un ejemplo ilustrativo de una versión publicada de la acción <strong>actions/setup-go</strong>:</p>
+
+<p><img src="img/published-release.png" alt="Lanzamiento publicado" /></p>
+
+<h3 id="publicación-automatizada">Publicación automatizada</h3>
+
+<p>He aquí un ejemplo de flujo de lanzamiento reutilizable usado por las acciones personalizadas de <strong>Sia Codelabs</strong>, el cual puede encontrar en su repositorio público <strong>.github</strong>, <a href="https://github.com/siacodelabs/.github">https://github.com/siacodelabs/.github</a>,  como <em>actions-release.yaml</em>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Release</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">workflow_call</span><span class="pi">:</span>
+    <span class="na">inputs</span><span class="pi">:</span>
+      <span class="na">version</span><span class="pi">:</span>
+        <span class="na">description</span><span class="pi">:</span> <span class="s">Version tag to publish</span>
+        <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>
+        <span class="na">type</span><span class="pi">:</span> <span class="s">string</span>
+
+<span class="na">env</span><span class="pi">:</span>
+  <span class="na">version</span><span class="pi">:</span> <span class="s">${{ inputs.version }}</span>
+  <span class="na">nodejs</span><span class="pi">:</span> <span class="s">16.x</span>
+  <span class="na">actionType</span><span class="pi">:</span> <span class="s">composite</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">release</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Release action</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Clone repo</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Configure Git metadata</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">git config --local user.name ${{ github.actor }}</span>
+          <span class="s">git config --local user.username ${{ github.actor }}</span>
+          <span class="s">git config --local user.email ${{ github.actor }}@users.noreply.github.com</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Determine action type</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">if [[ -f package.json ]]; then</span>
+            <span class="s">echo "actionType=JavaScript" &gt;&gt; $GITHUB_ENV</span>
+          <span class="s">fi</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Setup Node.js ${{ env.nodejs }} if action type is JavaScript</span>
+        <span class="na">if</span><span class="pi">:</span> <span class="s">env.actionType == 'JavaScript'</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-node@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">node-version</span><span class="pi">:</span> <span class="s">${{ env.nodejs }}</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Update version tag to use if needed</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">tag="${{ env.version }}"</span>
+
+          <span class="s">if [[ "$tag" != v* ]]; then</span>
+            <span class="s">echo "version=v$tag" &gt;&gt; $GITHUB_ENV</span>
+          <span class="s">fi</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Update package.json if needed</span>
+        <span class="na">if</span><span class="pi">:</span> <span class="s">env.actionType == 'JavaScript'</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s"># (1) determine version x.y.z to use</span>
+          <span class="s">version=${{ env.version }}</span>
+
+          <span class="s">if [[ $version != *.* ]]; then</span>
+            <span class="s">version=$version.0.0</span>
+          <span class="s">fi</span>
+
+          <span class="s"># (2) set version</span>
+          <span class="s">npm version --no-commit-hooks --no-git-tag-version ${version:1}</span>
+
+          <span class="s"># (3) commit changes</span>
+          <span class="s">git add package.json</span>
+          <span class="s">git add package-lock.json</span>
+          <span class="s">git commit -m "release: ${{ env.version }}"</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Create and publish release tag</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">git tag -a ${{ env.version }} -m "release: ${{ env.version }}"</span>
+          <span class="s">git push  # required if JavaScript</span>
+          <span class="s">git push origin --tags</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Create release</span>
+        <span class="na">env</span><span class="pi">:</span>
+          <span class="na">GITHUB_TOKEN</span><span class="pi">:</span> <span class="s">${{ secrets.GITHUB_TOKEN }}</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">gh release create ${{ env.version }} -t "Release: ${{ env.version }}"</span>
+</code></pre></div></div>
+
+<p>Recuerde que este flujo no publica en el <em>marketplace</em>, sólo genera el lanzamiento.
+Su publicación debe hacerla de manera manual.
+Para ello, una vez generado el <strong>lanzamiento de GitHub</strong>, siga los siguientes pasos:</p>
+
+<ol>
+  <li>
+    <p>Ir al repositorio de <strong>GitHub</strong>.</p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>Releases</em></strong> en la pestaña <strong><em>Code</em></strong>, se encuentra en el lateral derecho:</p>
+
+    <p><img src="img/releases.png" alt="Lanzamientos" /></p>
+  </li>
+  <li>
+    <p>Buscar el lanzamiento a publicar, confirmando que <em>no</em> se encuentra ya publicado en el <em>marketplace</em>, y hacer clic en el icono de un lápiz:</p>
+
+    <p><img src="img/release-toolbar.png" alt="Barra de iconos de un lanzamiento" /></p>
+
+    <p>Recuerde que para saber si un lanzamiento está publicado en el <em>markeplace</em>, debe aparecer el texto <strong><em>Marketplace</em></strong> que al hacer clic sobre él nos trasladará a la acción en el <em>marketplace</em>:</p>
+
+    <p><img src="img/marketplace-icon.png" alt="Icono de *marketplace*" /></p>
+  </li>
+  <li>
+    <p>Confirmar que la caja de verificación <strong><em>Publish this Action to the GitHub Marketplace</em></strong> está seleccionada.</p>
+  </li>
+  <li>
+    <p>Revisar los datos que aparecen en el formulario.</p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>Update release</em></strong>.</p>
+  </li>
+</ol>
+
+<p>Si todo ha ido bien, el lanzamiento debe mostrar el enlace <strong><em>Marketplace</em></strong>.</p>
+
+<h2 id="supresión-de-publicaciones">Supresión de publicaciones</h2>
+
+<p>Para suprimir una publicación del <em>marketplace</em>, no hay más que suprimir su lanzamiento correspondiente.
+Por lo general, se realiza mediante una supresión manual usando el portal web de <strong>GitHub</strong>:</p>
+
+<ol>
+  <li>
+    <p>Ir al repositorio de <strong>GitHub</strong>.</p>
+  </li>
+  <li>
+    <p>Ir a los lanzamientos, tal y como vimos en la sección anterior.</p>
+  </li>
+  <li>
+    <p>Buscar el lanzamiento a suprimir y hacer clic en el icono de la papelera.</p>
+  </li>
+  <li>
+    <p>Confirmar la supresión haciendo clic en <strong><em>Delete this release</em></strong> en la ventana emergente que mostrará <strong>GitHub</strong>.</p>
+  </li>
+</ol>
+
+<p>También puede utilizar el comando <strong>gh release delete</strong>.
+Ejemplo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gh release delete v0.1.1 <span class="nt">-y</span>
+</code></pre></div></div>
+
+<p>Puede usar la opción <code class="language-plaintext highlighter-rouge">-y</code> o <code class="language-plaintext highlighter-rouge">--yes</code> para confirmar la supresión desde el propio comando.</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

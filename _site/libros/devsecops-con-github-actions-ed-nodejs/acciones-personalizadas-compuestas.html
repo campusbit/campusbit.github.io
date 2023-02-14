@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Acciones personalizadas compuestas | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Acciones personalizadas compuestas" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="En esta lección, se describe cómo desarrollar acciones personalizadas compuestas y cómo acceder a ellas desde flujos de trabajo de GitHub Actions." />
+<meta property="og:description" content="En esta lección, se describe cómo desarrollar acciones personalizadas compuestas y cómo acceder a ellas desde flujos de trabajo de GitHub Actions." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Acciones personalizadas compuestas" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"En esta lección, se describe cómo desarrollar acciones personalizadas compuestas y cómo acceder a ellas desde flujos de trabajo de GitHub Actions.","headline":"Acciones personalizadas compuestas","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/devsecops-con-github-actions-ed-nodejs/acciones-personalizadas-compuestas"},"url":"/libros/devsecops-con-github-actions-ed-nodejs/acciones-personalizadas-compuestas"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/devsecops-con-github-actions-ed-nodejs'>Dev(Sec)Ops con GitHub Actions (Ed. Node.js)</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Acciones personalizadas compuestas</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>12 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Una de las características más interesantes de <strong>GitHub Actions</strong> es la posibilidad de ampliar la colección de acciones disponibles con algunas escritas por nosotros mismos.
+Permite que desarrollemos acciones que automatizan determinadas operaciones que solemos hacer con frecuencia para las que actualmente no tenemos una disponible.
+Es una tarea muy sencilla que vamos a abordar en la presente lección.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es una acción personalizada.</p>
+  </li>
+  <li>
+    <p>Cómo desarrollar acciones compuestas.</p>
+  </li>
+  <li>
+    <p>Cómo invocar las acciones personalizadas.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>Una <strong>acción personalizada</strong> (<em>custom action</em>) es aquella que desarrollamos nosotros mismos para su uso en uno o varios flujos de trabajo.
+Estas acciones pueden interactuar con el repositorio o realizar ciertas tareas durante su ejecución.
+Distinguimos entre acciones <strong>Docker</strong>, acciones <strong>JavaScript</strong> y acciones compuestas.
+En nuestro caso, vamos a centrar nuestros esfuerzos en las acciones compuestas y en las desarrolladas en <strong>JavaScript</strong>.
+En esta lección, presentaremos aspectos comunes y las compuestas, dejando para la siguiente las escritas en <strong>JavaScript</strong>.</p>
+
+<p>Una <strong>acción compuesta</strong> (<em>composite action</em>) es aquella que contiene una secuencia de pasos a ejecutar.
+Mientras que una <strong>acción JavaScript</strong> (<em>JavaScript action</em>) es aquella que realiza una determinada operación y se implementa en <strong>JavaScript</strong>.
+En nuestro caso, usaremos <strong>Node.js</strong> y <strong>TypeScript</strong>.</p>
+
+<p>Ambos tipos de acciones contienen, como mínimo, un archivo <strong>README.md</strong> y un archivo de metadatos <strong>action.yaml</strong> que vamos a estudiar a continuación.</p>
+
+<h2 id="archivo-readmemd">Archivo <em>README.md</em></h2>
+
+<p>Toda acción debe contener un archivo <strong>README.md</strong> que la describa.
+Se recomienda que contenga:</p>
+
+<ul>
+  <li>
+    <p>La acción.</p>
+  </li>
+  <li>
+    <p>Sus entradas y sus salidas.</p>
+  </li>
+  <li>
+    <p>Los secretos que usa.</p>
+  </li>
+  <li>
+    <p>Las variables de entorno que usa.</p>
+  </li>
+</ul>
+
+<p>Para facilitar su uso, unos ejemplos adicionales vienen muy bien.</p>
+
+<h2 id="archivo-de-metadatos-actionyaml">Archivo de metadatos <em>action.yaml</em></h2>
+
+<p>El archivo <strong>action.yaml</strong> contiene información sobre la propia acción como, por ejemplo, su nombre, su descripción, sus entradas, sus salidas y lo que ejecutar cuando se invoca.
+Su contenido es un objeto que dispone de las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>name</em></strong></td>
+      <td>Título de la acción en el <em>marketplace</em>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>description</em></strong></td>
+      <td>Breve descripción de la acción.</td>
+    </tr>
+    <tr>
+      <td><strong><em>author</em></strong></td>
+      <td>Nombre del autor de la acción.</td>
+    </tr>
+    <tr>
+      <td><strong><em>inputs</em></strong></td>
+      <td>Parámetros de entrada esperados.</td>
+    </tr>
+    <tr>
+      <td><strong><em>outputs</em></strong></td>
+      <td>Salidas generadas por la acción.</td>
+    </tr>
+    <tr>
+      <td><strong><em>runs</em></strong></td>
+      <td>Ejecución de la acción.</td>
+    </tr>
+    <tr>
+      <td><strong><em>branding</em></strong></td>
+      <td>Información sobre el icono asociado a la acción.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>He aquí un ejemplo ilustrativo extraído de <a href="https://github.com/siacodelabs/download-from-skynet">https://github.com/siacodelabs/download-from-skynet</a>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Download a File from Skynet</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Action for downloading a file from a Skynet platform.</span>
+<span class="na">author</span><span class="pi">:</span> <span class="s">Sia Codelabs</span>
+
+<span class="na">branding</span><span class="pi">:</span>
+  <span class="na">icon</span><span class="pi">:</span> <span class="s">download</span>
+  <span class="na">color</span><span class="pi">:</span> <span class="s">gray-dark</span>
+
+<span class="na">inputs</span><span class="pi">:</span>
+  <span class="na">portal</span><span class="pi">:</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">Portal URL to use.</span>
+    <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>
+    <span class="na">default</span><span class="pi">:</span> <span class="s">https://web3portal.com</span>
+  <span class="na">skylink</span><span class="pi">:</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">Skylink to download.</span>
+    <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>
+  <span class="na">path</span><span class="pi">:</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">Local path where to save the file.</span>
+    <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>
+
+<span class="na">runs</span><span class="pi">:</span>
+  <span class="na">using</span><span class="pi">:</span> <span class="s">node16</span>
+  <span class="na">main</span><span class="pi">:</span> <span class="s">dist/cjs/index.js</span>
+</code></pre></div></div>
+
+<h3 id="propiedad-name-del-archivo-actionyaml">Propiedad <em>name</em> del archivo <em>action.yaml</em></h3>
+
+<p>La propiedad <strong><em>name</em></strong> la utiliza el <em>marketplace</em> para fijar su título.
+Debe ser único en todo el <em>marketplace</em>.
+A continuación, se muestra un ejemplo ilustrativo, donde el texto <em>Download a File from Skynet</em> es el valor de <strong><em>name</em></strong>:</p>
+
+<p><img src="img/action-on-marketplace.png" alt="Ejemplo de acción en el *marketplace*" /></p>
+
+<h3 id="propiedad-inputs-del-archivo-actionyaml">Propiedad <em>inputs</em> del archivo <em>action.yaml</em></h3>
+
+<p>La propiedad <strong><em>inputs</em></strong> del archivo <strong>action.yaml</strong> describe las entradas de la acción.
+<strong>GitHub Actions</strong> esperará que se pasen esas entradas.
+Consiste en un objeto donde cada propiedad representa una entrada con las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>description</em></strong></td>
+      <td>Breve descripción de la entrada.</td>
+    </tr>
+    <tr>
+      <td><strong><em>required</em></strong></td>
+      <td>¿Es necesario pasar un valor para esta entrada?</td>
+    </tr>
+    <tr>
+      <td><strong><em>default</em></strong></td>
+      <td>Valor predeterminado por si no se pasa un valor explícitamente.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>He aquí un ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">inputs</span><span class="pi">:</span>
+  <span class="na">portal</span><span class="pi">:</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">Portal URL to use.</span>
+    <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>
+    <span class="na">default</span><span class="pi">:</span> <span class="s">https://web3portal.com</span>
+  <span class="na">skylink</span><span class="pi">:</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">Skylink to download.</span>
+    <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>
+  <span class="na">path</span><span class="pi">:</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">Local path where to save the file.</span>
+    <span class="na">required</span><span class="pi">:</span> <span class="kc">true</span>
+</code></pre></div></div>
+
+<h3 id="propiedad-outputs-del-archivo-actionyaml">Propiedad <em>outputs</em> del archivo <em>action.yaml</em></h3>
+
+<p>Además de indicar las entradas, también debemos indicar sus salidas si la acción genera alguna.
+Esto se hace con la propiedad <strong><em>outputs</em></strong> del archivo <strong>action.yaml</strong>.
+Un objeto donde cada propiedad representa una salida, cuyo valor contiene su descripción:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>description</em></strong></td>
+      <td>Breve descripción de la salida.</td>
+    </tr>
+    <tr>
+      <td><strong><em>value</em></strong></td>
+      <td>Valor de salida.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">outputs</span><span class="pi">:</span>
+  <span class="na">skylink</span><span class="pi">:</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">Skylink to use for downloading.</span>
+</code></pre></div></div>
+
+<p>Las acciones compuestas deben proporcionar los valores de sus salidas mediante el archivo indicado por la variable de entorno <strong>GITHUB_OUTPUT</strong>.
+Cada línea de este archivo representa una salida y debe presentar el formato <em>nombreSalida=valorSalida</em>.
+Ejemplo ilustrativo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s"># ...</span>
+    <span class="s">echo "salida=valor" &gt;&gt; $GITHUB_OUTPUT</span>
+</code></pre></div></div>
+
+<h3 id="propiedad-branding-del-archivo-actionyaml">Propiedad <em>branding</em> del archivo <em>action.yaml</em></h3>
+
+<p>Mediante la propiedad <strong><em>branding</em></strong>, podemos indicar metadatos relacionados con el icono que aparecerá en el <em>marketplace</em> asociado a la acción.
+Consiste en un objeto con las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>icon</em></strong></td>
+      <td>Icono a utilizar como, por ejemplo, <strong><em>activity</em></strong>, <strong><em>download</em></strong>, <strong><em>upload</em></strong>, etc.</td>
+    </tr>
+    <tr>
+      <td><strong><em>color</em></strong></td>
+      <td>Color de fondo como, por ejemplo, <strong><em>gray-dark</em></strong>, <strong><em>orange</em></strong>, <strong><em>black</em></strong>, etc.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Ejemplo ilustrativo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">branding</span><span class="pi">:</span>
+  <span class="na">icon</span><span class="pi">:</span> <span class="s">upload</span>
+  <span class="na">color</span><span class="pi">:</span> <span class="s">gray-dark</span>
+</code></pre></div></div>
+
+<h2 id="acciones-compuestas">Acciones compuestas</h2>
+
+<p>Una <strong>acción compuesta</strong> (<em>composite action</em>) es aquella cuya ejecución consiste en una secuencia de pasos a ejecutar.
+Es muy sencilla de escribir y no requiere grandes conocimientos.</p>
+
+<p>En <a href="https://github.com/siacodelabs/setup-antlr4">https://github.com/siacodelabs/setup-antlr4</a>, puede echar un vistazo a una acción compuesta que instala <strong>Antlr4</strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Setup Antlr4 on Ubuntu</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Set up Antlr4.</span>
+<span class="na">author</span><span class="pi">:</span> <span class="s">Sia Codelabs</span>
+
+<span class="na">branding</span><span class="pi">:</span>
+  <span class="na">icon</span><span class="pi">:</span> <span class="s">play-circle</span>
+  <span class="na">color</span><span class="pi">:</span> <span class="s">gray-dark</span>
+
+<span class="na">inputs</span><span class="pi">:</span>
+  <span class="na">antlr4-version</span><span class="pi">:</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">Antlr version to install.</span>
+    <span class="na">required</span><span class="pi">:</span> <span class="kc">false</span>
+    <span class="na">default</span><span class="pi">:</span> <span class="s2">"</span><span class="s">4.11.1"</span>
+  
+  <span class="na">setup-java</span><span class="pi">:</span>
+    <span class="na">description</span><span class="pi">:</span> <span class="s">Install JDK.</span>
+    <span class="na">required</span><span class="pi">:</span> <span class="kc">false</span>
+    <span class="na">default</span><span class="pi">:</span> <span class="s2">"</span><span class="s">true"</span>
+
+<span class="na">runs</span><span class="pi">:</span>
+  <span class="na">using</span><span class="pi">:</span> <span class="s">composite</span>
+  <span class="na">steps</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Update APT information</span>
+      <span class="na">shell</span><span class="pi">:</span> <span class="s">bash</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="s">sudo apt update</span>
+    
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set up JDK</span>
+      <span class="na">if</span><span class="pi">:</span> <span class="s">inputs.setup-java</span>
+      <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-java@v3</span>
+      <span class="na">with</span><span class="pi">:</span>
+        <span class="na">java-version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">17"</span>
+        <span class="na">distribution</span><span class="pi">:</span> <span class="s">temurin</span>
+    
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Install dependencies</span>
+      <span class="na">shell</span><span class="pi">:</span> <span class="s">bash</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">sudo apt install -y curl</span>
+        <span class="s">sudo apt install -y file</span>
+    
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Download Antlr4</span>
+      <span class="na">shell</span><span class="pi">:</span> <span class="s">bash</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">cd /usr/local/lib</span>
+        <span class="s">sudo curl -O https://www.antlr.org/download/antlr-${{ inputs.antlr4-version }}-complete.jar</span>
+    
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Check file content type</span>
+      <span class="na">shell</span><span class="pi">:</span> <span class="s">bash</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">fileType=$(file -i /usr/local/lib/antlr-${{ inputs.antlr4-version }}-complete.jar)</span>
+
+        <span class="s">if [[ ! "$fileType"  =~ "application/java-archive" ]]; then</span>
+          <span class="s">echo "::error::File should be application/java-archive. Got: $fileType."</span>
+          <span class="s">exit 1</span>
+        <span class="s">fi</span>
+    
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set up Antlr4</span>
+      <span class="na">shell</span><span class="pi">:</span> <span class="s">bash</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">export CLASSPATH=.:/usr/local/lib/antlr-${{ inputs.antlr4-version }}-complete.jar:$CLASSPATH</span>
+        <span class="s">sudo printf '#!/usr/bin/env bash\n\njava -Xmx500M -cp "/usr/local/lib/antlr-${{ inputs.antlr4-version }}-complete.jar:$CLASSPATH" org.antlr.v4.Tool $*\n' &gt; /usr/local/bin/antlr4</span>
+        <span class="s">sudo chmod ugo+x /usr/local/bin/antlr4</span>
+</code></pre></div></div>
+
+<h3 id="propiedad-runs-de-una-acción-compuesta">Propiedad <em>runs</em> de una acción compuesta</h3>
+
+<p>Las acciones compuestas deben tener un archivo <strong>action.yaml</strong>, dentro del cual, su propiedad <strong><em>runs</em></strong> contiene lo que debe ejecutarse.
+Concretamente, esta propiedad de tipo objeto puede contener las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>using</em></strong></td>
+      <td>Siempre debe ser <strong><em>composite</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>steps</em></strong></td>
+      <td>Pasos a ejecutar.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Cuando se indica un paso de <em>shell</em> en una acción compuesta, siempre hay que indicar el <em>shell</em> en cuestión, a diferencia de los pasos que aparecen en un flujo de trabajo donde no es obligatorio.
+Obsérvelo en el ejemplo anterior.</p>
+
+<p>En una acción compuesta, el acceso a los valores de entrada se hace a través del contexto <strong><em>inputs</em></strong>, tal y como hacemos en un flujo de trabajo.
+Por otro lado, vea que los pasos a ejecutar son similares a los de un trabajo.
+Pueden ser tanto pasos que usan acciones ya definidas como pasos de <em>shell</em>.</p>
+
+<h3 id="salidas-de-la-acción-compuesta">Salidas de la acción compuesta</h3>
+
+<p>Cuando una acción compuesta tiene que devolver algo, debe declarar una salida en la propiedad <strong><em>outputs</em></strong> del archivo <strong>action.yaml</strong> y fijar su valor mediante un paso de <em>shell</em> que ejecute lo siguiente:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">run</span><span class="pi">:</span> <span class="s">echo "nombreSalida=valor" &gt;&gt; $GITHUB_OUTPUT</span>
+</code></pre></div></div>
+
+<p><strong>GitHub Actions</strong> espera que le proporcionemos las salidas mediante un archivo de variables de entorno especial, cuya ruta pone a nuestra disposición mediante la variable de entorno <strong>GITHUB_OUTPUT</strong>.</p>
+
+<h3 id="empaquetado-de-una-acción-compuesta">Empaquetado de una acción compuesta</h3>
+
+<p>Las acciones compuestas deben empaquetarse con el archivo de metadatos <strong>action.yaml</strong> y cualquier archivo o <em>script</em> que sea utilizado por ella.
+A continuación, se muestra un paso que ejecuta un determinado <em>script</em>, el cual debe encontrarse dentro del directorio asociado a la acción.
+Este directorio se puede extraer de la propiedad <strong><em>action_path</em></strong> del contexto <strong><em>github</em></strong>.
+Veamos el código de ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">runs</span><span class="pi">:</span>
+  <span class="na">using</span><span class="pi">:</span> <span class="s2">"</span><span class="s">composite"</span>
+  <span class="na">steps</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">run</span><span class="pi">:</span> <span class="s">${{ github.action_path }}/test/script.sh</span>
+      <span class="na">shell</span><span class="pi">:</span> <span class="s">bash</span>
+</code></pre></div></div>
+
+<h2 id="visibilidad-de-las-acciones-personalizadas">Visibilidad de las acciones personalizadas</h2>
+
+<p>El objeto de una acción personalizada, independientemente de su tipo, es poder reutilizarla.
+Para ello, debemos ponerla a disposición de los flujos de trabajo de alguna forma.
+La <strong>visibilidad</strong> (<em>visibility</em>) de la acción indica si es accesible por todo el mundo o sólo por nosotros mismos.
+Una <strong>acción pública</strong> (<em>public action</em>) es aquella que puede reutilizarse en cualquier flujo de trabajo.
+Mientras que una <strong>acción privada</strong> (<em>private action</em>) sólo se puede utilizar:
+en el repositorio privado en el que se define;
+en otro repositorio de la misma cuenta, tanto si es público como privado;
+o bien, en uno público de otra cuenta.</p>
+
+<h3 id="acciones-privadas">Acciones privadas</h3>
+
+<p>Una <strong>acción privada</strong> (<em>private action</em>) sólo podemos utilizarla en el repositorio privado en el que la definimos o en un repositorio público o privado de la misma cuenta.
+Deben ubicarse en el directorio <strong>.github/actions</strong> del repositorio, el cual contiene un <em>directorio</em> específico para cada acción personalizada, conocido formalmente como <strong>directorio de acción</strong> (<em>action directory</em>).
+En este directorio de acción, ubicaremos todos sus archivos.
+Así, por ejemplo, si definimos tres acciones privadas <em>A</em>, <em>B</em> y <em>C</em>, tendremos los siguientes directorios de acción:
+<em>.github/actions/A</em>, <em>.github/actions/B</em> y <em>.github/actions/C</em>.</p>
+
+<p>Para invocar una acción privada, tendremos que indicar, en la propiedad <strong><em>uses</em></strong> del paso, la ruta al directorio de la acción con el formato <em>./nombreAcción</em>.
+El nombre de la acción es el del directorio de la acción.
+Por ejemplo, si la acción se encuentra en <em>.github/actions/A</em>, la invocaremos con <em>./A</em>.</p>
+
+<h3 id="acciones-públicas">Acciones públicas</h3>
+
+<p>Una <strong>acción pública</strong> (<em>public action</em>) es aquella que está disponible para el uso de cualquiera.
+Puede hacerse de dos formas.
+Mediante su ubicación en un repositorio público como el <strong>.github</strong> de la organización que vimos anteriormente para los flujos de trabajo reutilizables.
+O bien, mediante el <strong>GitHub Marketplace</strong>.</p>
+
+<h4 id="acciones-definidas-en-un-repositorio-público">Acciones definidas en un repositorio público</h4>
+
+<p>La manera más sencilla de hacer pública una acción es ubicarla en el repositorio público <strong>.github</strong> de la organización.
+En este, mantendremos la acción dentro de su directorio de acción en la ruta <strong>.github/actions</strong>, tal y como vimos con las acciones privadas.
+Pero al estar en un repositorio público, cualquiera podrá utilizarlo.</p>
+
+<p>Para invocar una acción de un repositorio público, la propiedad <strong><em>uses</em></strong> debe contener el siguiente formato:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nombrePropietario/nombreAcción
+</code></pre></div></div>
+
+<h4 id="acciones-publicadas-en-el-github-marketplace">Acciones publicadas en el <em>GitHub Marketplace</em></h4>
+
+<p>Otra posibilidad es publicar la acción en el <strong>GitHub Marketplace</strong> para facilitar su acceso a la comunidad.
+En este caso, hay ciertas restricciones que debemos conocer:</p>
+
+<ul>
+  <li>
+    <p>La acción debe definirse en su propio repositorio público.
+Este repositorio sólo debe contener esa acción.</p>
+  </li>
+  <li>
+    <p>Los archivos <strong>action.yaml</strong> y <strong>README.md</strong> deben encontrarse en la raíz del repositorio.</p>
+  </li>
+  <li>
+    <p>El identificador de la acción será el formado por <em>propietario/repositorio</em>.</p>
+  </li>
+</ul>
+
+<p>Puede utilizar, como ejemplo, el repositorio <a href="https://github.com/actions/setup-node">https://github.com/actions/setup-node</a>, donde se encuentra la acción <strong>actions/setup-node</strong>.</p>
+
+<h2 id="paso-de-datos-al-ejecutor">Paso de datos al ejecutor</h2>
+
+<p>Para pasar datos al ejecutor y, por lo tanto, a los pasos siguientes al de nuestra acción personalizada, hay que utilizar archivos de entorno.
+Un <strong>archivo de entorno</strong> (<em>environment file</em>) es un archivo que contiene variables de entorno generadas o establecidas por la acción en curso.
+Este archivo debe contener una línea para cada variable con el siguiente formato <em>nombreVariable=valor</em>.
+<strong>GitHub Actions</strong> nos indica el archivo a utilizar mediante la variable de entorno <strong>GITHUB_ENV</strong> cuyo valor fija él.
+Así, por ejemplo, en una acción compuesta, e incluso en un paso de un trabajo, podemos usar:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"variableDeEntorno=valor"</span> <span class="o">&gt;&gt;</span> <span class="nv">$GITHUB_ENV</span>
+</code></pre></div></div>
+
+<h2 id="flujos-de-trabajo">Flujos de trabajo</h2>
+
+<p>Las acciones también tienen sus flujos de trabajo con los que probar su funcionamiento, no lo olvide.
+Tendrán un flujo de trabajo con el que probar su funcionalidad.
+Por ejemplo, en la acción compuesta de ejemplo, <strong>siacodelabs/setup-antlr4</strong>, la prueba consiste en comprobar que <strong>Antlr4</strong> está disponible tras la ejecución de la acción:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">CI</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">**"</span>
+
+<span class="na">permissions</span><span class="pi">:</span>
+  <span class="na">contents</span><span class="pi">:</span> <span class="s">write</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">test</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Clone repository</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set up Antlr4</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">./</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Check installation</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">cat $(which antlr4)</span>
+          <span class="s">antlr4</span>
+</code></pre></div></div>
+
+<p>Lo que debe quedarle claro es cómo invocar la propia acción en uno de <em>sus</em> flujos de trabajo.
+Sencillo, mediante <code class="language-plaintext highlighter-rouge">./</code>, en nuestro ejemplo, como sigue:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Set up Antlr4</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">./</span>
+</code></pre></div></div>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

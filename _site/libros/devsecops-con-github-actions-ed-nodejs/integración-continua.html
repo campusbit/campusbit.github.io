@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Integración continua | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Integración continua" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Qué es la integración continua (CI) y cómo utilizar los flujos de trabajo de GitHub Actions para su automatización." />
+<meta property="og:description" content="Qué es la integración continua (CI) y cómo utilizar los flujos de trabajo de GitHub Actions para su automatización." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Integración continua" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Qué es la integración continua (CI) y cómo utilizar los flujos de trabajo de GitHub Actions para su automatización.","headline":"Integración continua","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/devsecops-con-github-actions-ed-nodejs/integraci%C3%B3n-continua"},"url":"/libros/devsecops-con-github-actions-ed-nodejs/integraci%C3%B3n-continua"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/devsecops-con-github-actions-ed-nodejs'>Dev(Sec)Ops con GitHub Actions (Ed. Node.js)</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Integración continua</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>18 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Una vez confirmados los cambios en el repositorio <strong>Git</strong>, lo siguiente es empezar con la automatización del resto de prácticas de <strong>DevOps</strong>.
+En esta lección, vamos a describir detenidamente el concepto de integración continua y cómo llevarla a cabo con <strong>GitHub Actions</strong>.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es la integración continua.</p>
+  </li>
+  <li>
+    <p>Qué son y por qué se usan las políticas de calidad y los estándares de código.</p>
+  </li>
+  <li>
+    <p>Qué es y para qué se usa el análisis estático de código.</p>
+  </li>
+  <li>
+    <p>Qué son y para qué se usan las pruebas de unidad.</p>
+  </li>
+  <li>
+    <p>Qué son los artefactos y qué acciones de <strong>GitHub Actions</strong> podemos usar para trabajar con ellos.</p>
+  </li>
+  <li>
+    <p>Cuáles son los permisos más habituales a asociar a los flujos de integración continua.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>La <strong>integración</strong> (<em>integration</em>) hace referencia a la compleción de algo con cosas faltantes, es decir, llevar a cabo algunas cosas que faltan para, así, terminar el todo en el que estamos trabajando.
+La <strong>integración continua</strong> (<strong>CI</strong>, <em>continuous integration</em>) no es más que una práctica que tiene como objeto realizar determinadas tareas faltantes, de manera automática, principalmente después de cada cambio realizado en una rama, como mínimo, la principal.
+Su objetivo es detectar fallos en cualquiera de los pasos automatizados para, así, pasar a corregirlos de inmediato.
+Los fallos detectados deben corregirse lo más rápidamente posible, no se deben dejar para más tarde, por ejemplo, para el momento del despliegue, porque incrementará el estrés y dificultará su resolución.
+Groso modo, abarca la compilación del código, la ejecución de pruebas y algunas tareas de comprobación de calidad.</p>
+
+<p>La integración continua se realiza mediante una plataforma específica, en nuestro caso, mediante <strong>GitHub Actions</strong>, más concretamente mediante flujos de trabajo que se ejecutan automáticamente cuando se realiza alguna operación de fusión de cambios con alguna rama del proyecto.</p>
+
+<p>La integración continua es uno de los pilares de <strong>DevOps</strong> y consiste básicamente en:</p>
+
+<ol>
+  <li>
+    <p>Clonar el repositorio <strong>Git</strong> del proyecto.</p>
+  </li>
+  <li>
+    <p>Instalar las dependencias del proyecto.</p>
+  </li>
+  <li>
+    <p>Realizar el análisis de código estático para llevar a cabo una primera comprobación y cumplimiento de los estándares de calidad.</p>
+  </li>
+  <li>
+    <p>Compilar en limpio el código fuente.</p>
+  </li>
+  <li>
+    <p>Ejecutar la batería de pruebas automatizadas.</p>
+  </li>
+  <li>
+    <p>Almacenar los informes generados por las pruebas si fuese necesario.</p>
+  </li>
+</ol>
+
+<p>Todas estas tareas se pueden automatizar y se llevan a cabo mediante un <em>flujo de trabajo</em>.
+Y todo ello, de manera automática y sin necesidad de intervención manual.
+Por ello, la integración continua presenta las siguientes ventajas:</p>
+
+<ul>
+  <li>
+    <p>Mejora la productividad del equipo de desarrollo, porque les libera de tener que hacer estas tareas manualmente.</p>
+  </li>
+  <li>
+    <p>Mejora la calidad del software, porque realiza un análisis de código para validar que cumple con nuestros estándares y, por otra parte, ejecuta la batería de pruebas para garantizar que no se ha roto nada con el nuevo cambio.</p>
+  </li>
+</ul>
+
+<p>Cada persona del equipo de desarrollo trabaja aisladamente con su propio equipo y entorno.
+Es posible que un cambio realizado en el proyecto lo realice localmente y se le olvide actualizar las dependencias del proyecto.
+En ocasiones, algo que funciona en <strong>Windows</strong> puede no hacerlo en <strong>Linux</strong> y viceversa.
+Por esta razón, y debido a que las personas cometemos errores, es algo inevitable, necesitamos algún mecanismo que ayude a detectar problemas cuando integramos nuestros cambios en el repositorio.
+Esto se detectará con el <strong>flujo de CI</strong>.
+Si algo va mal, este flujo lo detectará y, entonces, tendremos que resolverlo y volver a confirmar los cambios para que se ejecute, de nuevo, el flujo de trabajo.
+Y si todo va bien, podemos dar por cerrado el problema.
+Si se da cuenta, la ejecución automática de las pruebas ayuda a detectar problemas rápidamente.</p>
+
+<p>La idea es garantizar que los cambios realizados por un miembro del equipo no <em>rompen</em> nada y las pruebas pasan al completo.
+La integración continua ayuda a mantener las ramas principales actualizadas y sin fallos producidos por la integración de cambios.</p>
+
+<p>Ya no hay que esperar al día del despliegue o publicación, y añadir así un nivel de estrés extra.
+El problema se detecta con el <em>commit</em> o el <em>merge</em> que lo genera y requiere que lo resolvamos de inmediato.
+No deje para el último día las combinaciones de ramas.
+En ese caso, el beneficio de <strong>CI</strong> desaparece y el estrés aparece.
+En algunas organizaciones, la aprobación y la combinación de ramas son cuellos de botella muy grandes que ralentizan el proceso y generan estrés innecesariamente cuando la fecha de entrega se acerca.</p>
+
+<p>La idea es trabajar en pequeños conjuntos de cambios para reducir el tiempo de espera (<em>lead time</em>), la cantidad de tiempo que transcurre desde que un desarrollador se pone a trabajar en una nueva funcionalidad y ésta se despliega en producción.
+Tenemos que conseguir que sea lo más pequeño posible.
+Además, al trabajar en pequeños lotes, reducimos los riesgos, la sobrecarga y los costes.
+Pero para conseguirlo, es necesario que tengamos nuestro proceso automatizado todo lo posible.
+Si requiere intervención manual, lo que estaremos haciendo es dejar de desarrollar para atender esas tareas manuales.
+Algunas empresas que deciden desplegar cada semana o dos semanas con intervención manual dedican una parte muy alta de su trabajo a desplegar y resolver problemas durante los despliegues.
+Tiempo que deja de dedicarse al desarrollo de nuevas características y, por lo tanto, redunda en el producto.</p>
+
+<p>Una <strong>herramienta de CI</strong> es aquélla que proporciona todo lo necesario para poder llevar a cabo las tareas de integración continua de manera automática.
+<strong>GitHub Actions</strong> así lo hace.</p>
+
+<h2 id="flujo-de-trabajo-de-integración-continua">Flujo de trabajo de integración continua</h2>
+
+<p>Recordemos que un <em>flujo de trabajo</em> (<em>workflow</em>) no es más que un proceso automatizado.
+Al flujo dedicado a integración continua, se le conoce formalmente como <strong>flujo de integración continua</strong> (<em>CI workflow</em>).
+Podemos decir que si el flujo de integración continua se ejecuta sin problemas, la rama se encuentra en buen estado.
+Ahora bien, si alguno de sus trabajos falla, el cambio subido al repositorio de <strong>Git</strong> presenta algún problema que hay que resolver.</p>
+
+<p>¿Qué problemas podríamos encontrarnos?
+Pues depende de cada proyecto.
+Vamos a enumerar algunos de ellos:</p>
+
+<ul>
+  <li>
+    <p>El código no compila correctamente.
+Imaginemos que el desarrollador subió un cambio con características del lenguaje de programación más actuales de las que se han configurado en el proyecto.
+O bien una violación de alguna regla de buenas prácticas fijada por la organización.
+También podría ser que el desarrollador haya instalado una dependencia para el proyecto, pero se le haya olvidado registrarla en el archivo de metadatos.</p>
+  </li>
+  <li>
+    <p>El componente no pasa alguna prueba de unidad.
+En ocasiones, una prueba puede funcionar en <strong>Linux</strong>, pero no en <strong>Windows</strong>, y viceversa.
+Detectarlo lo antes posible, gracias al <strong>flujo de CI</strong>, nos ayudará a implementar el código atendiendo al sistema operativo, cuando sea necesario.</p>
+  </li>
+  <li>
+    <p>El componente no pasa alguna prueba de rendimiento.
+Hay proyectos que requieren una muy buena calidad, la cual se mide en parte mediante pruebas de rendimiento como, por ejemplo, de carga o estrés.</p>
+  </li>
+</ul>
+
+<h3 id="eventos-de-integración-continua">Eventos de integración continua</h3>
+
+<p>Por lo general, los eventos que dispararán el flujo de integración continua suelen ser los de <em>push</em> o integración de cambios (<em>pull requests</em>).
+Cuando se utiliza el desarrollo troncal (<em>trunked-based development</em>) se suele asociar a la rama troncal, esto es, generalmente, <em>main</em> o <em>master</em>.
+Así pues, es muy habitual tener lo siguiente en el flujo de integración continua:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">main</span>
+  <span class="na">pull_request</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">main</span>
+</code></pre></div></div>
+
+<h4 id="evento-push">Evento <em>push</em></h4>
+
+<p>Cada vez que se realiza un <em>push</em> o publicación en el repositorio, se produce un evento de tipo <em>push</em>.
+<strong>GitHub Actions</strong> permite que se ejecute los flujos de trabajo en estos casos.
+Para ello, hay que utilizar el evento <strong><em>push</em></strong>, el cual contendrá un objeto con las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>branches</em></strong></td>
+      <td>Ramas en las que estamos interesados.</td>
+    </tr>
+    <tr>
+      <td><strong><em>branches-ignore</em></strong></td>
+      <td>Todas las ramas salvo las indicadas en esta propiedad.</td>
+    </tr>
+    <tr>
+      <td><strong><em>tags</em></strong></td>
+      <td>Etiquetas en las que estamos interesados.</td>
+    </tr>
+    <tr>
+      <td><strong><em>tags-ignore</em></strong></td>
+      <td>Todas las etiquetas salvo las indicadas en esta propiedad.</td>
+    </tr>
+    <tr>
+      <td><strong><em>paths</em></strong></td>
+      <td>Todo <em>push</em> que afecte a uno de los archivos indicados.</td>
+    </tr>
+    <tr>
+      <td><strong><em>paths-ignore</em></strong></td>
+      <td>Todo <em>push</em> que afecte a un archivo no indicado en esta propiedad.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Si se indica <strong><em>paths</em></strong>, no se puede indicar también <strong><em>paths-ignore</em></strong>, y viceversa.</p>
+
+<p>Cualquiera de las propiedades anteriores acepta comodines.
+He aquí un primer ejemplo ilustrativo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">main</span>    <span class="c1"># rama main</span>
+      <span class="pi">-</span> <span class="s">dev/**</span>  <span class="c1"># cualquier rama con el prefijo dev/</span>
+    <span class="na">paths</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">**.js"</span> <span class="c1"># cualquier push con cambios en archivos JavaScript</span>
+</code></pre></div></div>
+
+<p>Y ahora otro extraído del proyecto <strong>Akromio</strong> que indica que sólo aquellos <em>pushes</em> que contengan cambios en archivos <strong>.js</strong>, <strong>.json</strong> o en el archivo <strong>.mocharc.yaml</strong> dispararán la ejecución del flujo de integración continua:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">ci</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">**"</span>
+    <span class="na">paths</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">**.js"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">**.json"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">**/.mocharc.yaml"</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">ci</span><span class="pi">:</span>
+    <span class="na">uses</span><span class="pi">:</span> <span class="s">akromio/github/.github/workflows/nodejs-ci.yaml@master</span>
+</code></pre></div></div>
+
+<p>Para indicar <em>todas</em> las ramas, debemos usar dos asteriscos (<code class="language-plaintext highlighter-rouge">**</code>) como en el ejemplo anterior.</p>
+
+<h4 id="evento-pull_request">Evento <em>pull_request</em></h4>
+
+<p>También es posible ejecutar los flujos de trabajo con eventos generados a partir de solicitudes de integración (<em>pull requests</em>).
+Hay varios tipos de eventos, pero el más usado es <strong><em>pull_request</em></strong>, por lo que nos centraremos en este.</p>
+
+<p>Este evento debe contener un objeto con las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>branches</em></strong></td>
+      <td>Ramas en las que estamos interesados. Ídem al evento <em>push</em>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>branches-ignore</em></strong></td>
+      <td>Todas las ramas salvo las indicadas en esta propiedad. Ídem al evento <em>push</em>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>types</em></strong></td>
+      <td>Estados en los que estamos interesados: <strong><em>opened</em></strong>, <strong><em>closed</em></strong>, <strong><em>locked</em></strong>, etc.</td>
+    </tr>
+    <tr>
+      <td><strong><em>paths</em></strong></td>
+      <td>Ídem a la propiedad homónima del evento <strong><em>push</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>paths-ignore</em></strong></td>
+      <td>Ídem a la propiedad homónima del evento <strong><em>push</em></strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span>
+  <span class="na">pull_request</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">main</span>
+    <span class="na">types</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">closed</span>
+</code></pre></div></div>
+
+<h2 id="políticas-de-calidad">Políticas de calidad</h2>
+
+<p>Las organizaciones más exigentes suelen disponer de <strong>políticas de calidad</strong> (<em>quality policies</em>) que fijan la calidad esperada de su código y software.
+Entre otras, debe disponer de un estándar de código con el que poder medir, en primera instancia, la calidad del código desarrollado por el equipo.</p>
+
+<h3 id="estándares-de-código">Estándares de código</h3>
+
+<p>Un <strong>estándar de código</strong> (<em>code standard</em>) es un norma que sirve como referencia a seguir, por todo el equipo, para mejorar la <em>apariencia</em> y calidad de nuestro código.
+Algunas industrias como, por ejemplo, la médica, la nuclear y la de aviación, incluso obligan, en ocasiones, a usar este tipo de estándares.</p>
+
+<p>Estos estándares se definen mediante reglas que todos debemos seguir.
+Entre otras podemos encontrar:</p>
+
+<ul>
+  <li>
+    <p>El tamaño máximo de línea.</p>
+  </li>
+  <li>
+    <p>El número máximo de parámetros que pueden tener las funciones.</p>
+  </li>
+  <li>
+    <p>El uso de comentarios de documentación.</p>
+  </li>
+  <li>
+    <p>El uso de convenios de nombres para las variables, las clases, los tipos, las funciones, etc.</p>
+  </li>
+</ul>
+
+<p>Para comprobar que nuestro código cumple con los estándares de la organización, se realiza, en primer lugar, un <strong>análisis estático de código</strong> (<em>static code analysis</em>), esto es, un estudio del código sin realizar ningún tipo de ejecución con el objeto de:</p>
+
+<ul>
+  <li>
+    <p>Validar que el código cumple con los estándares de código de la organización.</p>
+  </li>
+  <li>
+    <p>Localizar código con problemas de seguridad.</p>
+  </li>
+  <li>
+    <p>Localizar código ineficiente o de mala calidad.</p>
+  </li>
+  <li>
+    <p>Comprobar que no se usan funciones o tipos obsoletos.</p>
+  </li>
+</ul>
+
+<p>Las herramientas que realizan estos análisis se conocen formalmente como <strong>analizadores estáticos</strong> (<em>static analyzers</em>) o <strong>analizadores estáticos de código</strong> (<em>static code analyzer</em>).
+En <strong>Node.js</strong> y/o <strong>TypeScript</strong>, por ejemplo, se suele usar <strong>ESLint</strong>;
+mientras que en <strong>Go</strong>, <strong>Staticcheck</strong>, <strong>gofmt</strong> y <strong>go vet</strong>.</p>
+
+<h2 id="pruebas-de-unidad">Pruebas de unidad</h2>
+
+<p>Durante la fase de integración continua, se ejecutan las <strong>pruebas de unidad</strong> (<em>unit tests</em>), las cuales debemos haber automatizado mediante el uso de algún <em>framework</em> de pruebas.
+El objeto de estas pruebas es comprobar que los componentes de software que hemos desarrollado hacen lo que se espera de ellos.
+Una de sus principales métricas es la <strong>cobertura de código</strong> (<em>code coverage</em>) que mide la cantidad de código accedido durante las pruebas.
+Lo ideal es alcanzar el cien por cien de cobertura, lo que proporciona un nivel de calidad alto.
+Esto no significa que el código sea perfecto, puede presentar fallos de todas formas, pero sí que tiene menos fallos proporcionando un mayor grado de confianza que si no fuera del cien por cien.</p>
+
+<p>Los <em>frameworks</em> de pruebas más utilizados en <strong>Node.js</strong> y/o <strong>TypeScript</strong> son <strong>Jest</strong> y <strong>Mocha</strong>;
+en <strong>Go</strong>, el módulo <strong>testing</strong> de la biblioteca estándar.</p>
+
+<p>En la integración continua, por lo general, las pruebas se ejecutan en distintos entornos o sistemas operativos para garantizar así que el software puede funcionar en todos ellos.
+No basta con que elijamos un único sistema operativo, hay que hacer que se ejecute en todas las plataformas en las que deseamos funcione nuestro software.
+Que mejor lugar para hacer esto que en una plataforma de integración continua como <strong>GitHub Actions</strong> que tiene la capacidad de ejecutar lo que le pedimos con distintos sistemas operativos.</p>
+
+<h2 id="artefactos">Artefactos</h2>
+
+<p>Un <strong>artefacto</strong> (<em>artifact</em>) es algo producido por un flujo de trabajo como, por ejemplo, un binario, una imagen, un archivo de texto, una página web, etc.
+Por ejemplo, si estamos programando en <strong>Go</strong>, un flujo de trabajo podría generar un binario para cada plataforma.
+A cada uno de esos binarios, se le conoce formalmente como <em>artefacto</em> porque se han generado durante el flujo de trabajo.
+En integración continua, un artefacto podría ser el informe con el resultado de la ejecución de las pruebas que algunas organizaciones almacenan internamente.
+Los artefactos se pueden generar en cualquier fase del ciclo de desarrollo.</p>
+
+<p>Estos artefactos <em>no</em> se mantienen en la máquinas virtuales donde se ejecutan los trabajos, sino en un almacenamiento especial proporcionado por <strong>GitHub</strong> conocido formalmente como <strong>almacenamiento de artefactos</strong> (<em>artifact storage</em>).
+Esto se debe a que si se almacenase en la máquina virtual o en el contenedor donde se ejecuta el trabajo, el artefacto dejaría de estar disponible una vez terminado este.
+La idea es que un artefacto pueda ser usado por otro trabajo del mismo u otro flujo de trabajo, en el presente o en el futuro.</p>
+
+<p>Debe considerar un artefacto como un componente de salida generado por un flujo de trabajo.
+Y el almacén como un repositorio en el que guardarlos y al que pedírselo para su utilización.</p>
+
+<p>Los artefactos se mantienen un tiempo, no son eternos.
+En la capa gratuita, de manera predeterminada, durante <strong>90 días</strong>.
+Aunque los recursos sean gratuitos, ajústelos a lo que realmente necesite.
+Por ejemplo, en el proyecto <strong>Akromio</strong>, se ha bajado a 30 días para reducir los recursos gratuitos proporcionados por <strong>GitHub</strong>, ya que con ese intervalo es suficiente.</p>
+
+<h3 id="acción-actionsupload-artifact">Acción <em>actions/upload-artifact</em></h3>
+
+<p>Para subir un artefacto al almacén de artefactos, debemos utilizar la acción <strong><em>actions/upload-artifact</em></strong>, la cual espera sus argumentos en la propiedad <strong><em>with</em></strong>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>name</em></strong></td>
+      <td>Nombre del artefacto.</td>
+    </tr>
+    <tr>
+      <td><strong><em>path</em></strong></td>
+      <td>Ruta(s) donde se encuentran localmente el o los artefactos. Pueden ser directorios y/o archivos.</td>
+    </tr>
+    <tr>
+      <td><strong><em>retention-days</em></strong></td>
+      <td>Número de días a retener el artefacto. Si no se indica, se usará lo configurado en el repositorio.</td>
+    </tr>
+    <tr>
+      <td><strong><em>if-no-files-found</em></strong></td>
+      <td>Qué hacer si no se encuentra el artefacto a guardar: <strong><em>error</em></strong>, generar un error; <strong><em>warn</em></strong>, generar un aviso; o <strong><em>ignore</em></strong>, no hacer nada.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Vamos a ver un ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Almacenamiento del artefacto</span>
+  <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/upload-artifact@v3</span>
+  <span class="na">with</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">webpack artifacts</span>
+    <span class="na">path</span><span class="pi">:</span> <span class="s">public/</span>
+</code></pre></div></div>
+
+<h3 id="acción-actionsdownload-artifact">Acción <em>actions/download-artifact</em></h3>
+
+<p>Para descargar un artefacto del almacenamiento de artefactos, podemos usar la acción <strong><em>actions/download-artifact</em></strong>.
+La lista de propiedades de <strong><em>with</em></strong> son:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>name</em></strong></td>
+      <td>Nombre del artefacto a descargar. Si no se indica, se descargarán todos los artefactos.</td>
+    </tr>
+    <tr>
+      <td><strong><em>path</em></strong></td>
+      <td>Ruta local donde descargarlo. Si no se indica, se usa el directorio actual.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/download-artifact@v3</span>
+  <span class="na">with</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">webpack artifacts</span>
+    <span class="na">path</span><span class="pi">:</span> <span class="s">public</span>
+</code></pre></div></div>
+
+<h3 id="opción-de-configuración-artifact-and-log-retention">Opción de configuración <em>Artifact and log retention</em></h3>
+
+<p>En la configuración general de <strong>GitHub Actions</strong>, ubicada en la pestaña <strong><em>Settings &gt; Code and automation &gt; Actions &gt; General</em></strong> del repositorio, podemos encontrar el periodo de retención predeterminado de los artefactos.
+Se encuentra bajo <strong><em>Artifact and log retention</em></strong>:</p>
+
+<p><img src="img/artifact-and-log-retention.png" alt="Configuración de la retención de artefactos" /></p>
+
+<p>Puede fijar ahí el número de días que se mantendrán los artefactos y los <em>logs</em>.</p>
+
+<h2 id="permisos-del-flujo-de-integración-continua">Permisos del flujo de integración continua</h2>
+
+<p>No hay que olvidar seguir el principio de menor privilegio en cada flujo de trabajo.
+Generalmente, al flujo de integración continua le basta con el permiso de lectura de contenido, pues no suele hacer cambios al código fuente, sólo probarlo.
+Por esta razón, este tipo de flujos suele tener la siguiente propiedad <strong>permissions</strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">permissions</span><span class="pi">:</span>
+  <span class="na">contents</span><span class="pi">:</span> <span class="s">read</span>
+</code></pre></div></div>
+
+<h2 id="ejemplos-de-flujos-de-integración-continua">Ejemplos de flujos de integración continua</h2>
+
+<p>A continuación, vamos a presentar unos flujos de integración continua de ejemplo que le servirán como punto de partida.
+Por un lado, mostraremos uno típico de un proyecto <strong>Node.js</strong> y, por otra parte, uno de <strong>Go</strong>.
+Si su proyecto tiene varios repositorios, no descarte crearlos como flujos reutilizables.</p>
+
+<h3 id="flujo-de-integración-continua-de-nodejs">Flujo de integración continua de <em>Node.js</em></h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">CI</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">master</span>
+  <span class="na">pull_request</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">master</span>
+
+<span class="na">permissions</span><span class="pi">:</span>
+  <span class="na">contents</span><span class="pi">:</span> <span class="s">read</span>
+
+<span class="na">defaults</span><span class="pi">:</span>
+  <span class="na">run</span><span class="pi">:</span>
+    <span class="na">shell</span><span class="pi">:</span> <span class="s">bash -e {0}</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">runTests</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Node.js ${{ matrix.node }} on ${{ matrix.os }}</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">${{ matrix.os }}</span>
+
+    <span class="na">strategy</span><span class="pi">:</span>
+      <span class="na">matrix</span><span class="pi">:</span>
+        <span class="na">node</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">16.x</span><span class="pi">,</span> <span class="nv">18.x</span><span class="pi">]</span>
+        <span class="na">os</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">ubuntu-latest</span><span class="pi">,</span> <span class="nv">windows-latest</span><span class="pi">]</span>
+
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Node.js ${{ matrix.node }}</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-node@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">node-version</span><span class="pi">:</span> <span class="s">${{ matrix.node }}</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Install dependencies</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">npm ci -ws --include-workspace-root</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Run tests</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">npm run cov</span>
+</code></pre></div></div>
+
+<h3 id="flujo-de-integración-continua-para-go">Flujo de integración continua para <em>Go</em></h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">CI</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">master</span>
+  <span class="na">pull_request</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">master</span>
+
+<span class="na">permissions</span><span class="pi">:</span>
+  <span class="na">contents</span><span class="pi">:</span> <span class="s">read</span>
+
+<span class="na">defaults</span><span class="pi">:</span>
+  <span class="na">run</span><span class="pi">:</span>
+    <span class="na">shell</span><span class="pi">:</span> <span class="s">bash -e {0}</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">runTests</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">Go ${{ matrix.go }} on ${{ matrix.os }}</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">${{ matrix.os }}</span>
+
+    <span class="na">strategy</span><span class="pi">:</span>
+      <span class="na">matrix</span><span class="pi">:</span>
+        <span class="na">go</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.19</span><span class="pi">]</span>
+        <span class="na">os</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">ubuntu-latest</span><span class="pi">,</span> <span class="nv">windows-latest</span><span class="pi">]</span>
+
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v3</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Go ${{ matrix.node }}</span>
+        <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-go@v3</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">go-version</span><span class="pi">:</span> <span class="s">${{ matrix.go }}</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Lint</span>
+        <span class="na">if</span><span class="pi">:</span> <span class="s">runner.os == 'Linux'</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">files=$(gofmt -l -w .)</span>
+          
+          <span class="s">if [ "$files" != '' ]; then</span>
+            <span class="s">printf "The following files have been modified: ${files/$'\n'/, }\n"</span>
+            <span class="s">exit 1</span>
+          <span class="s">fi</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">for module in ./modules/*; do</span>
+            <span class="s">go build -v $module</span>
+          <span class="s">done</span>
+      
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Tests</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s"># (1) run tests</span>
+          <span class="s">error=0</span>
+
+          <span class="s">for module in ./modules/*; do</span>
+            <span class="s">coverage=$(go test $module/... -covermode count -coverprofile coverage | grep -v 'coverage: 100.0%' | cat)</span>
+            <span class="s">if [[ "$coverage" != "" ]]; then</span>
+              <span class="s">error=1</span>
+              <span class="s">go tool cover -func=coverage | grep -v "100.0%"</span>
+            <span class="s">fi</span>
+          <span class="s">done</span>
+          
+          <span class="s"># (2) return exit code</span>
+          <span class="s">exit $error</span>
+</code></pre></div></div>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

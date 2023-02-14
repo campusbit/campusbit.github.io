@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Artículos de contenido | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Artículos de contenido" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Cómo desarrollar blogs con Jekyll y GitHub Pages." />
+<meta property="og:description" content="Cómo desarrollar blogs con Jekyll y GitHub Pages." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Artículos de contenido" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Cómo desarrollar blogs con Jekyll y GitHub Pages.","headline":"Artículos de contenido","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/publicaci%C3%B3n-de-sitios-webs-est%C3%A1ticos-con-github-pages/art%C3%ADculos-de-contenido"},"url":"/libros/publicaci%C3%B3n-de-sitios-webs-est%C3%A1ticos-con-github-pages/art%C3%ADculos-de-contenido"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/publicación-de-sitios-webs-estáticos-con-github-pages'>Publicación de sitios webs estáticos con GitHub Pages</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Artículos de contenido</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>11 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Recordemos que <strong>Jekyll</strong> clasifica los archivos de contenido en páginas y artículos.
+Hasta el momento, hemos hecho hincapié en las páginas.
+Ha llegado el momento de presentar los artículos (<em>posts</em>) para crear así blogs.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Cómo crear su propio blog con <strong>Jekyll</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo crear los artículos de contenido y dónde añadirlos en el directorio del sitio.</p>
+  </li>
+  <li>
+    <p>Cómo presentar los artículos por páginas.</p>
+  </li>
+  <li>
+    <p>Cómo crear borradores de artículos en los que está trabajando y no desea se publiquen todavía.</p>
+  </li>
+  <li>
+    <p>Cómo etiquetar los artículos.</p>
+  </li>
+  <li>
+    <p>Cómo se generan los canales webs (<em>feeds</em>).</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>Básicamente, un <strong>blog</strong> es un sitio web cuyo contenido está dedicado a una determinada temática, ya sea vivencias de quien escribe o temas específicos como, por ejemplo, tecnología, ciencia o salud.
+Suelen publicar nuevo contenido con frecuencia y, en muchos casos, permiten el soporte de comentarios por parte de los lectores.
+Las empresas los suelen utilizar para mostrar cómo utilizar sus productos y las personas, en muchas ocasiones, para contar historias o incluso crear su propia marca personal.</p>
+
+<p>Con <strong>Jekyll</strong>, podemos crear blogs muy fácilmente, mediante el uso de <strong>artículos</strong> (<em>posts</em>), archivos de contenido que representan una entrada de contenido en un blog.</p>
+
+<h2 id="directorio-de-artículos">Directorio de artículos</h2>
+
+<p>En primer lugar, debemos crear el <strong>directorio _posts</strong> (<em>_posts directory</em>) en el <strong>directorio del sitio</strong>.
+A este directorio lo conoceremos formalmente como <strong>directorio de artículos</strong> (<em>post directory</em>).
+Dentro de él, ubicaremos cada artículo mediante su correspondiente archivo, cuyo nombre debe tener el formato <strong>año-mes-día-títuloDelArtículo.md</strong>.
+Generalmente, la extensión es <strong>.md</strong>, pero también puede ser <strong>.html</strong>, según sus gustos.</p>
+
+<p>La ruta final de acceso a los artículos será como sigue: <strong>/año/mes/día/título-del-artículo</strong>,
+a menos que usemos la propiedad <strong><em>defaults</em></strong> del archivo de configuración <strong>_config.yaml</strong> para fijar un formato alternativo.
+En el siguiente ejemplo, los artículos se publican dentro de la ruta <em>/blog/año</em> y no siguiendo el formato indicado anteriormente:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ...</span>
+
+<span class="na">defaults</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">scope</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">posts</span> <span class="c1"># con esto, indicamos que se aplique a los artículos</span>
+    <span class="na">values</span><span class="pi">:</span>
+      <span class="na">layout</span><span class="pi">:</span> <span class="s">post</span>
+      <span class="na">permalink</span><span class="pi">:</span> <span class="s">/blog/:year/:title</span>
+</code></pre></div></div>
+
+<p>Entre otros marcadores, podemos usar:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Marcador</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>:year</em></strong></td>
+      <td>Año de cuatro dígititos.</td>
+    </tr>
+    <tr>
+      <td><strong><em>:short_year</em></strong></td>
+      <td>Año de dos dígitos.</td>
+    </tr>
+    <tr>
+      <td><strong><em>:month</em></strong></td>
+      <td>Mes de dos dígitos.</td>
+    </tr>
+    <tr>
+      <td><strong><em>:day</em></strong></td>
+      <td>Día del mes de dos dígitos.</td>
+    </tr>
+    <tr>
+      <td><strong><em>:title</em></strong></td>
+      <td>Título del artículo.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Así pues, si tenemos el artículo <em>_posts/2023-03-19-bienvenidos-a-las-fallas.md</em> y seguimos con el ejemplo anterior, este se publicará en la ruta <em>/blog/2023/bienvenidos-a-las-fallas</em>.</p>
+
+<h2 id="encabezamiento-de-los-artículos">Encabezamiento de los artículos</h2>
+
+<p>Los artículos tienen un encabezamiento (<em>front matter</em>) similar al de las páginas.
+Vamos a ver un ejemplo:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s">Título del artículo</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">archivo de diseño</span>
+<span class="nn">---</span>
+
+Primer párrafo del artículo,
+conocido formalmente como excerpt.
+
+Resto de párrafos del artículo.
+</code></pre></div></div>
+
+<h2 id="variable-siteposts">Variable <em>site.posts</em></h2>
+
+<p>Recordemos que la variable global <strong><em>site</em></strong> proporciona diversos datos como, por ejemplo, las páginas a través de su propiedad <strong><em>pages</em></strong>;
+las colecciones mediante <strong><em>collections</em></strong>;
+y, la que nos interesa en estos momentos, <strong><em>posts</em></strong> para acceder a los artículos del sitio web, o sea, estos definidos en el directorio de artículos.</p>
+
+<p>Al igual que las páginas, cada objeto de tipo artículo tiene diversas propiedades como, por ejemplo, <strong><em>title</em></strong>, <strong><em>description</em></strong>, <strong><em>url</em></strong>, <strong><em>author</em></strong>, <strong><em>content</em></strong> y cualquier propiedad definida en su encabezamiento.
+Y también tienen otras propiedades que pueden resultar de interés:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Tipo de datos</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>excerpt</em></strong></td>
+      <td>Texto</td>
+      <td>Primer párrafo de contenido del artículo. Extraído automáticamente por <strong>Jekyll</strong> del contenido.</td>
+    </tr>
+    <tr>
+      <td><strong><em>date</em></strong></td>
+      <td>Fecha</td>
+      <td>Fecha de publicación del artículo.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="página-de-blog">Página de blog</h2>
+
+<p>Ya hemos visto cómo crear artículos y cómo indicar la ruta en la que deben aparecer, ahora ha llegado el momento de crear la página principal del blog.
+Para ello, no tenemos más que crear una página de contenido similar a la siguiente:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="c1"># /blog/index.md</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s">Blog</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">page</span>
+<span class="nn">---</span>
+
+{%- for post in site.posts -%}
+  # {{post.title | escape}}
+
+  Fecha: {{post.date | date: "%d-%m-%Y"%}}
+
+  URL: <span class="p">[</span><span class="nv">{{post.url}}</span><span class="p">](</span><span class="sx">{{post.url</span> | relative_url}})
+
+  {{post.excerpt}}
+{%- endfor -%}
+</code></pre></div></div>
+
+<h2 id="paginación-de-artículos">Paginación de artículos</h2>
+
+<p>La <strong>paginación de artículos</strong> (<em>post pagination</em>) es la operación por la que se agrupa los artículos en bloques de un tamaño máximo.
+Si el blog contiene muchos artículos, no suele ser muy recomendable crear una página conteniendo decenas y decenas de artículos.
+Puede ser más útil presentarlos en bloques.
+Para ello, utilizaremos el <strong><em>plugin</em> <em>jekyll-paginate</em></strong> (<em>jekyll-paginate plugin</em>) con el que paginaremos fácilmente los artículos.
+En primer lugar, debemos configurar el <em>plugin</em> y, en segundo lugar, utilizar <strong>Liquid</strong> para la paginación.</p>
+
+<h3 id="configuración-del-plugin-jekyll-paginate">Configuración del <em>plugin</em> <em>jekyll-paginate</em></h3>
+
+<p>Para configurar el <em>plugin</em>, iremos al archivo de configuración <strong>_config.yaml</strong> del sitio:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ...</span>
+
+<span class="na">plugins</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">jekyll-paginate</span>
+  <span class="c1"># ...</span>
+
+<span class="na">paginate</span><span class="pi">:</span> <span class="s">número</span>
+<span class="na">paginate_path</span><span class="pi">:</span> <span class="s">/formato/de/ruta/de/paginación</span>
+</code></pre></div></div>
+
+<p>Con <strong><em>paginate</em></strong>, indicamos el número máximo de artículos por página.
+Mientras que con <strong><em>paginate_path</em></strong>, el patrón de la ruta para cada página.
+Se utiliza el marcador <strong><em>:num</em></strong> para indicar la página actual.
+Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">paginate</span><span class="pi">:</span> <span class="m">10</span>
+<span class="na">paginate_path</span><span class="pi">:</span> <span class="s">/blog/p:num</span>
+</code></pre></div></div>
+
+<p>Siguiendo la configuración anterior, si tuviéramos 27 artículos, tendríamos tres páginas:
+<em>/blog/index.html</em> con los artículos de la primera página, los más recientes;
+<em>/blog/p2/index.html</em> con los de la segunda;
+y <em>/blog/p3/index.html</em> con los de la tercera y última, siendo estos los más antiguos.</p>
+
+<h3 id="objeto-paginator-de-liquid">Objeto <em>paginator</em> de <em>Liquid</em></h3>
+
+<p>El <em>plugin</em> crea el objeto <strong><em>paginator</em></strong> en <strong>Liquid</strong> que permite trabajar con las páginas.
+Este objeto dispone de las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Tipo de datos</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>posts</em></strong></td>
+      <td>Lista</td>
+      <td>Artículos disponibles en la página actual.</td>
+    </tr>
+    <tr>
+      <td><strong><em>total_posts</em></strong></td>
+      <td>Número</td>
+      <td>Número total de artículos.</td>
+    </tr>
+    <tr>
+      <td><strong><em>page</em></strong></td>
+      <td>Número</td>
+      <td>Número de la página actual.</td>
+    </tr>
+    <tr>
+      <td><strong><em>total_pages</em></strong></td>
+      <td>Número</td>
+      <td>Número total de páginas.</td>
+    </tr>
+    <tr>
+      <td><strong><em>per_page</em></strong></td>
+      <td>Número</td>
+      <td>Número máximo de artículos por página.</td>
+    </tr>
+    <tr>
+      <td><strong><em>previous_page</em></strong></td>
+      <td>Número</td>
+      <td>Número de la página anterior.</td>
+    </tr>
+    <tr>
+      <td><strong><em>previous_page_path</em></strong></td>
+      <td>Texto</td>
+      <td>Ruta a la página anterior.</td>
+    </tr>
+    <tr>
+      <td><strong><em>next_page</em></strong></td>
+      <td>Número</td>
+      <td>Número de la página posterior.</td>
+    </tr>
+    <tr>
+      <td><strong><em>next_page_path</em></strong></td>
+      <td>Texto</td>
+      <td>Ruta a la página posterior.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Con esto en mente, vamos a modificar el código de la página del blog para que liste los artículos por páginas:</p>
+
+<div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+# /blog/index.html
+title: Mi blog
+layout: page
+---
+
+<span class="p">{%</span><span class="w"> </span><span class="nt">for</span><span class="w"> </span><span class="nv">post</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nv">paginator.posts</span><span class="w"> </span><span class="p">%}</span>
+  &lt;h1&gt;&lt;a href="<span class="p">{{</span><span class="w"> </span><span class="nv">post</span><span class="p">.</span><span class="nv">url</span><span class="w"> </span><span class="p">}}</span>"&gt;<span class="p">{{</span><span class="w"> </span><span class="nv">post</span><span class="p">.</span><span class="nv">title</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nf">escape</span><span class="w"> </span><span class="p">}}</span>&lt;/a&gt;&lt;/h1&gt;
+
+  &lt;p class="author"&gt;
+    &lt;span class="date"&gt;<span class="p">{{</span><span class="w"> </span><span class="nv">post</span><span class="p">.</span><span class="nv">date</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nf">date</span><span class="p">:</span><span class="w"> </span><span class="s2">"%d-%m-%Y"</span><span class="p">}}</span>&lt;/span&gt;
+  &lt;/p&gt;
+
+  &lt;div class="content"&gt;
+    <span class="p">{{</span><span class="w"> </span><span class="nv">post</span><span class="p">.</span><span class="nv">excerpt</span><span class="w"> </span><span class="p">}}</span>
+  &lt;/div&gt;
+<span class="p">{%</span><span class="w"> </span><span class="nt">endfor</span><span class="w"> </span><span class="p">%}</span>
+
+&lt;div class="pagination"&gt;
+  <span class="p">{%</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nv">paginator</span><span class="p">.</span><span class="nv">previous_page</span><span class="w"> </span><span class="p">%}</span>
+    &lt;a href="<span class="p">{{</span><span class="w"> </span><span class="nv">paginator</span><span class="p">.</span><span class="nv">previous_page_path</span><span class="w"> </span><span class="p">}}</span>" class="previous"&gt;
+      &amp;lt;&amp;lt;
+    &lt;/a&gt;
+  <span class="p">{%</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="p">%}</span>
+    &lt;span class="previous"&gt;&amp;lt;&amp;lt&lt;/span&gt;
+  <span class="p">{%</span><span class="w"> </span><span class="kr">endif</span><span class="w"> </span><span class="p">%}</span>
+
+  &lt;span class="page_number "&gt;
+    <span class="p">{{</span><span class="w"> </span><span class="nv">paginator</span><span class="p">.</span><span class="nv">page</span><span class="w"> </span><span class="p">}}</span> de <span class="p">{{</span><span class="w"> </span><span class="nv">paginator</span><span class="p">.</span><span class="nv">total_pages</span><span class="w"> </span><span class="p">}}</span>
+  &lt;/span&gt;
+
+  <span class="p">{%</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nv">paginator</span><span class="p">.</span><span class="nv">next_page</span><span class="w"> </span><span class="p">%}</span>
+    &lt;a href="<span class="p">{{</span><span class="w"> </span><span class="nv">paginator</span><span class="p">.</span><span class="nv">next_page_path</span><span class="w"> </span><span class="p">}}</span>" class="next"&gt;&amp;gt;&amp;gt;&lt;/a&gt;
+  <span class="p">{%</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="p">%}</span>
+    &lt;span class="next "&gt;&amp;gt;&amp;gt;&lt;/span&gt;
+  <span class="p">{%</span><span class="w"> </span><span class="kr">endif</span><span class="w"> </span><span class="p">%}</span>
+&lt;/div&gt;
+</code></pre></div></div>
+
+<p>En el momento de escribir estas líneas, la paginación sólo funciona con archivos <strong>HTML</strong>, no utilice <strong>index.md</strong> sino <strong>index.html</strong>.
+Es una restricción bastante importante a tener en cuenta y recordar.</p>
+
+<h2 id="borradores-de-artículos">Borradores de artículos</h2>
+
+<p>Un <strong>borrador de un artículo</strong> (<em>post draft</em>) es un artículo no terminado, en el que estamos trabajando, susceptible de cambios y, por lo tanto, no publicable todavía.
+Este tipo de artículos se ubican en el <strong>directorio <em>_draft</em></strong> (<em>_draft directory</em>) del <strong>directorio del sitio</strong>, así se garantiza que no se publicarán.</p>
+
+<h2 id="etiquetado-de-artículos">Etiquetado de artículos</h2>
+
+<p>Debido a la naturaleza de los artículos, en un mismo blog podemos tener artículos de distinta índole.
+<strong>Jekyll</strong> permite que los categoricemos de alguna manera.
+Para ello, podemos utilizar las propiedades <strong><em>tag</em></strong> y <strong><em>tags</em></strong> de los encabezamientos.
+Consideraremos una <strong>etiqueta</strong> (<em>tag</em>) como un identificador de un tema.
+A través de estas etiquetas podemos proporcionar información de clasificación del contenido tratado en el artículo.
+Las etiquetas las decidimos nosotros, no vienen impuestas por <strong>Jekyll</strong>.</p>
+
+<p>Cuando un artículo se asocia a una única etiqueta, podemos indicarla mediante su propiedad <strong><em>tag</em></strong>.
+En cambio, si deseamos asociarlo a varias etiquetas, usaremos <strong><em>tags</em></strong>, una lista donde cada uno de sus elementos representa una etiqueta.
+Ejemplo:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s">Un día en la oficina</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">post</span>
+<span class="na">tag</span><span class="pi">:</span> <span class="s">trabajo</span>
+<span class="nn">---</span>
+
+Contenido del artículo.
+</code></pre></div></div>
+
+<h3 id="variable-sitetags">Variable <em>site.tags</em></h3>
+
+<p>En <strong><em>site.tags</em></strong>, <strong>Jekyll</strong> pone a nuestra disposición las etiquetas y los artículos asociados a ellas.
+Consiste en un objeto donde existe una propiedad para cada etiqueta, donde su valor es la lista de todos los artículos asociados a esa etiqueta.
+Gracias a esto, podemos crear una página que liste los artículos que tienen asociada una determinada etiqueta.
+Para ello, crearemos una página específica de esa etiqueta y ubicaremos en ella los artículos con algo similar a:</p>
+
+<div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{%-</span><span class="w"> </span><span class="nt">assign</span><span class="w"> </span><span class="nv">posts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">site</span><span class="p">.</span><span class="nv">tags</span><span class="p">.</span><span class="nv">etiqueta</span><span class="w"> </span><span class="p">-%}</span>
+<span class="p">{%-</span><span class="w"> </span><span class="nt">for</span><span class="w"> </span><span class="nv">post</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nv">posts</span><span class="w"> </span><span class="p">-%}</span>
+  ## <span class="p">{{</span><span class="w"> </span><span class="nv">post</span><span class="p">.</span><span class="nv">title</span><span class="w"> </span><span class="p">}}</span>
+
+  Url: [<span class="p">{{</span><span class="w"> </span><span class="nv">post</span><span class="p">.</span><span class="nv">url</span><span class="w"> </span><span class="p">}}</span>](<span class="p">{{</span><span class="w"> </span><span class="nv">post</span><span class="p">.</span><span class="nv">url</span><span class="w"> </span><span class="p">}}</span>)
+
+  <span class="p">{{</span><span class="w"> </span><span class="nv">post</span><span class="p">.</span><span class="nv">excerpt</span><span class="w"> </span><span class="p">}}</span>
+<span class="p">{%-</span><span class="w"> </span><span class="nt">endfor</span><span class="w"> </span><span class="p">-%}</span>
+</code></pre></div></div>
+
+<h2 id="canales-webs">Canales webs</h2>
+
+<p>Un <strong>canal web</strong> (<em>web feed</em>) es un archivo que proporciona información actualizada de algún sitio como, por ejemplo, los artículos más recientemente publicados en un blog.
+La <strong>W3C</strong> generó su propio estándar, <strong>Atom</strong>, para este tipo de archivos así como el protocolo para su intercambio.
+<strong>Jekyll</strong> proporciona el <strong><em>plugin</em> <em>jekyll-feed</em></strong> (<em>jekyll-feed plugin</em>) con el que generar este tipo de archivos a partir de los artículos contenidos en el sitio web.</p>
+
+<p>Estos archivos se utilizan para mantener al día a los usuarios del sitio con las nuevas publicaciones.
+Por lo que es recomendable usarlo y saber configurarlo para comprender exactamente que añadirá <strong>Jekyll</strong> a ellos.</p>
+
+<h3 id="configuración-del-plugin-jekyll-feed">Configuración del plugin <em>jekyll-feed</em></h3>
+
+<p>El <em>plugin</em> se configura en el archivo <strong>_config.yaml</strong> del sitio.
+Por un lado, utiliza diversas propiedades de este archivo, ajenas al propio canal, como, por ejemplo, <strong><em>title</em></strong>, <strong><em>description</em></strong>, <strong><em>url</em></strong> y <strong><em>author</em></strong>.
+Por otra parte, define su propia propiedad en la que indicar su configuración personalizada, <strong><em>feed</em></strong>.
+Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">plugins</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">jekyll-feed</span>
+  <span class="c1"># ...</span>
+
+<span class="na">feed</span><span class="pi">:</span>
+  <span class="na">path</span><span class="pi">:</span> <span class="s">/blog/feed.xml</span>
+  <span class="na">excerpt_only</span><span class="pi">:</span> <span class="kc">true</span>
+  <span class="na">posts_limit</span><span class="pi">:</span> <span class="m">15</span>
+  <span class="na">tags</span><span class="pi">:</span>
+    <span class="na">path</span><span class="pi">:</span> <span class="s">/blog/</span>
+    <span class="na">only</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">ciencia</span>
+      <span class="pi">-</span> <span class="s">tecnología</span>
+</code></pre></div></div>
+
+<p>A su vez, <strong><em>feed</em></strong> contiene las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Tipo de datos</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>path</em></strong></td>
+      <td>Texto</td>
+      <td>Ubicación del archivo del canal web como, por ejemplo, <em>/blog/feed.atom</em>. En caso de omisión, <strong>/feed.xml</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>posts_limit</em></strong></td>
+      <td>Número</td>
+      <td>Número máximo de artículos que se añadirán al canal.</td>
+    </tr>
+    <tr>
+      <td><strong><em>excerpt_only</em></strong></td>
+      <td>Booleano</td>
+      <td>Indica si para cada artículo sólo debe adjuntar su primer párrafo: <strong><em>true</em></strong>, sí; <strong><em>false</em></strong>, no, todo su contenido.</td>
+    </tr>
+    <tr>
+      <td><strong><em>tags</em></strong></td>
+      <td>Booleano u objeto</td>
+      <td>Indica si generar un canal para cada etiqueta.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Adicionalmente, de cada artículo utiliza las siguientes propiedades: <strong><em>title</em></strong>, <strong><em>date</em></strong>, <strong><em>excerpt</em></strong>, <strong><em>id</em></strong>, <strong><em>tags</em></strong>, <strong><em>image</em></strong> y <strong><em>author</em></strong>.
+En caso de omitir <strong><em>author</em></strong> en un artículo, utilizará el <strong><em>author</em></strong> del archivo <strong>_config.yaml</strong>.</p>
+
+<h3 id="canales-independientes-para-las-etiquetas">Canales independientes para las etiquetas</h3>
+
+<p>Si deseamos generar un canal para cada etiqueta, no tenemos más que utilizar la propiedad <strong><em>feed.tags</em></strong> del archivo de configuración <strong>_config.yaml</strong>.
+Esta propiedad puede ser un valor booleano que, en caso de indicar <strong><em>true</em></strong>, indicará que así debe ser;
+o bien, un objeto que personalice para qué etiquetas generar su propio canal y su configuración particular.</p>
+
+<p>Vamos a centrarnos en la configuración personaliza de los canales asociados a etiquetas.
+Recordemos que tendremos que indicar un objeto, en vez de un valor booleano, con las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Tipo de datos</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>except</em></strong></td>
+      <td>Lista de textos</td>
+      <td>Etiquetas de las que <em>no</em> deseamos se genere su propio canal.</td>
+    </tr>
+    <tr>
+      <td><strong><em>only</em></strong></td>
+      <td>Lista de textos</td>
+      <td>Etiquetas para las que generar su propio canal.</td>
+    </tr>
+    <tr>
+      <td><strong><em>path</em></strong></td>
+      <td>Texto</td>
+      <td>Directorio donde ubicar los canales asociados a las etiquetas como, por ejemplo, <em>/blog/</em>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="tema-minima">Tema <em>minima</em></h2>
+
+<p>El tema <strong>minima</strong> define la propiedad <strong><em>show_excerpts</em></strong> en el archivo de configuración <strong>_config.yaml</strong> con la que indicarle si deseamos que añada al final de la página de inicio los <em>excerpts</em> de los artículos.
+Si su valor es <strong><em>true</em></strong>, así lo hará.</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

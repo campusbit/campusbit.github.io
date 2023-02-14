@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Etiquetas | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Etiquetas" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Cómo utilizar las etiquetas con GitHub Issues y GitHub Pull Requests." />
+<meta property="og:description" content="Cómo utilizar las etiquetas con GitHub Issues y GitHub Pull Requests." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Etiquetas" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Cómo utilizar las etiquetas con GitHub Issues y GitHub Pull Requests.","headline":"Etiquetas","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/organizaci%C3%B3n-del-trabajo-con-github-projects-y-github-issues/etiquetas"},"url":"/libros/organizaci%C3%B3n-del-trabajo-con-github-projects-y-github-issues/etiquetas"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/organización-del-trabajo-con-github-projects-y-github-issues'>Organización del trabajo con GitHub Projects y GitHub Issues</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Etiquetas</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>7 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Las etiquetas son muy importantes en el trabajo, porque proporcionan información extra de una tarea, propuesta o discusión.
+Vamos a analizarlas detenidamente.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es una etiqueta.</p>
+  </li>
+  <li>
+    <p>Cómo crear, modificar y suprimir etiquetas.</p>
+  </li>
+  <li>
+    <p>Cómo mostrar las etiquetas en los elementos de <strong>GitHub Projects</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo filtrar los elementos de un proyecto asociados a una determinada etiqueta.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>Una <strong>etiqueta</strong> (<em>label</em>) sirve para categorizar y/o proporcionar información extra de alguna cosa.
+Se utilizan principalmente para proporcionar metadatos.
+Se definen a nivel de repositorio y se pueden aplicar a las propuestas (<em>issues</em>), a las solicitudes de integración (<em>pull requests</em>) y a las discusiones (<em>discussions</em>).
+Recuerde que si fija las etiquetas desde el formulario de un ítem del proyecto, lo está haciendo realmente en la propuesta asociada a él.</p>
+
+<p>Las etiquetas tienen un <strong>nombre</strong> (<em>name</em>) para su identificación del resto;
+una <strong>descripción</strong> (<em>description</em>) que describe cuándo usarla;
+y un <strong>color</strong> que se utiliza principalmente para destacarla o resaltarla del resto fácilmente.</p>
+
+<p>Atendiendo a quién las define, se distingue entre predefinidas y personalizadas.
+Una <strong>etiqueta predefinida</strong> (<em>default label</em>) es aquella que añade automáticamente <strong>GitHub</strong> al crear el repositorio.
+Mientras que una <strong>etiqueta personalizada</strong> (<em>custom label</em>), aquella que creamos nosotros mismos para añadir metadatos extras que no proporcionan las predefinidas.</p>
+
+<h2 id="etiquetas-predefinidas">Etiquetas predefinidas</h2>
+
+<p>Una <strong>etiqueta predefinidas</strong> (<em>default label</em>) es aquella que viene de fábrica con el repositorio.
+Podemos modificarlas e incluso suprimir aquellas que no sean de nuestro interés.
+En el momento de escribir estas líneas, tenemos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Etiqueta</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>bug</em></strong></td>
+      <td>Se asocia a cosas relacionadas directamente con un fallo.</td>
+    </tr>
+    <tr>
+      <td><strong><em>documentation</em></strong></td>
+      <td>Para representar un cambio en la documentación, ya sea una mejora o una añadidura.</td>
+    </tr>
+    <tr>
+      <td><strong><em>duplicate</em></strong></td>
+      <td>Indica que es un duplicado de otra cosa. Por ejemplo, si se asocia a una propuesta, indica que es un duplicado de otra ya existente.</td>
+    </tr>
+    <tr>
+      <td><strong><em>enhancement</em></strong></td>
+      <td>Representa una solicitud de cambio que proporciona nueva funcionalidad.</td>
+    </tr>
+    <tr>
+      <td><strong><em>good first issue</em></strong></td>
+      <td>Se utiliza para indicar que una propuesta puede ser ideal para una primera colaboración de alguien en el repositorio.</td>
+    </tr>
+    <tr>
+      <td><strong><em>help wanted</em></strong></td>
+      <td>Indica que se necesita ayuda para atender la propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>invalid</em></strong></td>
+      <td>Se asocia a una propuesta que no parece correcta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>question</em></strong></td>
+      <td>Refleja que falta información. En una propuesta (<em>issue</em>), que necesitamos más información para poder comprenderla y, por ende, implementarla.</td>
+    </tr>
+    <tr>
+      <td><strong><em>wontfix</em></strong></td>
+      <td>Viene a decir que no se trabajará en ello. Tan pronto como se sabe que no se va a llevar a cabo, se marca con esta etiqueta y se cierra.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="etiquetas-personalizadas">Etiquetas personalizadas</h2>
+
+<p>Es posible que las etiquetas predefinidas no sean suficientes para resolver todas las situaciones de nuestro proyecto u organización particular.
+<strong>GitHub</strong> permite definir más etiquetas, las cuales conocemos como <strong>etiquetas personalizadas</strong> (<em>custom labels</em>).</p>
+
+<h3 id="definición-de-una-etiqueta-personalizada">Definición de una etiqueta personalizada</h3>
+
+<p>Para definir una nueva etiqueta:</p>
+
+<ol>
+  <li>
+    <p>Ir al repositorio de <strong>GitHub</strong>.</p>
+  </li>
+  <li>
+    <p>En la pestaña <strong><em>Issues</em></strong>, hacer clic en <strong><em>Labels</em></strong> y, a continuación, en <strong><em>New label</em></strong>.
+Aparecerá un formulario integrado con los datos de la nueva etiqueta:</p>
+
+    <p><img src="img/nueva-etiqueta.png" alt="Cómo crear una nueva etiqueta" /></p>
+  </li>
+  <li>
+    <p>Rellenar el formulario con los datos de la nueva etiqueta y hacer clic en <strong><em>Create label</em></strong>:</p>
+
+    <p><img src="img/formulario-de-nueva-etiqueta.png" alt="Formulario de nueva etiqueta" /></p>
+  </li>
+</ol>
+
+<p>El nombre de la etiqueta debe ser descriptivo de su objetivo.
+Indique una descripción adecuada que describa cuándo usarla.
+El color debería ir acorde a su objetivo, si es una cosa urgente en la que debemos prestar especial atención, por ejemplo, utilice colores que se asocian a niveles altos de importancia como el rojo o el naranja.
+Si quiere representar algo que está listo, muy probablemente sea mejor un color como el verde.</p>
+
+<h2 id="edición-de-etiquetas">Edición de etiquetas</h2>
+
+<p>Para modificar una etiqueta, iremos a la etiqueta y haremos clic en los tres puntos (<code class="language-plaintext highlighter-rouge">...</code>).
+Esto mostrará su menú contextual y seleccionaremos <strong><em>Edit</em></strong>:</p>
+
+<p><img src="img/menú-contextual-de-las-etiquetas.png" alt="Menú contextual de las etiquetas" /></p>
+
+<h2 id="supresión-de-etiquetas">Supresión de etiquetas</h2>
+
+<p>Para la supresión de una etiqueta, seleccionaremos <strong><em>Delete</em></strong> del menú contextual de la etiqueta.</p>
+
+<h2 id="análisis-de-nuestras-propias-etiquetas">Análisis de nuestras propias etiquetas</h2>
+
+<p>Si está trabajando para una organización, debe ser la organización la que determine qué etiquetas deben utilizarse.
+En cambio, con proyectos personales, seremos nosotros mismos los que decidamos cuáles utilizar.
+En nuestro caso, vamos a utilizar las siguientes, aquellas predefinidas que no están en la lista se suprimen y las que no lo están se crean:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Etiqueta</th>
+      <th>Tipo</th>
+      <th>Color</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>bug</em></strong></td>
+      <td>Predefinida</td>
+      <td><strong><em>#d73a4a</em></strong> (rojo)</td>
+      <td>Describe un fallo en el software.</td>
+    </tr>
+    <tr>
+      <td><strong><em>documentation</em></strong></td>
+      <td>Predefinida</td>
+      <td><strong><em>#0075ca</em></strong> (azul)</td>
+      <td>Representa una actualización de la documentación del proyecto.</td>
+    </tr>
+    <tr>
+      <td><strong><em>duplicate</em></strong></td>
+      <td>Predefinida</td>
+      <td><strong><em>#cfd3d7</em></strong> (gris)</td>
+      <td>Es un duplicado de otra propuesta. Se recomienda que en la documentación de la propuesta se indique de cuál es el duplicado.</td>
+    </tr>
+    <tr>
+      <td><strong><em>help wanted</em></strong></td>
+      <td>Predefinida</td>
+      <td><strong><em>#008672</em></strong> (verde)</td>
+      <td>Se necesita ayuda para atender la solicitud (<em>issue</em>).</td>
+    </tr>
+    <tr>
+      <td><strong><em>invalid</em></strong></td>
+      <td>Predefinida</td>
+      <td><strong><em>#e4e669</em></strong> (amarilla)</td>
+      <td>Propuesta inválida o que no tiene sentido.</td>
+    </tr>
+    <tr>
+      <td><strong><em>question</em></strong></td>
+      <td>Predefinida</td>
+      <td><strong><em>#d876e3</em></strong> (violeta)</td>
+      <td>Necesitamos más información sobre lo que se habla en la propuesta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>wontfix</em></strong></td>
+      <td>Predefinida</td>
+      <td><strong><em>#ffffff</em></strong> (gris)</td>
+      <td>Se descarta la propuesta. Se recomienda indicar en su documentación por qué se descarta.</td>
+    </tr>
+    <tr>
+      <td><strong><em>lock</em></strong></td>
+      <td>Personalizada</td>
+      <td><strong><em>#D93F0B</em></strong> (naranja)</td>
+      <td>Hay algo que bloquea su continuidad.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Tenga en cuenta que una propuesta puede tener asociadas tantas etiquetas como sea necesario.
+Por ejemplo, si su organización establece que toda nueva funcionalidad debe llevar a cabo el cambio en el código fuente y, además, actualizar la documentación del proyecto, tendrá tanto <strong><em>enhancement</em></strong> como <strong><em>documentation</em></strong>.
+Ahora bien, si su organización decide que cada tarea se asocie a una propuesta diferente, tendrá una con <strong><em>enhancement</em></strong> y la otra con <strong><em>documentation</em></strong>, teniendo esta segunda un enlace a la primera en su descripción.
+Esto hará que la segunda no se lleve a cabo hasta que la primera se haya realizado.</p>
+
+<p>Vamos a hacer un poco más de hincapié en algunas etiquetas.
+En primer lugar, es posible que cuando un proyecto lleva cientos de propuestas, alguien abra una nueva que pueda ser un duplicado de otra, porque no buscó si ya existía o porque lo hizo pero no la encontró.
+Si esto es así, lo que se suele hacer es marcar esta nueva propuesta como <strong><em>duplicate</em></strong>, indicar cuál es la otra propuesta y cerrar el duplicado.
+Así la discusión se centra en la original y se evita hablar de ella en el duplicado.
+De la misma manera se puede actuar en <strong>GitHub Discussions</strong>.
+La idea es tener centrado el problema en un punto en vez de en varios.</p>
+
+<p>Por otra parte, tenemos la etiqueta personalizada <strong><em>lock</em></strong>.
+Esta etiqueta se suele utilizar cuando estamos trabajando en algo pero, por la razón que sea, nos quedamos bloqueados.
+Puede ser porque nos encontremos con un problema que debería atenderse en su propia propuesta, porque está fuera del ámbito de la marcada como bloqueada;
+o porque estamos a la espera de que se termine otra que está pendiente o en desarrollo.
+Algunas organizaciones suelen llevar la propuesta a un estatus que indique que está bloqueada.
+Personalmente, considero que es mejor marcarla como bloqueada, dejarla en su estatus actual y esperar a que podamos continuar.
+La razón es básicamente que así sé dónde se quedó bloqueada viendo el propio tablero.
+En cualquier caso, en la documentación de la tarea bloqueada habrá que indicar por qué estamos bloqueados.
+Una vez podamos continuar, le quitaremos la etiqueta, indicando así que ya no está bloqueada, y continuaremos.</p>
+
+<p>Si necesita poder echar un vistazo rápido a las cosas que tiene bloqueadas, puede crear su propia vista donde el filtro contenga el predicado <em>label:lock</em>.
+Esta vista sólo mostrará aquello que está bloqueado y podrá detectar posibles cuellos de botella.
+Pero como le digo, también puede crear un nuevo estatus o columna y mover la tarjeta ahí.
+Gustos, colores.</p>
+
+<h2 id="cómo-mostrar-las-etiquetas-en-github-projects">Cómo mostrar las etiquetas en <em>GitHub Projects</em></h2>
+
+<p>Es muy fácil indicar que se muestren las etiquetas en un proyecto de <strong>GitHub Projects</strong>.
+No hay más que hacer lo siguiente:</p>
+
+<ol>
+  <li>
+    <p>Ir a la vista del proyecto en cuestión.</p>
+  </li>
+  <li>
+    <p>Mostrar su menú contextual y hacer clic en <strong><em>Configuration &gt; fields</em></strong>:</p>
+
+    <p><img src="img/menú-contextual-de-vista-de-proyecto.png" alt="Menú contextual de una vista de proyecto" /></p>
+  </li>
+  <li>
+    <p>Seleccionar el campo <strong><em>Labels</em></strong>, indicando así que se deben mostrar las etiquetas asociadas a cada elemento:</p>
+
+    <p><img src="img/visualización-de-campos.png" alt="Visualización de campos en la vista del proyecto" /></p>
+  </li>
+</ol>
+
+<h2 id="filtrado-de-ítems-de-un-proyecto-por-etiqueta">Filtrado de ítems de un proyecto por etiqueta</h2>
+
+<p>Es posible que necesitemos filtrar aquellos ítems del proyecto que tengan una determinada etiqueta.
+Esto se puede hacer de manera muy sencilla, yendo al proyecto y haciendo clic en la etiqueta en cuestión en cualquier ítem que la tenga.
+Automáticamente, añadirá el predicado <strong><em>label:nombreEtiqueta</em></strong> al filtro.
+También puede añadir este predicado directamente al filtro.
+Lo que mejor le vaya.</p>
+
+<p>Si añade varios predicados al filtro, recuerde que sólo se mostrarán aquellos que cumplan todos ellos.
+Más adelante hablaremos detenidamente de los filtros.</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

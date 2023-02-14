@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Confirmaciones y combinaciones de Git | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Confirmaciones y combinaciones de Git" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Descripción de las confirmaciones y las combinaciones de Git. Casi todas las estrategias de ramificación requieren un conocimiento muy bueno de las combinaciones." />
+<meta property="og:description" content="Descripción de las confirmaciones y las combinaciones de Git. Casi todas las estrategias de ramificación requieren un conocimiento muy bueno de las combinaciones." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Confirmaciones y combinaciones de Git" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Descripción de las confirmaciones y las combinaciones de Git. Casi todas las estrategias de ramificación requieren un conocimiento muy bueno de las combinaciones.","headline":"Confirmaciones y combinaciones de Git","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/devsecops-con-github-actions-ed-nodejs/confirmaciones-y-combinaciones-de-git"},"url":"/libros/devsecops-con-github-actions-ed-nodejs/confirmaciones-y-combinaciones-de-git"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/devsecops-con-github-actions-ed-nodejs'>Dev(Sec)Ops con GitHub Actions (Ed. Node.js)</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Confirmaciones y combinaciones de Git</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>13 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Para trabajar bien con <strong>Git</strong>, conocer cómo funcionan las confirmaciones y las combinaciones es clave.
+Casi todas las estrategias de ramificación requieren un conocimiento muy bueno de las combinaciones.
+Por esta razón, vamos a dedicar esta lección a ambas operaciones.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es y cómo realizar una confirmación (<em>commit</em>).</p>
+  </li>
+  <li>
+    <p>Qué es y cómo realizar las combinaciones de ramas (<em>merge</em>).</p>
+  </li>
+  <li>
+    <p>Qué es un conflicto y cómo resolverlos.</p>
+  </li>
+  <li>
+    <p>Para qué sirve el <em>squashing</em>.</p>
+  </li>
+  <li>
+    <p>Qué es y cómo realizar el <em>cherry-picking</em>.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p><strong>Git</strong> es el sistema de control de versiones más utilizado hoy en día.
+Debido a que las estrategias de ramificación son muy importantes y, a su vez, fijan las reglas del juego que debemos seguir a la hora de trabajar con los cambios, es de vital importancia conocer bien las confirmaciones de cambios y las combinaciones de ramas.
+Groso modo, una confirmación (<em>commit</em>) registra un cambio en una rama, mientras que una combinación de ramas (<em>merge</em>) consiste en aplicar todas las confirmaciones de una rama en otra.
+El <em>cherry picking</em> es una operación que permite aplicar una determinada confirmación de una rama en otra, imprescindible cuando trabajamos con una rama de <em>hotfix</em> y la estrategia de desarrollo troncal.</p>
+
+<h2 id="confirmaciones-de-cambios">Confirmaciones de cambios</h2>
+
+<p>Cada vez que realizamos un cambio, debemos realizar una <strong>confirmación</strong> (<em>commit</em>), o sea, una operación mediante la cual registramos estos cambios en su rama correspondiente.
+Representa una unidad de cambio durante el desarrollo de nuestro trabajo o tarea.
+Registrará en el <em>repositorio de Git</em> el cambio y quién lo ha hecho, lo que a su vez permite saber qué cambios ha hecho cada miembro del equipo y cuándo.</p>
+
+<p>Estas confirmaciones tienen un identificador único que usaremos para referirnos a ellas.
+Concretamente, es la huella (<em>hash</em>) de los cambios realizados como, por ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>d5e1edace785f6a287464db7c9f223ced95c129d
+</code></pre></div></div>
+
+<p>¿Cómo se trabaja entonces?
+Recordemos que existe un repositorio distribuido con copias locales, o sea, en los equipos de los distintos miembros del equipo, y remotas, en servidores como, por ejemplo, <strong>Azure Repos</strong>, <strong>GitHub</strong> o <strong>BitBucket</strong>.
+Cada vez que una persona quiere realizar unos cambios, debe trabajar localmente para, posteriormente, llevarlos a la copia remota.
+Para ello, crea una rama para realizar el trabajo encomendado, realiza tantas confirmaciones como necesite para ir registrando sus cambios hasta terminar.
+No hay que crear una única confirmación para toda la tarea, se recomienda hacer pequeños cambios e ir confirmándolos, en vez de hacer una <em>gran</em> confirmación para todos los cambios de la tarea.</p>
+
+<p>Las estrategias de ramificación actuales recomiendan que al finalizar el día todas las confirmaciones locales se publiquen en el repositorio remoto para que no se pierdan, aun si la tarea no ha finalizado.</p>
+
+<p>Cada cambio tiene como objeto registrar unos cambios relacionados con algún aspecto concreto de la tarea, tienen un mensaje con el que describimos brevemente lo realizado.
+Recuerde, de las estrategias de ramificación, que estos mensajes de confirmación generalmente deben tener un formato estipulado por la organización como, por ejemplo, <em>chore: uso de rutas relativas en la propiedad files del package.json</em>.</p>
+
+<h2 id="combinaciones-de-ramas">Combinaciones de ramas</h2>
+
+<p>En <strong>Git</strong>, una <strong>combinación</strong> (<em>merge</em>) es una operación por la cual se integran o incorporan los cambios de una rama en otra.
+A la rama que recibe los cambios, se le conoce como <strong>rama destino</strong> (<em>target branch</em>, <em>base branch</em> o <em>destination branch</em>);
+mientras que la que contiene los cambios a integrar en la rama destino se conoce como <strong>rama origen</strong> (<em>source branch</em> o <em>head branch</em>).
+La idea es incorporar los cambios de una rama origen en una de destino.</p>
+
+<p>Cuando utilicemos una estrategia troncal de ramificación, la rama destino será la rama troncal, generalmente, la nombrada como <em>main</em> o <em>master</em>.
+Mientras que las ramas orígenes serán las ramas de implementación, ya sean de función o de <em>hotfix</em>.</p>
+
+<p>Hay que conocer varios conceptos: las solicitudes de integración (<em>pull requests</em>), las revisiones de código (<em>code reviews</em>) y la combinación (<em>merge</em>).</p>
+
+<p>En primer lugar, para llevar a cabo cambios en el código, tendremos que tener una tarea bien definida que nos diga qué tenemos que hacer.
+Para llevarla a cabo, crearemos una rama de implementación y realizaremos en ella los cambios necesarios, los cuales iremos agrupando y registrando en pequeñas confirmaciones, cada una de las cuales hace una parte de la tarea que tenemos encomendada.</p>
+
+<p>En caso de usar el desarrollo troncal (<em>trunk-based development</em>), lo que haremos es coger la rama troncal y crear una nueva rama de implementación, sea de funcionalidad o de corrección, para realizar en ella los cambios relacionados con nuestra tarea.
+No olvide que la nueva rama debe seguir el convenio de nombres marcado por la organización.</p>
+
+<p>Si la tarea no la finalizamos en el mismo día, por buenas prácticas, algunas organizaciones solicitan a sus equipos que publiquen todas las confirmaciones que han hecho, aun si no han terminado la tarea.
+Esto ayuda a no perder el trabajo realizado si el ordenador falla o se pierde, además de tener registrado el trabajo del día.</p>
+
+<p>Una vez terminada la tarea, lo siguiente es someter los cambios al escrutinio del equipo.
+La idea es que le echen un vistazo detenidamente para revisar y aprobar los cambios.
+Es posible que nos hayamos equivocado en algún sitio o hayamos malinterpretado alguna cosa que con la ayuda del equipo saldrá a la luz.
+Esto puede incluso generar comentarios que, en ocasiones, requieran que quien realizó el cambio tenga que explicar por qué lo hizo así.
+Incluso se pueden hacer recomendaciones de rendimiento que igual no pensamos o no caímos en ello, pero que pueden ser interesantes.
+Para ello, lo que hacemos es crear una <strong>solicitud de integración</strong> (<em>pull request</em>), la cual representa la petición de revisión y aprobación de los cambios realizados para integrarlos en una rama destino.</p>
+
+<p>La idea de las solicitudes de integración es simple: validar que los cambios cumplen nuestras políticas.
+Para ello, a las solicitudes de cambio se les asigna <strong>revisores</strong> (<em>reviewers</em>), personas que deben estudiar el cambio con cuidado y aprobarlo.
+Estos revisores serán otros miembros del equipo.
+En algunas ocasiones, la combinación de una rama en otra puede conllevar que un determinado grupo de examinadores lleve a cabo el examen.
+En organizaciones más pequeñas, un revisor puede ser cualquier otra persona del equipo que no sea la que generó la solicitud.</p>
+
+<p>Si los revisores consideran que el cambio es bueno, lo aprobarán y dejarán la solicitud lista para su combinación con la rama solicitada.
+Operación que, ojo, no tiene por qué ser realizada ni por el emisor de la petición ni por los revisores.
+Atendiendo a la rama a la que se desea combinar los cambios, la persona que realizará esa integración puede ser distinta e incluso una de un pequeño grupo de privilegiados.</p>
+
+<p>Es muy importante que la solicitud de cambios (o sea, la <em>pull request</em>) describa claramente los cambios que se realizaron.
+Así, los revisores podrán tener una idea clara de qué se está resolviendo y les resultará más fácil hacer su revisión.</p>
+
+<p>Los cambios deben cumplir unos requisitos de calidad que podemos garantizar con <em>flujos de <strong>CI</strong></em> como, por ejemplo, que todas las pruebas de unidad pasen y que el código sigue cumpliendo los estándares de calidad.</p>
+
+<p>Una vez aprobados los cambios, ya podemos hacer la integración de la rama de trabajo en la rama destino.
+Esto se realizará mediante una operación de <strong>combinación</strong> (<em>merge</em>).
+Esta operación tiene asociada inherentemente su propia confirmación porque va a hacer cambios en la rama destino.
+Esta confirmación requiere una descripción más detallada de los cambios como, por ejemplo, la que presentamos en la estrategia de ramificación:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tipoDeCambio(ámbitoSiNecesario): título descriptivo del cambio
+
+Párrafos con una breve descripción del cambio.
+Cada uno de ellos puede contener tantas frases como sea necesario,
+la idea es ayudar a que cualquiera entienda, tiempo después, el cambio
+sin necesidad de tener que analizar todos los cambios realizados en el código.
+</code></pre></div></div>
+
+<h3 id="conflictos">Conflictos</h3>
+
+<p>Es posible que en una combinación de ramas se produzcan conflictos.
+Es lo que menos deseamos, pero se pueden producir.
+Un <strong>conflicto</strong> (<em>conflict</em>) no hace más que reflejar una inconsistencia en la integración.
+Una situación anómala o desgraciada con la que <strong>Git</strong> nos indica que no puede hacer la combinación sin equivocarse.
+Cuando se dan, la operación de combinación se detiene y requiere que resolvamos el problema.</p>
+
+<p>Por ejemplo, suponga que hemos comenzado una rama de función partiendo del punto <em>P</em> de la rama troncal.
+A continuación, llega alguien y comienza su nueva rama de función para atender su tarea.
+Para facilitar la explicación, consideraremos que parte del mismo punto <em>P</em>.
+Supongamos, ahora, que esa otra tarea conlleva crear un determinado archivo <em>A</em> con un determinado contenido <em>C</em>, por la razón que sea, ahora no intente buscar una razón por la que eso tendría que ser necesario.
+Hecho el cambio, abrirá una solicitud de integración, se aprobará e integrará el cambio en la troncal.
+En este momento, la rama troncal se encuentra en el punto <em>Q</em>, uno más que <em>P</em>.
+Nosotros terminamos nuestra tarea, con la casualidad de que hemos creado ese mismo archivo <em>A</em>, pero con un contenido <em>D</em>.
+Creamos la <em>PR</em> y solicitamos la aprobación de nuestro cambio.
+Nos lo revisan, lo aprueban y pasamos a realizar la combinación de ramas.
+La integración no la vamos a hacer con <em>P</em>, nuestro punto de partida, sino con <em>Q</em>, el punto actual de la rama troncal.</p>
+
+<p>En este punto, observe que nuestra rama contiene un archivo <em>A</em> que no existía cuando comenzamos a trabajar, pero que alguien creó y confirmó en <em>Q</em> con un contenido distinto al que nosotros acabamos de crear.
+Aquí, se produce el conflicto y <strong>Git</strong> nos pide que lo resolvamos.
+El conflicto aparece porque <strong>Git</strong> no es capaz de fusionar los cambios de nuestra rama en la destino.
+Para hacerlo, tendría que sobrescribir el contenido <em>C</em> que se añadió tras <em>P</em>.
+Además, si tomase esa decisión, lo haría sin ser nosotros conscientes de ello.
+La cuestión es cuál de los dos hay que mantener o si debemos modificarlo a un contenido <em>E</em>.</p>
+
+<p>En <strong>GitHub</strong>, las solicitudes de integración aprobadas que no pueden combinarse debido a conflictos, muestran un mensaje de error y un botón con el que pasar a resolverlos:</p>
+
+<p><img src="img/resolución-de-conflictos.png" alt="Resolución de conflictos" /></p>
+
+<p>Y nosotros debemos indicar qué hacer:</p>
+
+<ul>
+  <li>
+    <p><strong>No combinar</strong> (<em>not to merge</em>), es decir, cancelar la operación de combinación, haciendo clic en el botón <strong><em>Close pull request</em></strong>.</p>
+  </li>
+  <li>
+    <p><strong>Resolver conflictos</strong> (<em>resolve conflicts</em>), o sea, indicar qué debe dejarse en el área conflictiva y realizar una confirmación de conflicto (<em>conflict commit</em>).
+Tenga en cuenta que cada conflicto resuelto debe dejar el archivo en estado consistente y no conflictivo y conllevará una confirmación con la que se registra ese <em>nuevo</em> cambio.</p>
+  </li>
+</ul>
+
+<p>Cada conflicto aparece en un archivo concreto del repositorio y en unas líneas concretas de este archivo.
+<strong>Git</strong> lo que hace es indicar este archivo y las líneas de la rama origen que entran en conflicto con las líneas de la rama destino.
+Lo que indica el conflicto es lo que hay en el destino y lo que hay en el origen.
+Para ello, <strong>Git</strong> muestra el conflicto con un formato como el siguiente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; nombre-de-la-rama-origen
+contenido disponible en ese punto
+en la rama origen
+=======
+contenido disponible en ese punto
+en la rama destino
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; nombre-de-la-rama-destino
+</code></pre></div></div>
+
+<p>La parte que va de <code class="language-plaintext highlighter-rouge">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> hasta <code class="language-plaintext highlighter-rouge">=======</code> contiene texto que está disponible en la rama que deseamos combinar, o sea, en la rama origen de la combinación.
+Se conoce formalmente como <strong>cambio actual</strong> (<em>current change</em>).</p>
+
+<p>En cambio, la sección que va de <code class="language-plaintext highlighter-rouge">=======</code> a <code class="language-plaintext highlighter-rouge">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> muestra el contenido que está disponible en la rama destino en la que deseamos escribir.
+Se conoce como <strong>cambio entrante</strong> (<em>incoming change</em>).</p>
+
+<p>Lo que hay que hacer es:</p>
+
+<ul>
+  <li>
+    <p>Aceptar el cambio actual (<em>accept current change</em>).</p>
+  </li>
+  <li>
+    <p>Aceptar el cambio entrante (<em>accept incoming change</em>).</p>
+  </li>
+  <li>
+    <p>Aceptar ambos cambios (<em>accept both changes</em>).</p>
+  </li>
+  <li>
+    <p>Realizar los cambios pertinentes para resolver el conflicto.</p>
+  </li>
+</ul>
+
+<h3 id="métodos-de-combinación">Métodos de combinación</h3>
+
+<p>Un <strong>método de combinación</strong> (<em>merge method</em>) indica una forma de realizar una combinación de ramas.
+Básicamente, las combinaciones de ramas podemos realizarlas como sigue:</p>
+
+<ul>
+  <li>
+    <p>Mediante <strong>confirmación de combinación</strong> (<em>merge commit</em>).
+Consiste en que cada confirmación de la rama origen se integrará como una confirmación independiente en la rama destino.
+Si la rama origen contiene, por ejemplo, cinco confirmaciones, la rama destino tendrá otras cinco confirmaciones.
+Esto tiene el inconveniente de que los historiales de cambios de las ramas son muy grandes y difíciles de seguir.</p>
+  </li>
+  <li>
+    <p>Mediante una <strong>combinación de confirmación y, a continuación, una combinación de ramas</strong> (<em>squash and merge</em>).</p>
+
+    <p>La <strong>combinación de confirmaciones</strong> (<em>squashing</em>) es una operación mediante la cual se unen varias confirmaciones en <em>una única</em> confirmación.
+Básicamente, genera una combinación que resume las combinaciones de la rama origen.
+La idea es que en vez de combinar varias confirmaciones de la rama origen en la destino, primero se resuman todas ellas en una única confirmación y, a continuación, se combine esa confirmación resumen en la rama destino.
+Es muy útil porque reduce el historial de cambios de la rama destino.</p>
+
+    <p>Después de esta combinación de confirmaciones se realizará la combinación de ramas, pero esta vez usando como origen la confirmación resumen.</p>
+
+    <p>Si estamos usando la extensión <strong>GitHub Pull Request and Issues</strong> de <strong>Visual Studio Code</strong>, puede hacer todo esto, en la solicitud de integración, seleccionando el método <strong><em>Squash and Merge</em></strong> de la combinación a realizar:</p>
+
+    <p><img src="img/squash-and-merge.png" alt="*Squash* y combinación de ramas" /></p>
+
+    <p>Una vez seleccionado el método, hay que hacer clic en <strong><em>Merge Pull Request</em></strong>, lo que nos pedirá el mensaje y la descripción de la confirmación relacionada con la combinación de ramas final:</p>
+
+    <p><img src="img/mensaje-y-descripción-de-combinación-de-ramas.png" alt="Mensaje y descripción de la combinación de ramas" /></p>
+  </li>
+  <li>
+    <p>Mediante <strong>rebase y combinación</strong> (<em>rebase and merge</em>).</p>
+  </li>
+</ul>
+
+<p>En las opciones del repositorio, sección <strong><em>Pull Requests</em></strong> de <strong><em>Settings &gt; General</em></strong>, puede indicar las posibles combinaciones que estarán disponibles:</p>
+
+<p><img src="img/opciones-de-pull-requests.png" alt="Opciones de configuración de las combinaciones" /></p>
+
+<h2 id="cherry-picking"><em>Cherry picking</em></h2>
+
+<p>El <strong><em>cherry picking</em></strong> es una operación que coge los cambios de una confirmación registrados en una rama para aplicarlos a otra.
+Más concretamente, los extrae de una determinada rama y se los aplica a la actual.
+Se realiza mediante el comando <strong>git cherry-pick</strong>.
+Algunos usos son:</p>
+
+<ul>
+  <li>
+    <p>Aplicar una confirmación, registrada en otra rama, en la actual.
+Muy útil cuando usamos una estrategia de ramificación troncal y una rama de <em>hotfix</em>.</p>
+  </li>
+  <li>
+    <p>Aplicar confirmaciones perdidas, es decir, que hicimos en alguna rama pero, por alguna razón, no trasladamos a la rama final correspondiente.</p>
+  </li>
+  <li>
+    <p>Aplicar una confirmación de una rama en otra, descartando otras que no parecen ser útiles.</p>
+  </li>
+</ul>
+
+<p>La sintaxis básica de este comando consiste en lo siguiente que significa que los cambios de la confirmación indicada deben aplicarse a la rama en curso:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git cherry-pick hashCortoDeLaConfirmación
+</code></pre></div></div>
+
+<p>Recordemos que el <strong>SHA corto de una confirmación</strong> (<em>commit short hash</em>) es el identificador de siete caracteres con el que se identifica una confirmación.</p>
+
+<p>Durante el <em>cherry picking</em> pueden aparecer conflictos.
+Los resolveremos como cualquier otro, teniendo en cuenta los siguientes comandos:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># continua con el cherry picking</span>
+<span class="c"># ya que hemos resuelto los conflictos</span>
+git cherry-pick <span class="nt">--continue</span>
+
+<span class="c"># aborta el cherry picking</span>
+git cherry-pick <span class="nt">--abort</span>
+</code></pre></div></div>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

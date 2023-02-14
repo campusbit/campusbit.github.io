@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Introducción a Dev(Sec)Ops | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Introducción a Dev(Sec)Ops" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Introducción a DevOps y DevSecOps, sus métricas y KPIs necesarias, así como los aspectos a tener en cuenta en el desarrollo de Node.js usando estos modelos o movimientos organizativos." />
+<meta property="og:description" content="Introducción a DevOps y DevSecOps, sus métricas y KPIs necesarias, así como los aspectos a tener en cuenta en el desarrollo de Node.js usando estos modelos o movimientos organizativos." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Introducción a Dev(Sec)Ops" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Introducción a DevOps y DevSecOps, sus métricas y KPIs necesarias, así como los aspectos a tener en cuenta en el desarrollo de Node.js usando estos modelos o movimientos organizativos.","headline":"Introducción a Dev(Sec)Ops","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/devsecops-con-github-actions-ed-nodejs/introducci%C3%B3n-a-devsecops"},"url":"/libros/devsecops-con-github-actions-ed-nodejs/introducci%C3%B3n-a-devsecops"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/devsecops-con-github-actions-ed-nodejs'>Dev(Sec)Ops con GitHub Actions (Ed. Node.js)</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Introducción a Dev(Sec)Ops</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>25 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Para comenzar, vamos a introducir los conceptos <strong>DevOps</strong> y <strong>DevSecOps</strong> para obtener una idea general, que iremos profundizando poco a poco a lo largo del libro.
+Describiremos los distintos conceptos más detalladamente cuando llegue su momento.
+Por un lado, presentaremos la parte teórica para, por otro lado, completarlo todo con <strong>GitHub Actions</strong>.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es y en qué consiste <strong>DevOps</strong> y <strong>DevSecOps</strong>.</p>
+  </li>
+  <li>
+    <p>Qué es un ingeniero o ingeniera <strong>DevOps</strong>.</p>
+  </li>
+  <li>
+    <p>Qué es <strong>CI/CD</strong>.</p>
+  </li>
+  <li>
+    <p>Cuáles son las métricas más comunes usadas en <strong>DevOps</strong>.</p>
+  </li>
+  <li>
+    <p>Qué son los <strong>KPI</strong>s.</p>
+  </li>
+  <li>
+    <p>Qué herramientas de <strong>GitHub</strong> utilizar en <strong>Dev(Sec)Ops</strong>.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>La <strong>competitividad</strong> (<em>competitiveness</em>) es la capacidad de competir.
+Cada día que pasa es más feroz y obliga a las organizaciones a tener que adaptarse y entregar productos y servicios más rápidamente.
+Ya no basta con solventar los problemas de los usuarios, sino que también hay que entregar los cambios a una velocidad relámpago.
+Esto no es algo específico de la industria del software, sino de cualquiera.
+La capacidad de acelerar los procesos y ser más rápidos que los competidores es una condición necesaria, aunque no suficiente, para mantenernos en la pugna.
+Tenga en cuenta que el tiempo promedio de duración de una empresa está cayendo.
+Por lo que debemos ser altamente competitivos y esto pasa por tener la capacidad de entregar nuevas versiones de un producto tan rápidamente como sea posible.</p>
+
+<p>La <strong>esperanza de vida</strong> (<em>lifespan</em>) es el tiempo medio de vida de algo.
+Todo depende, pero las cifras no son nada halagüeñas.
+La esperanza de vida de las empresas españolas es de poco más de <strong>diez años</strong>.
+El de las europeas, ronda los <strong>trece años</strong>.
+Aun más grave es el de las conocidas <strong>empresas de fin de semana</strong> (<em>weekend businesses</em>), aquellas que resultan de la conjunción de emprendedores e inversores para poner una idea en marcha en eventos tecnológicos conocidos como <strong><em>iweekends</em></strong>.
+Por lo general, no superan los <strong>dos años de vida</strong>, ya sea porque la idea no tiene futuro o porque requiere más recursos de los esperados.</p>
+
+<p><strong>DevOps</strong> (<em>Development/Operations</em>, Desarrollo/Operaciones) es un modelo o movimiento organizativo y cultural que tiene como objeto aumentar la calidad del software, la confianza en los servicios y la velocidad de entrega y despliegue.
+Consiste en una filosofía y unas prácticas de trabajo, así como un conjunto de herramientas para el desarrollo, el mantenimiento y la operación o explotación de nuestros servicios.
+Ayudan a mejorar la competitividad y la velocidad de desarrollo.
+Observe la siguiente imagen ampliamente utilizada para explicar las distintas fases del desarrollo usando <strong>DevOps</strong>:</p>
+
+<p><img src="img/devops.png" alt="Ciclo de vida DevOps (extraída de GitHub)" /></p>
+
+<p>La idea es crear equipos multidisciplinares, es decir, que abarquen varias disciplinas o áreas, además de reducir los malos entendidos entre los equipos de desarrollo y operaciones.
+Para ello, los equipos de desarrollo, pruebas y operaciones se unen y alinean para trabajar conjuntamente, manteniendo todas sus tareas en un registro común, en vez de tener equipos de desarrollo, pruebas y operaciones separados y con escasa comunicación entre ellos.
+Los equipos deben trabajar juntos en un bien común, con objeto de ser más competitivos, eficientes y efectivos, además de incrementar nuestra agilidad, seguridad y calidad.
+Todos debemos enfocarnos en el rendimiento y la estabilidad del sistema.</p>
+
+<p>Qué aspectos incluye:</p>
+
+<ul>
+  <li>
+    <p>Planificación ágil.</p>
+  </li>
+  <li>
+    <p>Desarrollo del software.</p>
+  </li>
+  <li>
+    <p>Integración continua de cambios.</p>
+  </li>
+  <li>
+    <p>Entrega continua del software.</p>
+  </li>
+  <li>
+    <p>Calidad (QA, <em>Quality Assurance</em>).</p>
+  </li>
+  <li>
+    <p>Explotación del software en producción, también conocido como operaciones, donde encontramos, por ejemplo, monitorización y configuración.</p>
+  </li>
+</ul>
+
+<p>Sus principales características son:</p>
+
+<ul>
+  <li>
+    <p>Alinear o unificar el desarrollo, el despliegue y la operación o explotación del software.</p>
+  </li>
+  <li>
+    <p>Acortar o reducir los ciclos de desarrollo con objeto de incrementar la frecuencia de despliegue, en otras palabras, entregar software con más frecuencia y de manera más rápida.</p>
+
+    <p>Si conseguimos entregar con más frecuencia, obtendremos el <em>feedback</em> más rápidamente.
+No olvidemos que ese <em>feedback</em> lo usaremos para mejorar el producto y nuestros procesos.
+No es lo mismo hacer algo y ponerlo a disposición de los usuarios en unos días o pocas semanas que en unos meses.
+La idea es seguir mejorando y aprendiendo constantemente.
+Las metodologías ágiles como <strong>Scrum</strong> ayudan considerablemente.</p>
+
+    <p>Al desplegar constantemente podríamos empezar a disponer de un <strong>MVP</strong> a partir del cual comenzar a recibir <em>feedback</em> lo antes posible.
+Un <strong>MVP</strong> (<em>minimum viable product</em>, <strong>producto viable mínimo</strong>) es un prototipo que dispone de las características suficientes para satisfacer a los clientes iniciales y así poder aprender y recibir comentarios y sugerencias para avanzar más adecuadamente.</p>
+  </li>
+  <li>
+    <p>Mejorar la calidad del producto, reduciendo las incidencias de producción así como incrementando la calidad del software desarrollado.</p>
+  </li>
+  <li>
+    <p>Automatizar el proceso todo lo posible, tanto a nivel de desarrollo, integración, despliegue y operación o explotación.</p>
+
+    <p>La <strong>automatización</strong> (<em>automation</em>) consiste en convertir tareas o procesos manuales en automáticos.
+Esta automatización ayuda, por un lado, a comprender el proceso detenidamente, pues para automatizarlo lo primero es entenderlo.
+Y por otra parte, reduce el tiempo al suprimir los tiempos muertos debido a actuaciones manuales.
+Es un aspecto imprescindible en <strong>DevOps</strong>.</p>
+  </li>
+  <li>
+    <p>Reducir los silos que producen algunas organizaciones,
+con el objetivo en mente de que todos los equipos trabajen por un bien común, comprendiendo todos ellos las necesidades de todos y
+ayudándose los unos a los otros para conseguirlo.
+En otras palabras, que exista un equipo único y cohesionado.
+<strong>El producto y su calidad son cosa de todos.</strong></p>
+  </li>
+</ul>
+
+<p><strong>DevOps</strong> se puede utilizar tanto en el desarrollo de bibliotecas como de aplicaciones o servicios de software.
+Atendiendo a qué estemos desarrollando, adaptaremos <strong>DevOps</strong> a nuestras necesidades.</p>
+
+<p>Actualmente, son muchas las organizaciones que han adoptado <strong>DevOps</strong>, independientemente de su tamaño:
+<strong>Algorand</strong>,
+<strong>Amazon</strong>,
+<strong>BBVA</strong>,
+<strong>BitTorrent</strong>,
+<strong>Capital One</strong>,
+<strong>Glovo</strong>,
+<strong>Google</strong>,
+<strong>IBM</strong>,
+<strong>ING</strong>,
+<strong>IoTeX Network</strong>,
+<strong>Liberty Mutual</strong>,
+<strong>Microsoft</strong>,
+<strong>Mozilla</strong>,
+<strong>Nasa</strong>,
+<strong>Netflix</strong>,
+<strong>Nike</strong>,
+<strong>OVHcloud</strong>,
+<strong>Python Software Foundation</strong>,
+<strong>Red Hat</strong>,
+<strong>Reef Chain</strong>,
+<strong>Sainsbury’s</strong>,
+<strong>Starbucks</strong>,
+<strong>Swiss Re</strong>,
+<strong>Telefónica</strong>,
+<strong>3M</strong>,
+entre otras.</p>
+
+<p>No hay que olvidar los servicios de monitorización e <strong>IaC</strong> (<em>Infrastructure as Code</em>) que son también indispensables en el área de operaciones o explotación.
+<strong>IaC</strong> consiste en automatizar y validar la creación y la destrucción de entornos como, por ejemplo, de producción o pruebas.</p>
+
+<p>El uso de plataformas de automatización, como <strong>GitHub Actions</strong>, en vez del uso de servidores específicos de nuestra organización, tiene, entre otras ventajas, las siguientes:</p>
+
+<ul>
+  <li>
+    <p>Reduce el coste operacional.</p>
+  </li>
+  <li>
+    <p>Escalan automáticamente cuando incrementa la carga.</p>
+  </li>
+  <li>
+    <p>Realizan copias de seguridad automáticamente.</p>
+  </li>
+  <li>
+    <p>Realizan actualizaciones automáticas de sus servidores.</p>
+  </li>
+  <li>
+    <p>Algunos de ellos suelen mantener cifrados nuestros archivos en los servidores.</p>
+  </li>
+  <li>
+    <p>Proporcionan alta disponibilidad.</p>
+  </li>
+  <li>
+    <p>Suelen proporcionar herramientas que facilitan la colaboración del equipo.</p>
+  </li>
+  <li>
+    <p>Tienen la capacidad de generar notificaciones cuando se producen ciertos eventos que podemos utilizar para la ejecución automática de tareas como, por ejemplo, la integración continua, la entrega continua o el despliegue continuo.</p>
+  </li>
+</ul>
+
+<h2 id="ingeniero-o-ingeniera-devops">Ingeniero o ingeniera <em>DevOps</em></h2>
+
+<p>Actualmente, se habla de <strong>ingeniero o ingeniera DevOps</strong> (<em>DevOps engineer</em>) para hacer referencia a una persona que desarrolla y opera, es decir, tiene la formación y experiencia para realizar trabajos de desarrollo, pruebas y operación.
+En definitiva, es capaz de comprender y ejercer cualquier rol <strong>DevOps</strong>.
+Básicamente, en <strong>Node.js</strong> esto quiere decir:</p>
+
+<ul>
+  <li>
+    <p>Saber programar bien en <strong>JavaScript</strong> o en un lenguaje que <em>transpile</em> a este lenguaje como, por ejemplo, <strong>TypeScript</strong>.</p>
+  </li>
+  <li>
+    <p>Saber realizar pruebas de unidad, integración y sistemas.
+Para ello, como mínimo, hay que conocer:
+algún motor de pruebas como <strong>Mocha</strong> o <strong>Jest</strong>;
+alguna biblioteca de aserción como <strong>@akromio/expected</strong> o <strong>Chai</strong>;
+alguna biblioteca de dobles de pruebas como <strong>@akromio/doubles</strong> o <strong>Sinon</strong>;
+alguna herramienta para ejecutar pruebas de carga como <strong>Akromio</strong> o <strong>Artillery</strong>;
+alguna herramienta de análisis estático de código como <strong>ESLint</strong> o <strong>CodeQL</strong>;
+y cómo publicar paquetes en <strong>NPM</strong>.</p>
+  </li>
+  <li>
+    <p>Saber automatizar trabajos, en nuestro caso, con <strong>GitHub Actions</strong>.</p>
+  </li>
+  <li>
+    <p>Saber trabajar con <strong>Git</strong>.</p>
+  </li>
+  <li>
+    <p>Ser organizado y saber administrar el trabajo, por ejemplo, con <strong>GitHub Projects</strong> y <strong>GitHub Issues</strong>.</p>
+  </li>
+  <li>
+    <p>Conocer <strong>UML</strong> para diseñar soluciones.</p>
+  </li>
+</ul>
+
+<p>Todo esto sin considerar los aspectos adicionales si desarrollamos aplicaciones de <em>cloud</em>.</p>
+
+<h2 id="métricas">Métricas</h2>
+
+<p>Una <strong>métrica</strong> (<em>metric</em>) es una medida que sirve para medir algún aspecto importante del negocio.
+No olvide la máxima del físico y matemático británico, <strong>Lord Kevin</strong>:</p>
+
+<p><em>Lo que no se define no se puede medir. Lo que no se mide no se puede mejorar. Lo que no se mejora se degrada siempre.</em></p>
+
+<p>Las métricas nos ayudarán a centrarnos en aquello que es relevante, a validar la calidad de nuestros procesos y a tomar decisiones para optimizarlos.</p>
+
+<p>En <strong>DevOps</strong>, existen varias métricas que debemos conocer, pues proporcionan información valiosa de cómo estamos trabajando.
+Son métricas que deberíamos recopilar con objeto de mejorar y garantizar que las cosas van bien.
+Si no recopilamos estas métricas, será más difícil demostrar que estamos trabajando correctamente ante la cúpula directiva, los mandos intermedios e incluso clientes y usuarios.
+No se recolectan sólo por el bien de la organización, sino también por el de los equipos y las personas que forman parte de ellos.
+La idea es recopilar información, observar qué está sucediendo y determinar qué deseamos y trabajar para conseguirlo.</p>
+
+<p><strong>DORA</strong> es el acrónimo de <em>DevOps Research &amp; Assessment</em> (Investigación y Evaluación de DevOps).
+Es una organización que analiza el estado de <strong>DevOps</strong> y define, tras el análisis de cómo se está aplicando en distintas organizaciones, varias métricas que deberíamos tener en cuenta.
+A estas métricas, se las conoce formalmente como <strong>métricas DORA</strong> (<em>DORA metrics</em>).
+Las clasifica en métricas de rendimiento y operacionales.</p>
+
+<h3 id="métricas-de-rendimiento">Métricas de rendimiento</h3>
+
+<p>Las <strong>métricas de rendimiento</strong> (<em>throught metrics</em>) tienen como objeto ayudarnos a evaluar y analizar nuestro proceso de desarrollo y de entrega, así como la calidad del producto.
+Ayudan a conocer la velocidad con la que ponemos los cambios a disposición de los usuarios.
+Tenemos la frecuencia de entrega, el tiempo de espera para cambios, el tiempo de reparación y la tasa de fallo de cambio.
+Para estas métricas, la automatización es clave.</p>
+
+<p>La <strong>frecuencia de entrega</strong> (<em>delivery frequency</em>) o <strong>frecuencia de despliegue</strong> (<em>deployment frequency</em>) está relacionada con el número de veces que desplegamos el producto en producción por unidad de tiempo.
+En caso de una biblioteca, cuántas veces por unidad de tiempo la publicamos en el registro, como por ejemplo <strong>NPM</strong>, para su utilización por la comunidad.
+Y en el caso de una aplicación o servicio, cuántas veces por unidad de tiempo la ponemos en producción para su uso por parte de los usuarios.
+No es lo mismo desplegar una aplicación o servicio móvil que una web o una biblioteca.</p>
+
+<p>Unos ejemplos de esta métrica serían tres veces por semana o diez veces al mes.</p>
+
+<p>Cuanto más automatizados tengamos los procesos más fácil será reducir el tiempo de espera e incrementar la frecuencia de entrega.
+No hay que pedirle peras al olmo, es decir, no hay que pedir lo imposible.
+Hay que decidir una frecuencia de entrega y un tiempo de espera posible y, entonces, trabajar para alcanzarlo.</p>
+
+<p>El <strong>tiempo de espera</strong> (<em>lead time</em>) hace referencia al tiempo que pasa desde que nos ponemos a trabajar en algo, terminamos y llega al usuario, es decir, cuánto tiempo nos cuesta realizar algo y ponerlo a disposición de nuestros usuarios.
+Concretamente, en <strong>DORA</strong>, se hace hincapié en el <strong>tiempo de espera para cambio</strong> (<em>lead time for changes</em>), aquel que transcurre desde que hemos terminado de implementar algo y llega al usuario, es decir, desde que tenemos el cambio en el repositorio y el usuario puede hacer uso de él.
+Se mide principalmente en horas o días.
+La idea es determinar a qué velocidad deseamos hacer las entregas e intentar que el promedio del tiempo de espera de entrega se ajuste.
+Esto significa que deberíamos poder determinar este tiempo para cada trabajo que realizamos.</p>
+
+<p>El tiempo de espera es muy importante tanto en los <em>bugs</em> como en la aportación de <em>feedback</em> de los usuarios.
+Lo que ayuda a desarrollar el producto que el usuario desea.
+Es posiblemente una de las más importantes porque ayuda a centrar nuestros esfuerzos en lo que realmente desean.</p>
+
+<p>El <strong>tiempo medio de reparación</strong> (<em>mean time to repair</em> o <strong>MTTR</strong>) es el tiempo que transcurre desde que identificamos un problema, lo resolvemos y los ponemos a disposición de los usuarios.
+Representa el tiempo que estará inactivo el sistema en caso de fallo o el que tardamos en volver a estar en condiciones operativas normales.
+Como puede imaginarse, debe ser lo más pequeño posible.
+Se suele medir en minutos u horas.
+Valores mayores suelen ser peligrosos.
+Cada organización debe determinar cuál es el tiempo aceptable para su proyecto.</p>
+
+<p>Finalmente, la <strong>tasa de fallo de cambio</strong> (<em>change fail rate</em>) viene a indicar algo tan sencillo como el porcentaje de fallos que se han debido a cambios en el software, es decir, que dados los cambios realizados, que porcentaje de ellos han acabado generando degradación, fallos o <em>bugs</em> importantes en el software.
+Lo ideal es que las entregas no generen fallos en producción pero, como somos humanos, es posible.
+Pero para poder <em>detectar</em> que estamos haciendo algo mal, es necesario saber cuándo se producen estos fallos.
+Si se produce uno al año, no será lo mismo que uno cada dos entregas.</p>
+
+<p>Una vez recabados los datos de estas métricas, lo siguiente es presentarlas y conocer en qué estado nos encontramos.
+Para ello, <strong>DORA</strong> proporciona los siguientes niveles de mejor puntuación a peor:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Métrica</th>
+      <th>Alto</th>
+      <th>Medio</th>
+      <th>Bajo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Frecuencia de despliegue</td>
+      <td>Bajo demanda o una vez al día</td>
+      <td>Una vez a la semana o al mes</td>
+      <td>Una vez cada seis meses</td>
+    </tr>
+    <tr>
+      <td>Tiempo de espera para cambio</td>
+      <td>Menos de una semana</td>
+      <td>Entre una semana y un mes</td>
+      <td>Entre un mes y seis meses</td>
+    </tr>
+    <tr>
+      <td>Tiempo medio de reparación</td>
+      <td>Menos de un día</td>
+      <td>Entre un día y una semana</td>
+      <td>Entre una semana y un mes</td>
+    </tr>
+    <tr>
+      <td>Tas de fallo de cambio</td>
+      <td>Menos del 15%</td>
+      <td>Menos del 30%</td>
+      <td>Menos del 60%</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="métricas-operacionales">Métricas operacionales</h3>
+
+<p>Las <strong>métricas operacionales</strong> (<em>operational metrics</em>) son aquellas que describen el rendimiento del sistema en producción.
+Concretamente, <strong>DORA</strong> define la <strong>métrica de fiabilidad</strong> (<em>reliability metrics</em>), con la cual conocemos la disponibilidad del servicio, su rendimiento, la latencia y la escalabilidad.
+La idea es saber cómo de bien está desplegado el servicio y cómo de bien atiende las necesidades de los usuarios.</p>
+
+<p>Groso modo, podemos describirla mediante los siguientes aspectos:</p>
+
+<ul>
+  <li>
+    <p>La <strong>disponibilidad del servicio</strong> (<em>service availability</em>).
+Indica  el tiempo que el servicio, por ejemplo una aplicación desplegada en una plataforma <em>cloud</em> como <strong>AWS</strong>, <strong>Azure</strong> o <strong>Google Cloud</strong>, está disponible sin interrupciones.
+Se recomienda que sea <strong>99.999%</strong> del tiempo, conocido formalmente como los <strong>cinco nueves</strong> (<em>five 9s</em>).</p>
+  </li>
+  <li>
+    <p>El <strong>tráfico y uso del servicio</strong> (<em>service usage and traffic</em>), el cual indica el número de usuarios que tiene el servicio y el ancho de banda que consumen sus peticiones.
+Ya no basta con hacer software, también debemos saber cómo consume los recursos contratados, porque pueden incrementar considerablemente los costes de la organización.</p>
+  </li>
+</ul>
+
+<h2 id="kpis"><em>KPIs</em></h2>
+
+<p>Es muy recomendable que además de usar métricas para evaluar cómo está siendo nuestro rendimiento o desempeño, también definamos <strong>KPIs</strong>.
+Un <strong>KPI</strong> (<em>key performance indicator</em>, <strong>indicador clave de desempeño</strong>) no es más que una objetivo que deseamos cumplir con el objeto de medir el desempeño o rendimiento de algún proceso.
+Estos indicadores se utilizan en multitud de áreas como, por ejemplo, el marketing, las finanzas, el servicio de atención al cliente y, como no podía ser menos, en IT.
+En nuestro caso, nuestra intención es fijar algunos objetivos que nos permitan comprobar el estado de nuestro ciclo de desarrollo <strong>Dev(Sec)Ops</strong>.
+Estos <strong>KPIs</strong> deben presentar las siguientes características, conocidas formalmente como <strong>SMART</strong> de su acrónimo en inglés:</p>
+
+<ul>
+  <li>
+    <p>Deben ser <strong>específicos</strong> (<em><strong>S</strong>pecific</em>), es decir, muy concretos y nada abstractos.
+La abstracción puede dar pie a interpretaciones subjetivas que podrían conducir a malas interpretaciones.</p>
+  </li>
+  <li>
+    <p>Deben ser <strong>medibles</strong> (<em><strong>M</strong>easurable</em>), es decir, tienen que poder medirse.</p>
+  </li>
+  <li>
+    <p>Deben ser <strong>alcanzables</strong> (<strong><em>A**chievable</em>), o sea, tenemos que poder alcanzarlos.
+No tiene ningún sentido definir **KPIs</strong> que no podamos cumplir.</p>
+  </li>
+  <li>
+    <p>Deben ser <strong>relevantes</strong> (<em><strong>R</strong>elevant</em>), esto es, importantes y aportar información para, así, poder determinar si vamos por el buen o el mal camino.</p>
+  </li>
+  <li>
+    <p>Deben tener un intervalo de <strong>tiempo</strong> (<em><strong>T</strong>imely</em>) en el que medirlos y comprobarlos.</p>
+  </li>
+</ul>
+
+<p>En resumen, debemos definir <strong>KPIs</strong> concretos, medibles en un intervalo de tiempo y que sean relevantes para los objetivos que deseamos alcanzar.
+Teniendo en cuenta los <strong>KPIs</strong> y las métricas, debería resultar fácil poder determinar, sin miedo a equivocarnos, si estamos trabajando bien o mal y qué podemos mejorar para ser más productivos y eficientes.</p>
+
+<p>He aquí algunos ejemplos de <strong>KPIs</strong>:</p>
+
+<ul>
+  <li>
+    <p>Durante el próximo trimestre, hay que realizar un despliegue cada semana.</p>
+  </li>
+  <li>
+    <p>Hay que reducir en un 25% los errores en los despliegues a producción durante el próximo trimestre.</p>
+  </li>
+  <li>
+    <p>Al finalizar el trimestre, debemos haber alcanzado el 95% de cobertura de código en cada uno de los repositorios del proyecto.</p>
+  </li>
+</ul>
+
+<h2 id="productividad-y-eficiencia">Productividad y eficiencia</h2>
+
+<p>Hoy en día, las organizaciones y los países hacen mucho hincapié en términos como productividad y eficiencia.
+Son medidas muy relacionadas con la producción.</p>
+
+<p>Básicamente, la <strong>producción</strong> (<em>production</em>) consiste en la fabricación o creación de algo, ya sea un producto de software, de hardware u otra cosa.
+En economía, está fuertemente relacionado con crear bienes o servicios que generen valor económico o agregado a la organización y/o país.
+La <strong>eficiencia</strong> (<em>efficiency</em>) es la capacidad de producir algo con la menor cantidad de recursos posible y que cumpla con lo esperado o deseado.
+Por su parte, la <strong>productividad</strong> (<em>productivity</em>) es la relación entre lo producido y los recursos necesarios para ello.
+Cuanto menores sean estos recursos, más productivos seremos y, entonces, sin miedo a equivocarnos, podemos decir que somos más rentables.
+Por lo tanto, podemos decir que la productividad evalúa nuestra capacidad de producir cosas además de los recursos invertidos para ello.</p>
+
+<p>Lo ideal es ir mejorando año a año y producir lo mismo con menos o producir más con lo mismo.
+Por lo general, la automatización incrementa considerablemente la productividad y el crecimiento.</p>
+
+<p>Algunas organizaciones internacionales como la <strong>OCDE</strong> u <strong>Organización para la Cooperación y el Desarrollo Económicos</strong> (<em>Organisation for Economic Co-operation and Development</em>) y el <strong>FMI</strong> o <strong>Fondo Monetario Internacional</strong> (<em>International Monetary Fund</em>) definen indicadores relacionados con la productividad de los países.
+Por ejemplo, el <strong>producto interior bruto</strong> o <strong>PIB</strong> (<em>gross domestic product</em> o <em>GDP</em>) representa el valor monetario de la producción de bienes y servicios de un país, comprados por los usuarios finales, durante un período de tiempo, generalmente, un año.
+En <strong>2022</strong>, los países con mayor <strong>PIB</strong> son, según el <strong>FMI</strong> y el <strong>Banco Mundial</strong>, <strong>Estados Unidos</strong>, <strong>China</strong>, <strong>Japón</strong>, <strong>Alemania</strong> y <strong>Reino Unido</strong>.
+<strong>España</strong> aparece en el puesto <strong>14</strong>;
+y algunos de nuestros vecinos como <strong>Francia</strong>, <strong>Italia</strong> y <strong>Portugal</strong> en los puestos <strong>7</strong>, <strong>8</strong> y <strong>47</strong>, respectivamente.</p>
+
+<p>Otro indicador importante es el <strong>PIB por hora trabajada</strong> (<em>GDP per hour worked</em>) que mide, en dólares, la productividad laboral y la eficiencia de la mano de obra con factores de producción.
+Se define como el número total de horas trabajadas de todas las personas involucradas en la producción y refleja, parcialmente, la productividad en términos de capacidades personales de los trabajadores y el esfuerzo que deben realizar.
+El promedio de la <strong>OCDE</strong> para <strong>2021</strong> fue de <strong>107.4</strong> dólares.
+<strong>Irlanda</strong> con <strong>136.4</strong>, <strong>Rumanía</strong> con <strong>133.4</strong>, <strong>Costa Rica</strong> con <strong>122</strong> y <strong>Eslovenia</strong> con <strong>114.9</strong> se encuentran por encima.
+Mientras que países como <strong>Japón</strong> con <strong>102.4</strong>, <strong>España</strong> con <strong>99.2</strong> y <strong>México</strong> con <strong>94.9</strong> se encuentran por debajo de este promedio de la <strong>OCDE</strong>.</p>
+
+<h2 id="sistemas-de-control-de-versiones">Sistemas de control de versiones</h2>
+
+<p>Una de las principales prácticas usada en <strong>DevOps</strong> es el control de versiones del código.
+Siendo <strong>Git</strong> el sistema más utilizado y aceptado hoy en día.
+Son muchos los proveedores de este tipo de sistemas como, por ejemplo, <strong>Bitbucket</strong>, <strong>GitHub</strong> y <strong>GitLab</strong>.
+En nuestro caso, nos centramos en <strong>GitHub</strong>.</p>
+
+<h2 id="organización-del-trabajo">Organización del trabajo</h2>
+
+<p>La <strong>organización del trabajo</strong> (<em>work organization</em>) está relacionada con el establecimiento y la disciplina en el trabajo.
+Es clave para mejorar la productividad y la comunicación dentro del equipo.
+Debe facilitar la asignación de tareas y la comunicación del equipo.
+En nuestro caso, usaremos <strong>GitHub Projects</strong> que presentaremos brevemente en una lección posterior.</p>
+
+<p>Como veremos, la idea es disponer de un tablero (<em>dashboard</em>) donde registrar los trabajos.
+En nuestro caso, consistirá en un tablero <strong>Kanban</strong> el cual debe ser simple.
+Por ello, no dispondrá más que cuatro columnas:</p>
+
+<ul>
+  <li>
+    <p><strong><em>Backlog</em></strong>, que contendrá todas aquellas tareas pendientes de hacer en un futuro a corto, medio o largo plazo.</p>
+  </li>
+  <li>
+    <p><strong><em>To Do</em></strong>, aquellas que están pendientes de coger por la persona que la tiene asignada.</p>
+  </li>
+  <li>
+    <p><strong><em>In Progress</em></strong> o <strong><em>Doing</em></strong>, aquellas que se están llevando a cabo en estos momentos.</p>
+  </li>
+  <li>
+    <p><strong><em>Done</em></strong>, aquellas que se han realizado y se consideran finalizadas.</p>
+  </li>
+</ul>
+
+<p>Recuerde que este tablero debe ser simple, añadir muchas columnas puede resultar contraproducente.
+Siempre que hagamos algo, debe estar registrado en el tablero, no hay que trabajar en nada que no se haya registrado en él.
+Aunque seamos la única persona del equipo que trabaja en el proyecto, por favor, sea organizada.
+Si lo hace en estos casos, cuando se incorpore a un equipo, le resultará más fácil.</p>
+
+<p>El tablero contendrá <strong>tarjetas</strong> (<em>cards</em>) cada una de las cuales representa una tarea o trabajo a hacer.
+Se recomienda que tengan los siguientes elementos claves:</p>
+
+<ul>
+  <li>
+    <p>El <strong>tipo de trabajo</strong> (<em>type of work</em>), el cual sirve para identificar la naturaleza del trabajo: <strong><em>feature</em></strong>, una nueva funcionalidad; <strong><em>bug</em></strong>, un defecto o error en el software; <strong><em>documentation</em></strong>, realización de cualquier tipo de documentación del proyecto; <strong><em>test</em></strong>, añadidura de nuevas pruebas como, por ejemplo, de unidad, integración o sistema; etc.</p>
+  </li>
+  <li>
+    <p>El <strong>origen</strong> (<em>origin</em>) de la tarjeta, o sea, quién lo solicita o comunica: <strong><em>business</em></strong>, negocio; <strong><em>IT</em></strong>, el equipo de tecnología; <strong><em>user</em></strong>, el usuario; etc.</p>
+  </li>
+  <li>
+    <p>La <strong>prioridad</strong> (<em>priority</em>), es decir, el nivel de importancia de la tarea: <strong><em>low</em></strong>, baja; <strong><em>medium</em></strong>, media; <strong><em>high</em></strong>, alta; o <strong><em>critical</em></strong>, crítica.</p>
+  </li>
+</ul>
+
+<p>En el caso de <strong>GitHub</strong>, estos elementos los podemos identificar mediante etiquetas.
+Es importante que mantenga las cosas simples.
+Por lo que no se recomienda distinguir muchos tipos de trabajo ni disponer de muchos tipos de prioridades.</p>
+
+<p>Aunque ser organizado no conlleva tener éxito, lo que sí está claro es que generalmente la desorganización y la complejidad conducen al fracaso.</p>
+
+<h2 id="integración-continua-ci">Integración continua (CI)</h2>
+
+<p>La <strong>integración continua</strong> (<strong>CI</strong>, <em>continuous integration</em>) es una práctica que consiste en realizar determinadas tareas de manera automática después de cada cambio subido al repositorio remoto de <strong>Git</strong>.
+Groso modo, abarca la compilación del código, la ejecución de pruebas, la comprobación de la calidad y la generación del artefacto que se entregará y/o desplegará.</p>
+
+<p>La idea que se esconde tras la integración continua es garantizar que los cambios publicados en el <strong>repositorio Git</strong> no tienen efectos colaterales en otros puntos.
+Para ello, sometemos al repositorio al análisis estático del software y al paso de las pruebas, garantizando que se cumplen las políticas de calidad de la organización.
+Y todo ello, de manera automática sin necesidad de intervención por nuestra parte.
+Los fallos detectados deben corregirse lo más rápidamente posible, no se deben dejar para más tarde, por ejemplo, para el momento del despliegue, porque incrementará el estrés y dificultará su resolución.</p>
+
+<p>En nuestro caso, utilizaremos <strong>GitHub Actions</strong> para automatizar la integración continua, junto con una buena estrategia de ramificación.</p>
+
+<h2 id="entrega-continua-y-despliegue-continuo-cd">Entrega continua y despliegue continuo (CD)</h2>
+
+<p>Dos términos con abreviatura <strong>CD</strong> se utilizan en <strong>DevOps</strong>.
+Por un lado, tenemos el concepto de <strong>entrega continua</strong> (<em>continuous delivery</em>), una práctica que sigue a la integración continua.
+La integración continua, recordemos, tiene como objeto construir el paquete y llevar a cabo sobre él pruebas de unidad y unas primeras validaciones de seguridad y calidad.
+La entrega continua consiste en la capacidad de publicar el software de manera automática bajo demanda.</p>
+
+<p>Por su parte, el <strong>despliegue continuo</strong> (<em>continuous delivery</em>) es la práctica que hace referencia al proceso de instalar nuestras soluciones en nuestro entorno de producción sin necesidad de intervención manual, a raíz de cambios en el código.
+La entrega continua requiere intervención manual para solicitar la publicación o despliegue;
+en cambio, el despliegue continuo, no, lo hace automáticamente sin que se lo solicitemos explícitamente.</p>
+
+<p>En definitiva, con <strong>CD</strong>, lo que buscamos es:</p>
+
+<ul>
+  <li>
+    <p>Crear un proceso para poner nuevo código en producción de la manera más rápida posible.</p>
+  </li>
+  <li>
+    <p>Reducir el tiempo de despliegue, automatizando todo lo posible.</p>
+  </li>
+  <li>
+    <p>Reducir los tiempos <em>muertos</em>.</p>
+  </li>
+</ul>
+
+<p>Y todo ello, como no podía ser de otra forma con <strong>DevOps</strong>, de la manera más automática posible.</p>
+
+<p>Tanto la entrega continua como el despliegue continuo se pueden realizar con <strong>GitHub Actions</strong>.</p>
+
+<h2 id="tiempo-de-desarrollo">Tiempo de desarrollo</h2>
+
+<p>El <strong>tiempo de desarrollo</strong> (<em>development time</em>) es la cantidad de horas requeridas para implementar un producto de software o una determinada característica del producto.
+La automatización puede ayudar a reducir este tiempo, por ejemplo:</p>
+
+<ul>
+  <li>
+    <p>Confirmando que las pruebas pasan tras los cambios realizados.</p>
+  </li>
+  <li>
+    <p>Realizando análisis estáticos de código que garanticen que el código cumple con los estándares de la organización.</p>
+  </li>
+  <li>
+    <p>Comprobando que los paquetes utilizados no presentan vulnerabilidades de seguridad.</p>
+  </li>
+  <li>
+    <p>Construyendo el paquete de software a entregar.</p>
+  </li>
+  <li>
+    <p>Versionando y publicando el software en el registro para su acceso por parte de los usuarios.</p>
+  </li>
+</ul>
+
+<p>Todo ello se puede automatizar y delegar en una plataforma de automatización como <strong>GitHub Actions</strong> para que lo haga ella y mientras tanto el equipo de desarrollo pueda seguir trabajando.</p>
+
+<h2 id="devsecops-y-la-seguridad-continua-cs"><em>DevSecOps</em> y la seguridad continua (CS)</h2>
+
+<p><strong>DevSecOps</strong> es una evolución lógica y natural de <strong>DevOps</strong> que integra las pruebas de seguridad en el proceso <strong>DevOps</strong>, convirtiendo la seguridad en un compromiso inherente del proceso de desarrollo y de su operatividad.
+Añade el área de seguridad al equipo con el objeto de desarrollar software seguro como objetivo final, ya no simplemente software, sino software más fuerte ante ciberamenazas.
+Si dejamos la seguridad a un equipo independiente ajeno al equipo <strong>DevOps</strong>, los problemas de seguridad se detectarán más tardíamente y esto puede ralentizar la puesta en producción.</p>
+
+<p>La <strong>seguridad continua</strong> (<em>continuous security</em>, <strong>CS</strong>) e encarga de proporcionar seguridad a lo largo y ancho del proceso de desarrollo y su puesta en producción.
+La idea es que no se aplique la seguridad de manera independiente después del desarrollo, sino que se haga durante el propio desarrollo además de durante su puesta en producción.
+Si lo hacemos así, se reducen considerablemente las vulnerabilidades y sus riesgos asociados, lo que mejora la calidad del software y proporciona mayor tranquilidad a la organización.</p>
+
+<p>Entre los aspectos de seguridad que debemos añadir al ciclo de desarrollo, encontramos:</p>
+
+<ul>
+  <li>
+    <p>Realizar análisis de dependencias para comprobar que no presentan vulnerabilidades, por ejemplo, mediante el uso de <strong>Dependabot</strong>.</p>
+  </li>
+  <li>
+    <p>Realizar pruebas de unidad, integración y sistema.</p>
+  </li>
+  <li>
+    <p>Realizar análisis estáticos de código, por ejemplo, mediante <em>linters</em> y/o <strong>CodeQL</strong>.</p>
+  </li>
+  <li>
+    <p>Realizar pruebas de rendimiento, de escalabilidad y de denegación de servicio.</p>
+  </li>
+  <li>
+    <p>Realizar pruebas de penetración.</p>
+  </li>
+  <li>
+    <p>Asegurar los entornos productivos ante ataques y ciberamenazas.</p>
+  </li>
+  <li>
+    <p>Garantizar que los flujos de trabajo de <strong>GitHub Actions</strong> siguen el principio de menor privilegio.</p>
+  </li>
+</ul>
+
+<p>Observe que esto amplia todavía más la formación y experiencia de los equipos <strong>DevOps</strong>, porque sus perfiles deben añadir aspectos de ciberseguridad que no se adquieren fácilmente.
+Este rol, que actualmente no está muy extendido, lo estará en un futuro a corto o medio plazo.
+Las organizaciones que antes lo adopten serán más competitivas y podrán desplegar aplicaciones y servicios más difíciles de vulnerar.</p>
+
+<p>Las <strong>pruebas de seguridad</strong> (<em>security testing</em>) se añaden a las fases <strong>CI</strong> y <strong>CD</strong>.
+Cada una de estas fases, debe añadir elementos extras de ciberseguridad con objeto de garantizar que el software presentará la menor cantidad posible de vulnerabilidades, haciendo, así, que la organización presente menos riesgos ante ciberamenazas.</p>
+
+<p>El uso de <strong>DevSecOps</strong> implica que cuando diseñemos el software, tendremos que tener en cuenta aspectos como la triada CIA: confidencialidad, integridad y disponibilidad.
+Lo que significa que el equipo también debe saber criptografía, autenticación, autorización, escalado, etc.
+No piense que es un mundo de vino y rosas, es más complejo de lo que se puede esperar.
+Pero tener la seguridad formando parte, desde el comienzo, del desarrollo y la operación de software es de vital importancia en los tiempos que corren.</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

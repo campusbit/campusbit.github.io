@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Introducción a GitHub Projects | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Introducción a GitHub Projects" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Introducción a GitHub Projects para la organización del trabajo en DevOps y DevSecOps, mejorando así nuestras capacidades organizativas, productividad y eficiencia." />
+<meta property="og:description" content="Introducción a GitHub Projects para la organización del trabajo en DevOps y DevSecOps, mejorando así nuestras capacidades organizativas, productividad y eficiencia." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Introducción a GitHub Projects" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Introducción a GitHub Projects para la organización del trabajo en DevOps y DevSecOps, mejorando así nuestras capacidades organizativas, productividad y eficiencia.","headline":"Introducción a GitHub Projects","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/organizaci%C3%B3n-del-trabajo-con-github-projects-y-github-issues/introducci%C3%B3n-a-github-projects"},"url":"/libros/organizaci%C3%B3n-del-trabajo-con-github-projects-y-github-issues/introducci%C3%B3n-a-github-projects"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/organización-del-trabajo-con-github-projects-y-github-issues'>Organización del trabajo con GitHub Projects y GitHub Issues</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Introducción a GitHub Projects</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>12 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Todo proyecto, independientemente de si se desarrolla mediante una metodología <strong>Dev(Sec)Ops</strong>, ágil u otra, debe llevar a cabo un control del trabajo.
+Es muy importante para el éxito del proyecto.
+Vamos a presentar <strong>GitHub Projects</strong> como herramienta de planificación y organización del trabajo.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es <strong>GitHub Projects</strong>.</p>
+  </li>
+  <li>
+    <p>Qué es un proyecto en <strong>GitHub Projects</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo crear y suprimir un proyecto.</p>
+  </li>
+  <li>
+    <p>Qué son las vistas del proyecto.</p>
+  </li>
+  <li>
+    <p>Qué eventos genera <strong>GitHub Projects</strong> que pueden disparar flujos de trabajo de <strong>GitHub Actions</strong>.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p><strong>GitHub Projects</strong> es una herramienta para la planificación y organización de trabajos.
+Actualmente, se puede usar gratuitamente.
+Recordemos que la <strong>organización de trabajos</strong> (<em>work organization</em>) tiene como objeto registrar y planificar los trabajos a realizar para lograr nuestro objetivo, el desarrollo de un producto de software.
+Todo ello de la manera más óptima, eficiente y efectiva posible.</p>
+
+<p><strong>GitHub Projects</strong> considera un <strong>proyecto</strong> (<em>project</em>) como un conjunto de tareas representado mediante algún tipo de forma útil para su organización, asignación y visualización.
+Un proyecto puede estar asociado a uno o más repositorios de <strong>GitHub</strong>, es decir, puede considerar que un proyecto se puede implementar con varios repositorios y gestionar sus trabajos desde un punto centralizado que es el proyecto.
+Cada trabajo se representa mediante un <strong>ítem</strong> (<em>item</em>), el cual se puede asociar a una propuesta (<em>issue</em>) o a una solicitud de integración (<em>pull request</em>) para conocer, así, cómo se implementó su cambio.</p>
+
+<h2 id="proyectos-de-usuario">Proyectos de usuario</h2>
+
+<p>Atendiendo a dónde se define el proyecto, distinguimos entre proyectos de usuario o de organización.
+En nuestro caso, nos centraremos en los de usuario.
+Un <strong>proyecto de usuario</strong> (<em>user project</em>) no es más que un proyecto asociado a una cuenta de usuario de  <strong>GitHub</strong> y puede contener trabajos relacionados con varios de sus repositorios, tal y como veremos más adelante en esta misma lección.</p>
+
+<h3 id="creación-de-un-proyecto-de-usuario">Creación de un proyecto de usuario</h3>
+
+<p>La creación de un proyecto de usuario es muy sencilla:</p>
+
+<ol>
+  <li>
+    <p>Ir al portal de <strong>GitHub</strong>.</p>
+  </li>
+  <li>
+    <p>Desplegar el menú contextual del usuario y hacer clic en <strong><em>Your projects</em></strong>:</p>
+
+    <p><img src="img/tus-proyectos.png" alt="Menú contextual del usuario" /></p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>New project</em></strong>.</p>
+  </li>
+  <li>
+    <p>Seleccionar la plantilla para la primera vista del proyecto a crear como, por ejemplo, <strong><em>Board</em></strong>:</p>
+
+    <p><img src="img/selección-de-plantilla.png" alt="Selección de la plantilla del nuevo proyecto" /></p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>Create</em></strong> para crear el proyecto.</p>
+  </li>
+  <li>
+    <p>Indicar el nombre descriptivo del proyecto y el de su primera vista.
+A continuación, se muestra un proyecto cuya vista elegida es el tablero (<em>board</em>):</p>
+
+    <p><img src="img/tablero-de-proyecto.png" alt="Ejemplo de vista tablero de un nuevo proyecto" /></p>
+  </li>
+</ol>
+
+<h3 id="supresión-de-proyecto-de-usuario">Supresión de proyecto de usuario</h3>
+
+<p>Para suprimir un proyecto, seguir los siguientes pasos:</p>
+
+<ol>
+  <li>
+    <p>Abrir el proyecto.</p>
+  </li>
+  <li>
+    <p>Ir a las opciones del proyecto.
+Para ello, mostrar su menú contextual, haciendo clic en los tres puntos (<code class="language-plaintext highlighter-rouge">...</code>) y, a continuación, en <strong><em>Settings</em></strong>:</p>
+
+    <p><img src="img/menú-contextual-de-proyecto.png" alt="Menú contextual del proyecto" /></p>
+  </li>
+  <li>
+    <p>Ir a la sección <strong><em>Danger zone</em></strong> y hacer clic en <strong><em>Delete this project</em></strong>:</p>
+
+    <p><img src="img/zona-de-peligro-de-proyecto.png" alt="Sección *Danger zone* del proyecto" /></p>
+  </li>
+</ol>
+
+<h2 id="uso-de-proyectos-en-un-repositorio">Uso de proyectos en un repositorio</h2>
+
+<p>En el portal de <strong>GitHub</strong>, es posible configurar si deseamos que aparezca la pestaña <strong><em>Projects</em></strong> de un repositorio.
+No hay más que ir a las opciones generales del repositorio y buscar la sección <strong><em>Features</em></strong>.
+En ella, encontramos todas las funcionalidades disponibles en el proyecto.
+No tenemos más que buscar <strong><em>Projects</em></strong> y activarla o desactivarla según nuestras necesidades:</p>
+
+<p><img src="img/funcionalidad-de-proyectos.png" alt="Configuración de *GitHub Projects* en un repositorio" /></p>
+
+<p>Si la activamos, aparecerá la pestaña <strong><em>Projects</em></strong> en el repositorio y, así, podremos asociarle aquellos proyectos que consideremos oportunos.
+Esto generalmente significa los que tienen ítems relacionados con él.
+Por un lado, indica dónde se encuentran las tareas asociadas a ese repositorio y, por otra parte, proporciona un acceso rápido del proyecto.</p>
+
+<h2 id="gestión-de-acceso">Gestión de acceso</h2>
+
+<p>El <strong>acceso</strong> (<em>access</em>) hace referencia a quiénes pueden acceder y colaborar en el proyecto.</p>
+
+<p>Por un lado, tenemos que los proyectos pueden ser públicos o privados, al igual que los repositorios.
+Su visibilidad (<em>visibility</em>) se configura en la sección <strong><em>Danger zone</em></strong> de las opciones del proyecto.</p>
+
+<p>Por otro lado, podemos configurar los colaboradores mediante la sección <strong><em>Manage access</em></strong>, ubicada también en las opciones del proyecto.
+En primer lugar, hay que invitar al colaborador, mediante la sección <strong><em>Invite collaborators</em></strong>:</p>
+
+<p><img src="img/gestión-de-acceso.png" alt="Gestión del acceso" /></p>
+
+<p>A cada colaborador, podemos asignarle un rol u otro atendiendo a lo que podrá hacer:</p>
+
+<ul>
+  <li>
+    <p><strong><em>Read</em></strong>, puede acceder en modo lectura al proyecto.
+Si el proyecto es público, cualquiera podrá leerlo.
+Este rol sólo tiene sentido si es privado.</p>
+  </li>
+  <li>
+    <p><strong><em>Write</em></strong>, puede leer y escribir en el proyecto, pero sin poder invitar a otros colaboradores.</p>
+  </li>
+  <li>
+    <p><strong><em>Admin</em></strong>, ídem a <strong><em>Write</em></strong>, pero además puede invitar a otros colaboradores.</p>
+  </li>
+</ul>
+
+<h2 id="vistas">Vistas</h2>
+
+<p>Una <strong>vista</strong> (<em>view</em>) es una forma de presentar los trabajos del proyecto.
+Puede ser en forma de tabla o de tablero, lo que más le guste.
+Lo importante es saber que un proyecto puede tener tantas vistas como sea necesario para satisfacer nuestras necesidades.</p>
+
+<p>Por ejemplo, y tal y como puede observar en el proyecto de <strong>Akromio</strong>, <a href="https://github.com/akromio?tab=projects">https://github.com/akromio?tab=projects</a>,  existe un campo <em>When</em> (<em>cuándo</em>) que indica en qué momento se debe realizar o atender el ítem.
+Concretamente, para el año <em>2023</em> hay siete posibilidades: <em>2023</em>, <em>2023/B1</em>, <em>2023/B2</em>, <em>2023/B3</em>, <em>2023/B4</em>, <em>2023/B5</em> y <em>2023/B6</em>.
+Cuando se sabe que se debe desarrollar en el año 2023, pero todavía no se sabe en qué bimestre, se le asigna <em>2023</em>.
+En cambio, cuando se sabe el bimestre en el que debe realizarse, se fija el valor del bimestre en cuestión: <em>2023/B1</em>, <em>2023/B2</em>, <em>2023/B3</em>, <em>2023/B4</em>, <em>2023/B5</em> ó <em>2023/B6</em>.
+Para el bimestre en curso, se crea una vista particular que filtra sólo aquellos ítems que se deben realizar en ese bimestre en particular.
+Así, es muy fácil observar y concentrarse en las tarjetas del hito actual.
+Concretamente, para el primer bimestre, la vista adicional tiene el siguiente filtro <em>when:”2023/B1”</em>.
+Y cuando se esté acercando el segundo bimestre, se creará otra vista que tendrá como filtro <em>when:”2023/B2”</em>.
+La idea es mantener una vista <em>General</em> que contiene todas las tarjetas y otra para el bimestre en curso.</p>
+
+<p>En cambio, en <strong>Kramer Edulab</strong>, tenemos un tablero para todos los libros de una determinada serie editorial.
+En su vista <em>General</em>, tenemos todas las tarjetas relacionadas con todos sus libros.
+Pero para cada libro en particular, existe una vista que muestra lo que le es específico.
+Por ejemplo, para este libro, el filtro de su vista particular es <em>repo:”krameredulab/github-projects-and-issues”</em>.</p>
+
+<p>Apóyese en las vistas siempre que lo necesite según sus necesidades.
+Son extremadamente útiles.</p>
+
+<h3 id="vista-tablero">Vista tablero</h3>
+
+<p>La <strong>vista tablero</strong> (<em>board view</em>) presenta los ítems atendiendo a su estatus:</p>
+
+<p><img src="img/ejemplo-de-tablero.png" alt="Ejemplo de tablero" /></p>
+
+<p>La idea es ver el flujo de trabajo por el que debe fluir un ítem, además de servir como punto de comunicación de lo que se está haciendo, de lo que se ha hecho y de lo que está pendiente de hacer.
+Además puede ayudar a detectar cuellos de botella si se observa que hay varios ítems en el mismo estatus que empiezan a acumularse como, por ejemplo, ítems bloqueados en los que no se puede seguir trabajando por alguna cosa.</p>
+
+<p>A cada columna del tablero, se le conoce como <strong>estatus</strong> (<em>status</em>), se considera que refleja la situación en la que se encuentra.
+Por lo general, se recomienda tener un tablero simple con pocos estatus o columnas como, por ejemplo:</p>
+
+<ul>
+  <li>
+    <p><strong><em>Backlog</em></strong>, pendientes de hacer.
+Describen cosas que hay que hacer, pero todavía no están descritas a la perfección.</p>
+  </li>
+  <li>
+    <p><strong><em>Todo</em></strong>, pendientes de hacer pero listas para ser atendidas.
+Esto significa que deben estar perfectamente descritas, algunas veces se utiliza más el término <strong>refinado</strong> (<em>refined</em>), para que la persona del equipo de desarrollo que la coja no tenga dudas de lo que debe hacer y de por qué.</p>
+  </li>
+  <li>
+    <p><strong><em>In Progress</em></strong>, actualmente bajo desarrollo.</p>
+  </li>
+  <li>
+    <p><strong><em>Done</em></strong>, hecha y terminada.</p>
+  </li>
+</ul>
+
+<p>Groso modo, el flujo de una tarjeta sería: <em>Backlog -&gt; Todo -&gt; In Progress -&gt; Done</em>.
+Para que un ítem pase de <strong><em>Backlog</em></strong> a <strong><em>Todo</em></strong> es necesario que se encuentre bien analizado y descrito y contenga lo que hay que hacer.
+Esto es así en los proyectos donde se trabaja en equipo.
+Si estamos ante un proyecto personal, puede haber un cierto grado de flexibilidad.
+Esto no es un dogma, es simplemente una forma de trabajo.
+Está claro que si alguna persona del equipo coge un ítem de <strong><em>Todo</em></strong> y este no está bien descrito, tendrá que perder tiempo en averiguar qué debe hacer.
+Eso es un desperdicio que no deseamos se produzca.</p>
+
+<h3 id="vista-tabla">Vista tabla</h3>
+
+<p>La <strong>vista tabla</strong> (<em>table view</em>) presenta los ítems en forma de tabla, de manera muy similar a una hoja Excel.</p>
+
+<h2 id="elementos">Elementos</h2>
+
+<p>Un <strong>elemento</strong> o <strong>ítem</strong> (<em>item</em>), también conocido como <strong>tarjeta</strong> (<em>card</em>), representa un trabajo o tarea a realizar.
+Tienen un título y una descripción.
+Además, se pueden asociar a propuestas (<em>issues</em>).
+Podemos crear una propuesta desde un ítem o tarjeta, o bien crear una tarjeta o ítem desde una propuesta.
+Para gustos, colores.
+Los elementos que no tienen asociada una propuesta se conocen formalmente como <strong>ítems borradores</strong> (<em>draft items</em>).</p>
+
+<h3 id="creación-de-elementos">Creación de elementos</h3>
+
+<p>Para añadir un elemento a un proyecto, en nuestro caso, mediante una vista tablero:</p>
+
+<ol>
+  <li>
+    <p>Ir al proyecto.</p>
+  </li>
+  <li>
+    <p>Seleccionar la vista tablero.
+Puede hacerlo desde una vista tabla de manera muy similar.</p>
+  </li>
+  <li>
+    <p>Determinar la columna a la que añadir el elemento, generalmente, será <strong><em>Backlog</em></strong> y, entonces, hacer clic en <strong><em>+ Add item</em></strong>, ubicado en su parte inferior:</p>
+
+    <p><img src="img/nuevo-ítem.png" alt="Añadidura de nuevo ítem a un tablero" /></p>
+
+    <p>A continuación, escribir el título del nuevo ítem.
+Si lo que desea es crear un ítem a partir de una <em>issue</em> existente, puede copiar la URL de la propuesta como título y la enlazará al nuevo ítem.</p>
+  </li>
+</ol>
+
+<h3 id="asociación-de-una-propuesta-a-un-ítem">Asociación de una propuesta a un ítem</h3>
+
+<p>Recordemos que todo elemento de un proyecto puede tener una propuesta (<em>issue</em>) asociada.
+Si no la tiene, se lo considera un borrador (<em>draft</em>).
+Cuando tenemos un borrador, podemos crear una <em>issue</em> en el repositorio correspondiente mediante el propio elemento.
+Para ello:</p>
+
+<ol>
+  <li>
+    <p>Hacer clic en el elemento para que aparezca su formulario de edición.</p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>Convert to issue</em></strong> para crear y asociar la propuesta:</p>
+
+    <p><img src="img/conversión-a-propuesta.png" alt="Creación de *issue* desde un elemento de proyecto" /></p>
+  </li>
+  <li>
+    <p>Seleccionar el repositorio en el que crear la propuesta.</p>
+  </li>
+</ol>
+
+<h3 id="visualización-de-campos">Visualización de campos</h3>
+
+<p>En ocasiones, es muy útil personalizar lo que mostrará un tablero (<em>board</em>) de cada tarjeta.
+Por ejemplo, de todos los campos dados de alta, podemos indicar que muestre sólo algunos de ellos, los que consideremos necesarios para la vista en cuestión.
+Esto es muy fácil de hacer, basta con ir a la vista en cuestión, mostrar su menú contextual y en él podemos observar la configuración actual:</p>
+
+<p><img src="img/visualización-de-configuración-de-una-vista.png" alt="Visualización de la configuración de una vista" /></p>
+
+<p><strong><em>fields</em></strong> indica cuántos campos se mostrarán y cuántos no.
+Para conocer cuáles se están mostrando o para configurar cuáles mostrar, haremos clic en él y pasaremos a indicar aquéllos que deseamos aparezcan en las tarjetas del tablero:</p>
+
+<p><img src="img/configuración-de-la-visualización-de-campos.png" alt="Configuración de la visualización de campos" /></p>
+
+<p>Una vez hechos los cambios, al volver a la vista, no olvide hacer clic en <strong><em>Save changes</em></strong> en la barra de filtro.
+Observará un circulo azul en la pestaña de la vista, esto quiere decir que ha hecho cambios y debe guardarlos o se perderán.</p>
+
+<h2 id="eventos-de-github-actions-relacionados-con-los-proyectos">Eventos de <em>GitHub Actions</em> relacionados con los proyectos</h2>
+
+<p>A pesar de que este no es un libro de <strong>GitHub Actions</strong>, es importante conocer y, por lo tanto, presentar en familia algunos eventos disparadores de flujos de trabajo.
+Estos eventos se producen en <strong>GitHub Projects</strong> y pueden disparar flujos de trabajo de <strong>GitHub Actions</strong> para reaccionar a ellos de alguna manera que pueda resultar útil.
+Cuando <strong>GitHub Actions</strong> se encuentre en su día a día, si no lo está ya, no tendrá más que volver aquí y echar un vistazo.</p>
+
+<h3 id="evento-project">Evento <em>project</em></h3>
+
+<p><strong>GitHub</strong> genera el <strong>evento <em>project</em></strong> (<em>project event</em>) cada vez que se produce alguna cosa relacionada con un proyecto de <strong>GitHub Projects</strong>.
+Como pasa a menudo con algunos eventos de <strong>GitHub Actions</strong>, la reacción puede afinarse con la propiedad <strong><em>types</em></strong> del evento que consiste en un array de textos, cuyos valores, en este caso, pueden ser:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Valor</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>created</em></strong></td>
+      <td>Se acaba de crear un proyecto.</td>
+    </tr>
+    <tr>
+      <td><strong><em>closed</em></strong></td>
+      <td>Se acaba de cerrar un proyecto.</td>
+    </tr>
+    <tr>
+      <td><strong><em>reopened</em></strong></td>
+      <td>Se acaba de reabrir un proyecto cerrado.</td>
+    </tr>
+    <tr>
+      <td><strong><em>deleted</em></strong></td>
+      <td>Se acaba de suprimir un proyecto.</td>
+    </tr>
+    <tr>
+      <td><strong><em>edited</em></strong></td>
+      <td>Se acaba de editar un proyecto.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Veamos una configuración de ejemplo de este tipo de evento:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span>
+  <span class="na">project</span><span class="pi">:</span>
+    <span class="na">types</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">created</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>La propiedad <strong><em>event</em></strong> del contexto <strong><em>github</em></strong> permite acceder a los datos concretos del evento al que estamos reaccionando.
+En este caso, consistirá en un objeto entre cuyas propiedades encontramos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>owner</em></strong></td>
+      <td>Objeto representativo de la cuenta propietaria del proyecto.</td>
+    </tr>
+    <tr>
+      <td><strong><em>creator</em></strong></td>
+      <td>Objeto representativo de la cuenta que creó el proyecto.</td>
+    </tr>
+    <tr>
+      <td><strong><em>number</em></strong></td>
+      <td>Identificador numérico del proyecto.</td>
+    </tr>
+    <tr>
+      <td><strong><em>body</em></strong></td>
+      <td>Texto con la descripción del proyecto.</td>
+    </tr>
+    <tr>
+      <td><strong><em>columns</em></strong></td>
+      <td>Array de objetos con la información de las columnas.</td>
+    </tr>
+    <tr>
+      <td><strong><em>url</em></strong></td>
+      <td>URL del proyecto.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="evento-project_card">Evento <em>project_card</em></h3>
+
+<p>Mediante el <strong>evento <em>project_card</em></strong> (<em>project_card event</em>), podemos reaccionar ante un ítem del proyecto.
+Su propiedad <strong><em>types</em></strong> es un array de valores:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Valor</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>created</em></strong></td>
+      <td>Se acaba de crear un nuevo ítem.</td>
+    </tr>
+    <tr>
+      <td><strong><em>moved</em></strong></td>
+      <td>Se acaba de mover un ítem de una columna a otra.</td>
+    </tr>
+    <tr>
+      <td><strong><em>converted</em></strong></td>
+      <td>Se acaba de crear la propuesta de un ítem.</td>
+    </tr>
+    <tr>
+      <td><strong><em>edited</em></strong></td>
+      <td>Se acaba de editar un ítem.</td>
+    </tr>
+    <tr>
+      <td><strong><em>deleted</em></strong></td>
+      <td>Se acaba de suprimir un ítem.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Para acceder a los datos del evento, usaremos <strong><em>github.event</em></strong>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>project</em></strong></td>
+      <td>Objeto representativo del proyecto.</td>
+    </tr>
+    <tr>
+      <td><strong><em>creator</em></strong></td>
+      <td>Objeto representativo del creador del ítem.</td>
+    </tr>
+    <tr>
+      <td><strong><em>column</em></strong></td>
+      <td>Objeto representativo de la columna en la que se encuentra el ítem.</td>
+    </tr>
+    <tr>
+      <td><strong><em>state</em></strong></td>
+      <td>Estado del ítem.</td>
+    </tr>
+    <tr>
+      <td><strong><em>url</em></strong></td>
+      <td>URL del ítem.</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

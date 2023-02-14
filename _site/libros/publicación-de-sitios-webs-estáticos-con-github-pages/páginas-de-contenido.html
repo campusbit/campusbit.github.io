@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Páginas de contenido | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Páginas de contenido" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Cómo organizar el contenido en un sitio web Jekyll con páginas y colecciones." />
+<meta property="og:description" content="Cómo organizar el contenido en un sitio web Jekyll con páginas y colecciones." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Páginas de contenido" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Cómo organizar el contenido en un sitio web Jekyll con páginas y colecciones.","headline":"Páginas de contenido","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/publicaci%C3%B3n-de-sitios-webs-est%C3%A1ticos-con-github-pages/p%C3%A1ginas-de-contenido"},"url":"/libros/publicaci%C3%B3n-de-sitios-webs-est%C3%A1ticos-con-github-pages/p%C3%A1ginas-de-contenido"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/publicación-de-sitios-webs-estáticos-con-github-pages'>Publicación de sitios webs estáticos con GitHub Pages</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Páginas de contenido</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>16 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>El contenido es la parte más importante de un sitio web.
+En <strong>Jekyll</strong>, se distingue principalmente entre archivos estáticos, de páginas y de artículos.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es un archivo de contenido.</p>
+  </li>
+  <li>
+    <p>Qué diferencia hay entre un archivo transformable y uno estático.</p>
+  </li>
+  <li>
+    <p>Qué es una página de contenido.</p>
+  </li>
+  <li>
+    <p>Qué es el encabezamiento (<em>front matter</em>) de un archivo de contenido.</p>
+  </li>
+  <li>
+    <p>Cómo definir propiedades personalizadas en un encabezamiento.</p>
+  </li>
+  <li>
+    <p>Qué son los archivos de diseño (<em>layout files</em>).</p>
+  </li>
+  <li>
+    <p>Cómo agrupar contenido mediante colecciones.</p>
+  </li>
+  <li>
+    <p>Cómo indicar la página que debe devolver <strong>GitHub Pages</strong> cuando el usuario indique una ruta inexistente.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>El <strong>contenido de un sitio web</strong> (<em>website content</em>) es la colección de recursos que proporciona y pueden consultar los usuarios.
+Recordemos que un <strong>generador de sitios webs estáticas</strong> (<em>static site generator</em>) no es más que una aplicación que transforma un directorio en un sitio web de contenido estático.
+Esto es lo que es <strong>Jekyll</strong>, ni más ni menos, un programa que transforma un directorio en un determinado sitio web estático para que pueda ser servido por cualquier servicio o servidor web como, por ejemplo, <strong>GitHub Pages</strong>, <strong>Apache</strong> o <strong>Nginx</strong>.</p>
+
+<p>Atendiendo a si los archivos de contenido deben ser transformados en <strong>HTML</strong> o deben ser copiados tal cual, se distingue entre archivos transformables y estáticos.
+Un <strong>archivo transformable</strong> (<em>renderizable file</em>) es aquel que debe procesar de alguna manera el generador para obtener su equivalente en <strong>HTML</strong>.
+En nuestro caso, puede ser un archivo <strong>Markdown</strong> o bien un <strong>HTML</strong>, en ambos casos, con contenido dinámico indicado mediante expresiones o etiquetas 
+<strong>Liquid</strong>.
+Mientras que un <strong>archivo estático</strong> (<em>static file</em>) es aquel que no será procesado y se copiará tal cual al resultado final como, por ejemplo, una <strong>imagen</strong> , un <strong>PDF</strong> o cualquier otro tipo de archivo que no deseamos sea procesado internamente por el generador, en nuestro caso, <strong>Jekyll</strong>.</p>
+
+<p>En <strong>Jekyll</strong>, los archivos transformables se clasifican en páginas y artículos.
+En esta lección, vamos a presentar las páginas, dejando los artículos para una posterior.</p>
+
+<h2 id="páginas-de-contenido">Páginas de contenido</h2>
+
+<p>Una <strong>página</strong> (<em>page</em>) es un archivo o recurso de contenido que puede estar escrito en <strong>Markdown</strong> o <strong>HTML</strong>.
+Estos archivos son archivos transformable y, por lo tanto, se consideran plantillas con elementos <strong>Liquid</strong> en su interior que personalizan su contenido final en tiempo de generación.
+Es importante que tenga claro que cuando <strong>Jekyll</strong> está generando el sitio web final y se encuentra con un archivo <strong>Markdown</strong>, acabará generando un archivo <strong>HTML</strong>.
+Para facilitar la agrupación de las páginas por cualquier tipo de criterio, podemos organizarlas en <strong>carpetas</strong> (<em>folders</em>), cada una de las cuales se representa mediante un directorio.</p>
+
+<p>Las páginas, a diferencia de otros archivos, se pueden ubicar en cualquier directorio.</p>
+
+<h3 id="encabezamiento-de-la-página">Encabezamiento de la página</h3>
+
+<p>Tanto las páginas como los artículos, pueden tener lo que se conoce formalmente como un <strong>encabezamiento</strong> (<em>front matter</em>) que contiene los metadatos de la página en forma de propiedades cuyo formato es <strong>nombre: valor</strong>.
+Se ubica al comienzo del archivo y se delimita por tres guiones (<code class="language-plaintext highlighter-rouge">---</code>), tal y como muestra el siguiente ejemplo:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+title: Título de la página si se desea personalizar
+layout: archivo de diseño a utilizar
+permalink: /ruta/donde/publicar/la/página
+---
+</code></pre></div></div>
+
+<p>Los encabezamientos indicados <em>explícitamente</em> son lo que utiliza <strong>Jekyll</strong> para determinar si está ante un archivo estático o uno transformable.
+Si dispone de él, es un archivo transformable y debe procesarlo como tal;
+en otro caso, es estático y debe copiarlo tal cual a la salida.</p>
+
+<p>Entre las propiedades del encabezamiento de las páginas, encontramos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Tipo de datos</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>title</em></strong></td>
+      <td>Texto</td>
+      <td>Título de la página, debe ser descriptivo de su contenido.</td>
+    </tr>
+    <tr>
+      <td><strong><em>layout</em></strong></td>
+      <td>Texto</td>
+      <td>Archivo de diseño a utilizar como, por ejemplo, <strong><em>default</em></strong>, <strong><em>page</em></strong> o <strong><em>post</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>permalink</em></strong></td>
+      <td>Texto</td>
+      <td>Ruta de la página dentro del sitio web.</td>
+    </tr>
+    <tr>
+      <td><strong><em>description</em></strong></td>
+      <td>Texto</td>
+      <td>Breve descripción de la página, añadido como metadato <strong>HTML</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>slug</em></strong></td>
+      <td>Texto</td>
+      <td>Parte final de la ruta que identifica la página.</td>
+    </tr>
+    <tr>
+      <td><strong><em>render_with_liquid</em></strong></td>
+      <td>Booleano</td>
+      <td>Si <strong>Jekyll</strong> debe usar <strong>Liquid</strong> en esta página. Su valor predeterminado es <strong><em>true</em></strong>; indique <strong><em>false</em></strong> si no desea que lo use. Disponible desde la versión <strong>4.0</strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Recuerde que el encabezamiento debe aparecer al comienzo de la página y puede hacerlo tanto en archivos <strong>Markdown</strong> como <strong>HTML</strong>.
+Más adelante hablaremos de los archivos de diseño (<em>layouts</em>), archivos que definen el diseño con el que se publicará la página.
+Atendiendo al tema que utilicemos en el sitio, se definirán unos u otros.
+Incluso nuestro sitio puede añadir los suyos propios.</p>
+
+<p>Un <strong>enlace permanente</strong> (<em>permalink</em>) es la ruta bajo la cual <strong>Jekyll</strong> publicará la página de contenido.
+Se indica mediante la propiedad <strong><em>permalink</em></strong> del encabezamiento de la página.</p>
+
+<p>Si decide indexar su sitio web en algún buscador como, por ejemplo, <strong>Google</strong>, es recomendable que recuerde lo siguiente:</p>
+
+<ul>
+  <li>
+    <p>Se recomienda que el título de la página y del sitio contengan entre <strong>20</strong> y <strong>70</strong> caracteres, incluidos los espacios en blanco.
+Para su mejor indexación, no olvide que aparezcan las palabras claves.</p>
+  </li>
+  <li>
+    <p>Las descripciones deberían estar entre <strong>70</strong> y <strong>150</strong> caracteres y contener las palabras claves.
+Estas descripciones aparecen en los resultados de búsqueda, de ahí que se recomiende su definición para cada página y sitio web.</p>
+  </li>
+  <li>
+    <p>Las rutas de las páginas deben ser descriptivas del contenido que representan.</p>
+  </li>
+</ul>
+
+<p>Puede utilizar <strong>WooRank</strong>, <a href="https://www.woorank.com">https://www.woorank.com</a>, para obtener un informe con sugerencias para un mejor posicionamiento de su sitio.
+No tiene más que indicar el URL de su sitio web y dejar que lo analice para obtener un pequeño informe gratuito que le mostrará algunas recomendaciones que le pueden ayudar.</p>
+
+<h2 id="archivos-de-diseño-en-jekyll">Archivos de diseño en <em>Jekyll</em></h2>
+
+<p>Un <strong>archivo de diseño</strong> (<em>layout file</em>) es una plantilla que contiene la estética con la que se presentará el contenido de una página o artículo.
+Dentro de ellas, se utiliza una expresión <strong>{{ content }}</strong> para indicar dónde irá el contenido de la página o artículo que se está procesando, permitiendo así que las páginas y los artículos tengan una estética similar.
+Se ubican en la carpeta especial <strong>_layouts</strong> del <strong>directorio del sitio</strong>.
+Cada archivo ahí ubicado se considera un diseño.
+Cuando deseemos indicar, en una página o artículo, bajo qué diseño deseamos se genere, lo indicaremos mediante la propiedad <strong><em>layout</em></strong> de su <strong>encabezamiento</strong> (<em>front matter</em>):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+title: Título de la página
+layout: nombre del archivo de diseño a utilizar, sin extensión
+---
+
+Contenido de la página, el cual puede contener, recordemos,
+elementos y expresiones Liquid.
+</code></pre></div></div>
+
+<p>Recuerde que, en un archivo de diseño, dónde irá el contenido de la página o el artículo bajo procesamiento, se indica mediante una expresión <strong>Liquid</strong> como la siguiente:</p>
+
+<div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{{</span><span class="w"> </span><span class="nv">content</span><span class="w"> </span><span class="p">}}</span>
+</code></pre></div></div>
+
+<p>He aquí un ejemplo ilustrativo de un archivo de diseño:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"es"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+      <span class="nt">&lt;meta</span> <span class="na">character= </span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;title&gt;</span>{{ page.title }}<span class="nt">&lt;/title&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"/styles/style.css"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+
+  <span class="nt">&lt;body&gt;</span>
+    Aquí contenido de encabezamiento común a todas las páginas
+    que utilicen este diseño.
+
+    {{ content }}
+
+    Aquí contenido de pie común a todas las páginas
+    que utilicen este diseño.
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>Los temas, que presentaremos en una lección posterior, vienen con sus propios archivos de diseño.
+Así, por ejemplo, el tema <strong>minima</strong>, que viene de fábrica con <strong>Jekyll</strong>, proporciona los archivos de diseño <strong><em>default</em></strong>, <strong><em>home</em></strong>, <strong><em>page</em></strong> y <strong><em>post</em></strong>.
+En cambio, el tema <strong>Leap day</strong> sólo viene con <strong><em>default</em></strong>.
+Independientemente del número de archivos de diseño que proporcione el tema que estemos usando, podemos definir los nuestros y, además, sobrescribir los proporcionados.</p>
+
+<h2 id="propiedades-personalizadas-de-los-encabezamientos">Propiedades personalizadas de los encabezamientos</h2>
+
+<p>Recordemos que los encabezamientos (<em>front matters</em>) contienen los metadatos de los archivos de contenido.
+Atendiendo a si estamos ante una página o un artículo, <strong>Jekyll</strong> define unas propiedades predefinidas como, por ejemplo, <strong><em>title</em></strong>, <strong><em>layout</em></strong> o <strong><em>permalink</em></strong>.</p>
+
+<p>Además de estas propiedades predefinidas, también podemos declarar <strong>propiedades personalizadas</strong> (<em>custom properties</em>) para contener cualquier dato extra necesario para nuestros fines.
+Cualquier propiedad que no sea una predefinida se considerará como personalizada.
+Puede utilizar este tipo de propiedades, por ejemplo, para añadir metadatos adicionales, los cuales puede utilizar, si lo desea, en el resultado final mediante <strong>Liquid</strong>.</p>
+
+<p>Estas propiedades se pueden acceder y utilizar en el sitio web mediante expresiones <strong>Liquid</strong>.
+<strong>Jekyll</strong> crea las variables <strong><em>page</em></strong> o <strong><em>post</em></strong>, según el tipo de archivo, para que podamos acceder a las propiedades de su encabezamiento.
+El acceso es tan sencillo como:</p>
+
+<div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{{</span><span class="w"> </span><span class="nv">page</span><span class="p">.</span><span class="nv">propiedad</span><span class="w"> </span><span class="p">}}</span>
+<span class="p">{{</span><span class="w"> </span><span class="nv">post</span><span class="p">.</span><span class="nv">propiedad</span><span class="w"> </span><span class="p">}}</span>
+</code></pre></div></div>
+
+<h2 id="colecciones">Colecciones</h2>
+
+<p>Una <strong>colección</strong> (<em>collection</em>) representa un grupo de archivos de contenido.
+Son muy útiles para agrupar contenido relacionado con algún tema o criterio.
+Un sitio web puede tener tantas colecciones como necesite, incluso no tener ninguna.</p>
+
+<p>Se definen en el archivo de configuración <strong>_config.yaml</strong>, en la <strong>propiedad <em>collections</em></strong> (<em>collections property</em>).
+Esta propiedad puede ser de tipo lista de textos o bien un objeto.</p>
+
+<p>Cuando se define como una lista de textos, cada uno de sus elementos representa el nombre de la colección, sin proporcionar ningún tipo de metadato sobre la colección.
+En este caso, es importante que recuerde que las colecciones tendrán su propiedad <strong><em>output</em></strong> a <strong><em>false</em></strong>.
+Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ...</span>
+
+<span class="na">collections</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">nombre</span>
+  <span class="pi">-</span> <span class="s">nombre</span>
+  <span class="pi">-</span> <span class="s">...</span>
+</code></pre></div></div>
+
+<p>En cambio, cuando se define como un objeto o mapa, cada propiedad representa una colección y su valor contiene sus metadatos.
+Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ...</span>
+
+<span class="na">collections</span><span class="pi">:</span>
+  <span class="c1"># colección sponsorship</span>
+  <span class="na">sponsorship</span><span class="pi">:</span>
+    <span class="na">title</span><span class="pi">:</span> <span class="s">Patrocinio</span>
+    <span class="na">output</span><span class="pi">:</span> <span class="kc">true</span>
+    <span class="na">permalink</span><span class="pi">:</span> <span class="s">/:collection/:path</span>
+    <span class="na">order</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">patrocinio.md</span>
+      <span class="pi">-</span> <span class="s">roadmap.md</span>
+  
+  <span class="c1"># colección doc</span>
+  <span class="na">doc</span><span class="pi">:</span>
+    <span class="na">title</span><span class="pi">:</span> <span class="s">Documentación</span>
+    <span class="na">output</span><span class="pi">:</span> <span class="kc">true</span>
+    <span class="na">permalink</span><span class="pi">:</span> <span class="s">/:collection/:path</span>
+    <span class="na">order</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">instalación.md</span>
+      <span class="pi">-</span> <span class="s">datos.md</span>
+      <span class="pi">-</span> <span class="s">catálogos.md</span>
+      <span class="pi">-</span> <span class="s">registros.md</span>
+      <span class="pi">-</span> <span class="s">extensiones.md</span>
+      <span class="pi">-</span> <span class="s">disparadores.md</span>
+      <span class="pi">-</span> <span class="s">ejecución-distribuida.md</span>
+      <span class="pi">-</span> <span class="s">plugins.md</span>
+</code></pre></div></div>
+
+<h3 id="directorios-de-colección">Directorios de colección</h3>
+
+<p>Para cada colección, tenemos que crear un directorio <strong><em>_nombreColección</em></strong> en el <strong>directorio del sitio</strong> e introducir en él sus archivos de contenido.
+Así pues, si definimos una colección <em>doc</em>, definiremos el directorio <em>_doc</em> en el directorio del sitio y ubicaremos ahí sus archivos de contenido.</p>
+
+<h3 id="propiedad-output-de-las-colecciones">Propiedad <em>output</em> de las colecciones</h3>
+
+<p>La <strong>propiedad <em>output</em></strong> (<em>output property</em>) es muy importante en una colección.
+Si su valor es <strong><em>true</em></strong>, <strong>Jekyll</strong> generará una página para cada uno de sus archivos;
+en caso contrario, generará una única página para todos ellos.
+Lo habitual es <strong><em>true</em></strong>.</p>
+
+<h3 id="propiedad-permalink-de-las-colecciones">Propiedad <em>permalink</em> de las colecciones</h3>
+
+<p>La <strong>propiedad <em>permalink</em></strong> (<em>permalink property</em>) de una colección se puede utilizar para fijar la ruta de sus documentos.
+Esta propiedad puede contener los siguientes <strong>marcadores de posición</strong> (<em>placeholders</em>), o sea, elementos nombrados en cuyo lugar se insertará su valor asociado.
+Disponemos, entre otros, de los siguientes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Marcador</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>:collection</em></strong></td>
+      <td>Nombre de la colección.</td>
+    </tr>
+    <tr>
+      <td><strong><em>:path</em></strong></td>
+      <td>Ruta del archivo relativa al directorio de la colección.</td>
+    </tr>
+    <tr>
+      <td><strong><em>:name</em></strong></td>
+      <td>Nombre del archivo de contenido sin su extensión.</td>
+    </tr>
+    <tr>
+      <td><strong><em>:title</em></strong></td>
+      <td>Si el encabezamiento define la propiedad <strong><em>slug</em></strong>, se utilizará su valor; en otro caso, se usa <strong><em>:name</em></strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Así, por ejemplo, si tenemos una colección <em>doc</em> y deseamos fijar la ruta de cada una de sus páginas de contenido, podríamos escribir la siguiente propiedad <strong><em>permalink</em></strong> en la colección sin necesidad de indicarla en las páginas:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ...</span>
+
+<span class="na">collections</span><span class="pi">:</span>
+  <span class="na">doc</span><span class="pi">:</span>
+    <span class="na">title</span><span class="pi">:</span> <span class="s">Documentación</span>
+    <span class="na">output</span><span class="pi">:</span> <span class="kc">true</span>
+    <span class="na">permalink</span><span class="pi">:</span> <span class="s">/:collection/:path</span>
+</code></pre></div></div>
+
+<p>El <strong><em>slug</em></strong> es la última parte de la ruta del archivo que lo identifica del resto dentro del directorio en el que se encuentra.
+Es un término muy utilizado en <strong>SEO</strong>.
+Se utiliza para posicionar adecuadamente la página en los buscadores.
+Así, por ejemplo, el <em>slug</em> de esta lección es <em>páginas-de-contenido</em>.
+Los buscadores para mejorar el posicionamiento recomiendan que sea descriptivo de su contenido.</p>
+
+<h3 id="propiedad-order-de-las-colecciones">Propiedad <em>order</em> de las colecciones</h3>
+
+<p>Desde la versión <strong>4.0</strong> de <strong>Jekyll</strong>, se puede utilizar la <strong>propiedad <em>order</em></strong> (<em>order property</em>).
+Si el orden de las páginas de una colección es importante, podemos usarla para indicar exactamente el orden en que deseamos aparezcan.
+En esta propiedad de tipo lista, cada uno de sus elementos representa un archivo de contenido.
+Ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ...</span>
+
+<span class="na">collections</span><span class="pi">:</span>
+  <span class="na">doc</span><span class="pi">:</span>
+    <span class="na">title</span><span class="pi">:</span> <span class="s">Documentación</span>
+    <span class="na">output</span><span class="pi">:</span> <span class="kc">true</span>
+    <span class="na">permalink</span><span class="pi">:</span> <span class="s">/:collection/:path</span>
+    <span class="na">order</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">instalación.md</span>
+      <span class="pi">-</span> <span class="s">datos.md</span>
+      <span class="pi">-</span> <span class="s">catálogos.md</span>
+      <span class="pi">-</span> <span class="s">registros.md</span>
+      <span class="pi">-</span> <span class="s">extensiones.md</span>
+      <span class="pi">-</span> <span class="s">disparadores.md</span>
+      <span class="pi">-</span> <span class="s">ejecución-distribuida.md</span>
+      <span class="pi">-</span> <span class="s">plugins.md</span>
+</code></pre></div></div>
+
+<p>En el momento de escribir estas líneas, <strong>GitHub Pages</strong> utiliza la versión <strong>3.9.3</strong> de <strong>Jekyll</strong>, por lo que tenemos que utilizar una solución alternativa para este caso.
+Lo más sencillo es añadir una propiedad numérica personalizada <em>order</em> a los encabezamientos de las páginas de la colección y utilizar el filtro <strong><em>sort</em></strong> de <strong>Liquid</strong> para realizar la ordenación.
+Ejemplo:</p>
+
+<div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{%-</span><span class="w"> </span><span class="nt">assign</span><span class="w"> </span><span class="nv">coll</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">site</span><span class="p">.</span><span class="nv">collections</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nf">where</span><span class="p">:</span><span class="w"> </span><span class="s2">"label"</span><span class="p">,</span><span class="w"> </span><span class="nv">page</span><span class="p">.</span><span class="nv">collection</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nf">first</span><span class="w"> </span><span class="p">-%}</span>
+<span class="p">{%-</span><span class="w"> </span><span class="nt">assign</span><span class="w"> </span><span class="nv">docs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">coll</span><span class="p">.</span><span class="nv">docs</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nf">sort</span><span class="p">:</span><span class="w"> </span><span class="s2">"order"</span><span class="w"> </span><span class="p">-%}</span>
+<span class="p">{%-</span><span class="w"> </span><span class="nt">for</span><span class="w"> </span><span class="nv">doc</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nv">docs</span><span class="w"> </span><span class="p">-%}</span>
+  <span class="p">{%-</span><span class="w"> </span><span class="kr">if</span><span class="w"> </span><span class="nv">doc</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">page</span><span class="w"> </span><span class="p">-%}</span>
+    &lt;span class="page-link"&gt;<span class="p">{{</span><span class="w"> </span><span class="nv">doc</span><span class="p">.</span><span class="nv">title</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nf">escape</span><span class="w"> </span><span class="p">}}</span>&lt;/span&gt;
+  <span class="p">{%-</span><span class="w"> </span><span class="kr">else</span><span class="w"> </span><span class="p">-%}</span>
+    &lt;a class ="page-link" href="<span class="p">{{</span><span class="w"> </span><span class="nv">doc</span><span class="p">.</span><span class="nv">url</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nf">relative_url</span><span class="w"> </span><span class="p">}}</span>"&gt;<span class="p">{{</span><span class="w"> </span><span class="nv">doc</span><span class="p">.</span><span class="nv">title</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nf">escape</span><span class="w"> </span><span class="p">}}</span>&lt;/a&gt;
+  <span class="p">{%-</span><span class="w"> </span><span class="kr">endif</span><span class="w"> </span><span class="p">-%}</span>
+<span class="p">{%-</span><span class="w"> </span><span class="nt">endfor</span><span class="w"> </span><span class="p">-%}</span>
+</code></pre></div></div>
+
+<p>La versión de <strong>Jekyll</strong> utilizada por <strong>GitHub Pages</strong> se puede consultar en <a href="https://pages.github.com/versions">https://pages.github.com/versions</a>.</p>
+
+<h3 id="acceso-a-las-colecciones-mediante-liquid">Acceso a las colecciones mediante <em>Liquid</em></h3>
+
+<p>La <strong>variable <em>site.collections</em></strong> contiene una <em>lista</em> con las colecciones dadas de alta en el archivo <strong>_config</strong>.
+Cada uno de sus elementos es un objeto que contiene los datos de una colección que, a su vez, dispone, entre otras, de las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Tipo de datos</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>label</em></strong></td>
+      <td>Texto</td>
+      <td>Nombre de la colección.</td>
+    </tr>
+    <tr>
+      <td><strong><em>docs</em></strong></td>
+      <td>Array de objetos</td>
+      <td>Archivos de contenido, generados a partir de plantillas, asociados a la colección.</td>
+    </tr>
+    <tr>
+      <td><strong><em>files</em></strong></td>
+      <td>Array de objetos</td>
+      <td>Archivos de contenido estáticos asociados a la colección.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Si necesita acceder a una determinada colección a partir de su nombre, puede utilizar la variable <strong><em>site</em></strong> como sigue:</p>
+
+<div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code>site._nombreColección
+</code></pre></div></div>
+
+<p>En cambio, si necesita acceder a una colección a partir del valor de alguna de sus propiedades, utilice el filtro <strong><em>where</em></strong> de <strong>Liquid</strong>, tal y como muestra el siguiente ejemplo:</p>
+
+<div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code>site.collections | where: "label", page.collection
+</code></pre></div></div>
+
+<p>Recuerde que el filtro <strong><em>where</em></strong> devuelve una lista.
+No es raro utilizar, a continuación, un filtro <strong><em>first</em></strong> si sólo nos interesa el primer elemento de la lista devuelta.</p>
+
+<p>Los archivos listados en la propiedad <strong><em>docs</em></strong> de las colecciones son aquellos que definen explícitamente un encabezamiento (<em>front matter</em>).
+Los que no lo declaran, se tratan como archivos estáticos, <strong><em>files</em></strong>.</p>
+
+<p>Cada objeto de un archivo de contenido dispone de las propiedades definidas en su encabezamiento, además de las siguientes propiedades:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Tipo de datos</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>url</em></strong></td>
+      <td>Texto</td>
+      <td>Ruta asociada al documento.</td>
+    </tr>
+    <tr>
+      <td><strong><em>content</em></strong></td>
+      <td>Texto</td>
+      <td>Contenido del documento sin transformar.</td>
+    </tr>
+    <tr>
+      <td><strong><em>output</em></strong></td>
+      <td>Texto</td>
+      <td>Contenido transformado del documento.</td>
+    </tr>
+    <tr>
+      <td><strong><em>collection</em></strong></td>
+      <td>Texto</td>
+      <td>Nombre de la colección a la que está asociado el documento.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="valores-predeterminados-de-los-archivos-de-contenido-de-las-colecciones">Valores predeterminados de los archivos de contenido de las colecciones</h3>
+
+<p>Es posible asignar valores predeterminados a propiedades, tanto predefinidas como personalizadas, de los encabezamientos de los archivos de contenido asociados a una colección.
+Por ejemplo, podemos indicar el valor de la propiedad <strong><em>layout</em></strong> en el encabezamiento de cada página o bien a nivel de colección.
+Así, si decidimos cambiarlo, sólo tendremos que ir a la configuración de la colección.</p>
+
+<p>Aunque podría pensar que estos valores se fijan en la propiedad de la colección, o sea, en la propiedad correspondiente de <strong><em>collections</em></strong>, no es así.
+Hay que utilizar la <strong>propiedad <em>defaults</em></strong> (<em>defaults property</em>), la cual consiste en una lista de elementos donde cada uno de ellos representa un ámbito de aplicación.
+Realmente, esta propiedad no fija los valores predeterminados de una colección sino de los archivos de contenido de una determinada ruta.
+Veamos un ejemplo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">collections</span><span class="pi">:</span>
+  <span class="na">doc</span><span class="pi">:</span>
+    <span class="na">permalink</span><span class="pi">:</span> <span class="s">/:collection/:path</span>
+    <span class="c1"># ...</span>
+
+  <span class="na">sponsorship</span><span class="pi">:</span>
+    <span class="na">permalink</span><span class="pi">:</span> <span class="s">/:collection/:path</span>
+    <span class="c1"># ...</span>
+
+<span class="na">defaults</span><span class="pi">:</span>
+  <span class="c1"># colección doc</span>
+  <span class="pi">-</span> <span class="na">scope</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">doc</span>
+    <span class="na">values</span><span class="pi">:</span>
+      <span class="na">layout</span><span class="pi">:</span> <span class="s">page</span>
+  
+  <span class="c1"># colección sponsorship</span>
+  <span class="pi">-</span> <span class="na">scope</span><span class="pi">:</span>
+      <span class="na">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">sponsorship</span>
+    <span class="na">values</span><span class="pi">:</span>
+      <span class="na">layout</span><span class="pi">:</span> <span class="s">page</span>
+</code></pre></div></div>
+
+<p>En caso de una colección, el elemento es similar a:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">scope</span><span class="pi">:</span>
+  <span class="na">path</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>  <span class="c1"># siempre la cadena vacía</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">ruta-de-la-colección</span>  <span class="c1"># generalmente, el nombre de la colección</span>
+<span class="na">values</span><span class="pi">:</span> <span class="c1"># propiedades con sus valores predeterminados</span>
+  <span class="na">layout</span><span class="pi">:</span> <span class="s">archivo-de-diseño</span>
+  <span class="c1">#...</span>
+</code></pre></div></div>
+
+<p>Recuerde que puede fijar el valor predeterminado de cualquier propiedad, tanto predefinida como personalizada.
+Si el archivo dispone de un encabezamiento y define su propio valor, este sobrescribirá al fijado en <strong><em>defaults</em></strong>.
+En caso de tratarse de un archivo estático, los valores así indicados serán sus propiedades.</p>
+
+<p>La propiedad <strong><em>type</em></strong> de <strong><em>scope</em></strong> sirve para indicar a qué tipo de contenido se debe aplicar.
+Si deseamos que se aplique a todas las páginas de contenido, indicaremos <strong><em>pages</em></strong>;
+en cambio, para los artículos, <strong><em>posts</em></strong>;
+y si, como en los ejemplos anteriores necesitamos que se aplique a una determinada colección, el identificador de la colección.</p>
+
+<h2 id="página-de-error-404-en-jekyll">Página de error 404 en <em>Jekyll</em></h2>
+
+<p>Los servidores webs responden con un error <strong><em>404 Not Found</em></strong> cuando un recurso solicitado no existe.
+Si no indicamos nada especial, <strong>GitHub Pages</strong> proporcionará una página de error predeterminada.
+Si lo deseamos o necesitamos, podemos definir una página de error propia en un archivo <strong>404.md</strong> o <strong>404.html</strong> ubicado en el <strong>directorio del sitio</strong>.
+Ejemplo en <strong>Markdown</strong>:</p>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">page</span>
+<span class="na">permalink</span><span class="pi">:</span> <span class="s">/404.html</span>
+<span class="nn">---</span>
+
+<span class="gh"># 404</span>
+
+<span class="ge">*!Página no encontrada!*</span> :(
+</code></pre></div></div>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

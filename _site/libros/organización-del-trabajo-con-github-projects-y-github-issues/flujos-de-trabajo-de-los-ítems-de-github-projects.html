@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Flujos de trabajo de los ítems de GitHub Projects | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Flujos de trabajo de los ítems de GitHub Projects" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Cómo utilizar los flujos de trabajo de GitHub Projects para automatizar tareas relacionadas con ítems de proyecto." />
+<meta property="og:description" content="Cómo utilizar los flujos de trabajo de GitHub Projects para automatizar tareas relacionadas con ítems de proyecto." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Flujos de trabajo de los ítems de GitHub Projects" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Cómo utilizar los flujos de trabajo de GitHub Projects para automatizar tareas relacionadas con ítems de proyecto.","headline":"Flujos de trabajo de los ítems de GitHub Projects","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/organizaci%C3%B3n-del-trabajo-con-github-projects-y-github-issues/flujos-de-trabajo-de-los-%C3%ADtems-de-github-projects"},"url":"/libros/organizaci%C3%B3n-del-trabajo-con-github-projects-y-github-issues/flujos-de-trabajo-de-los-%C3%ADtems-de-github-projects"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/organización-del-trabajo-con-github-projects-y-github-issues'>Organización del trabajo con GitHub Projects y GitHub Issues</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Flujos de trabajo de los ítems de GitHub Projects</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>4 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Los flujos de trabajo de <strong>GitHub Projects</strong> permiten fijar automáticamente el estatus de un ítem cuando se producen ciertos eventos relacionados con él.
+No son muy flexibles, pero para ciertas cosas sí son muy interesantes y útiles.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es un flujo de <strong>GitHub Projects</strong>, no confundirlos con los de <strong>GitHub Actions</strong>.</p>
+  </li>
+  <li>
+    <p>Qué flujos de trabajo hay disponibles en <strong>GitHub Projects</strong>.</p>
+  </li>
+  <li>
+    <p>Como activar o desactivar flujos de trabajo.</p>
+  </li>
+  <li>
+    <p>Cómo modificar un flujo de trabajo.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p>La <strong>automatización</strong> (<em>automation</em>) consiste en convertir tareas o procesos manuales en automáticos.
+Esta automatización se puede realizar con flujos internos de <strong>GitHub Projects</strong>, los que aquí vamos a presentar;
+o con flujos de trabajo de <strong>GitHub Actions</strong>, los cuales quedan fuera del ámbito de este libro.
+Un <strong>flujo de trabajo de <em>GitHub Projects</em></strong> (<em>GitHub Projects workflow</em>) no es más que la automatización de algo cuando sucede un determinado evento que puede afectar a un ítem del proyecto.
+Se utilizan principalmente para fijar el valor del estatus de los ítems cuando sucede algo relacionado con él.
+En el momento de escribir estas líneas, los posibles flujos disponibles son:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flujo</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>Item added to project</em></strong></td>
+      <td>Para fijar el estatus inicial de los nuevos ítems del proyecto.</td>
+    </tr>
+    <tr>
+      <td><strong><em>Item reopened</em></strong></td>
+      <td>Para fijar el estatus de un ítem del proyecto cuando se reabre una propuesta (<em>issue</em>) y/o solicitud de integración (<em>pull request</em>) asociada a él.</td>
+    </tr>
+    <tr>
+      <td><strong><em>Item closed</em></strong></td>
+      <td>Para fijar el estatus de un ítem del proyecto cuando se cierra una propuesta y/o solicitud de integración asociada a él.</td>
+    </tr>
+    <tr>
+      <td><strong><em>Code changes requested</em></strong></td>
+      <td>Para cambiar el estatus de un ítem del proyecto si una revisión de código de una solicitud de integración solicita cambios.</td>
+    </tr>
+    <tr>
+      <td><strong><em>Code review approved</em></strong></td>
+      <td>Para fijar el estatus de un ítem del proyecto cuando se aprueba una solicitud de integración asociada a él.</td>
+    </tr>
+    <tr>
+      <td><strong><em>Pull requested merged</em></strong></td>
+      <td>Para fijar el estatus de un ítem del proyecto cuando una solicitud de integración asociada a él se integra en otra rama.</td>
+    </tr>
+    <tr>
+      <td><strong><em>Auto-archive items</em></strong></td>
+      <td>Para archivar un ítem del proyecto cuando cumple una determinada condición como, por ejemplo, que esté cerrada y lleve así <em>x</em> días.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>De manera predeterminada, sólo se encuentran activados los flujos <strong><em>Item closed</em></strong> y <strong><em>Pull request merged</em></strong>.
+Personalmente, me gusta fijar también el estatus inicial de los nuevos ítems con <strong><em>Item added to project</em></strong>.</p>
+
+<h2 id="activacióndesactivación-de-un-flujo-de-trabajo">Activación/desactivación de un flujo de trabajo</h2>
+
+<p>Para activar o desactivar un flujo de trabajo de <strong>GitHub Projects</strong>, en primer lugar hay que saber llegar a ellos:</p>
+
+<ol>
+  <li>
+    <p>Ir al proyecto.</p>
+  </li>
+  <li>
+    <p>Hacer clic en los tres puntos (<code class="language-plaintext highlighter-rouge">...</code>) para mostrar su menú contextual:</p>
+
+    <p><img src="img/menú-contextual-del-proyecto.png" alt="Menú contextual del proyecto" /></p>
+  </li>
+  <li>
+    <p>Seleccionar <strong><em>Workflows</em></strong>, lo que mostrará los flujos de trabajo disponibles:</p>
+
+    <p><img src="img/flujos-de-trabajo-de-github-projects.png" alt="Flujos de trabajo de *GitHub Projects*" /></p>
+  </li>
+</ol>
+
+<p>Una vez nos encontramos en los flujos, lo siguiente es activar o desactivar aquel que nos interese.
+Si el flujo ya está activado, como el de la imagen anterior, no hay más que desactivarlo haciendo clic en <strong><em>On</em></strong>.
+Ahora bien, si el flujo está desactivado:</p>
+
+<ol>
+  <li>
+    <p>Hacer clic en <strong><em>Edit</em></strong>:</p>
+
+    <p><img src="img/visualización-de-un-flujo-desactivado.png" alt="Visualización de un flujo desactivado de *GitHub Projects*" /></p>
+  </li>
+  <li>
+    <p>Revisar el flujo para confirmar que es lo que queremos.</p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>Save and turn on workflow</em></strong> para activarlo:</p>
+
+    <p><img src="img/edición-de-un-flujo-a-activar.png" alt="Edición de un flujo a activar en *GitHub Projects*" /></p>
+  </li>
+</ol>
+
+<h2 id="modificación-de-un-flujo-de-github-projects">Modificación de un flujo de <em>GitHub Projects</em></h2>
+
+<p>Siendo sinceros, no es gran cosa lo que podemos hacer con estos flujos, pero ayudan en algo.
+Supongamos que, cuando se añada un nuevo ítem al proyecto, deseamos que se ubique en el estatus o columna <em>Backlog</em>.
+Esto podemos hacerlo de manera muy sencilla con el flujo <strong><em>Item added to project</em></strong>:</p>
+
+<ol>
+  <li>
+    <p>Ir a los flujos del proyecto.</p>
+  </li>
+  <li>
+    <p>Seleccionar el flujo <strong><em>Item added to project</em></strong>, el cual muestra a qué evento hay que reaccionar, en este caso, ante una <strong><em>issue</em></strong> y/o <strong><em>pull request</em></strong>:</p>
+  </li>
+  <li>
+    <p>En <strong><em>Set value</em></strong>, indicar el estatus a asignar a los nuevos ítems, en nuestro caso, <strong><em>Backlog</em></strong>:</p>
+
+    <p><img src="img/edición-del-flujo-item-added-to-project.png" alt="Edición del flujo *Item added to project*" /></p>
+  </li>
+  <li>
+    <p>Una vez hecho el cambio, hacer clic a <strong><em>Save and turn on workflow</em></strong>.</p>
+  </li>
+</ol>
+
+<p>Si lo que desea es cambiar el estatus al que debe ir el ítem cuando se cierre su propuesta y/o solicitud de integración asociada, puede utilizar los flujos <strong><em>Item closed</em></strong> y <strong><em>Pull request merged</em></strong>.
+Más adelante, mostraremos detenidamente el flujo <strong><em>Auto-archive items</em></strong>.</p>
+
+<h2 id="flujos-de-trabajo-de-github-actions">Flujos de trabajo de <em>GitHub Actions</em></h2>
+
+<p>También es posible utilizar los flujos de trabajo de <strong>GitHub Actions</strong>, por ejemplo, para crear ítems.
+El estudio de los flujos de <strong>GitHub Actions</strong> queda fuera del ámbito de este libro.
+A pesar de ello, puede echar un vistazo a <a href="https://github.com/akromio/nodejs-akromio/actions/workflows/create-project-item-for-dep-review.yaml">https://github.com/akromio/nodejs-akromio/actions/workflows/create-project-item-for-dep-review.yaml</a>.
+Con este trabajo, se crea un ítem todos los lunes para realizar la revisión de las solicitudes de integración generadas los domingos por <strong>Dependabot</strong>.</p>
+
+<p>Si necesita crear ítems en un proyecto, actualmente no se puede utilizar el <em>token</em> generado or <strong>GitHub Actions</strong>.
+No tiene permisos suficientes.
+Hay que utilizar un <em>token</em> personal con el que se proporcione acceso a los ámbitos (<em>scopes</em>) <strong><em>repo</em></strong> y <strong><em>project</em></strong>.
+Una vez lo haya generado, añádalo al almacén de secretos de <strong>GitHub Actions</strong>, por ejemplo, con el nombre <strong>GH_PROJECTS_TOKEN</strong> y use este <em>token</em> en el <em>script</em> de creación del ítem.</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>

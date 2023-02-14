@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Introducción a GitHub Pages | Campus:bit</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Introducción a GitHub Pages" />
+<meta name="author" content="Kramer Edulab" />
+<meta property="og:locale" content="es_ES" />
+<meta name="description" content="Introducción a GitHub Pages y Jekyll." />
+<meta property="og:description" content="Introducción a GitHub Pages y Jekyll." />
+<meta property="og:site_name" content="Campus:bit" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-02-14T08:41:56-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Introducción a GitHub Pages" />
+<meta name="twitter:site" content="@krameredulab" />
+<meta name="twitter:creator" content="@krameredulab" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Kramer Edulab"},"dateModified":"2023-02-14T08:41:56-06:00","datePublished":"2023-02-14T08:41:56-06:00","description":"Introducción a GitHub Pages y Jekyll.","headline":"Introducción a GitHub Pages","mainEntityOfPage":{"@type":"WebPage","@id":"/libros/publicaci%C3%B3n-de-sitios-webs-est%C3%A1ticos-con-github-pages/introducci%C3%B3n-a-github-pages"},"url":"/libros/publicaci%C3%B3n-de-sitios-webs-est%C3%A1ticos-con-github-pages/introducci%C3%B3n-a-github-pages"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="Campus:bit" /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /></head>
+<body><header class="site-header">
+  <div class="wrapper">
+    <a class="site-title" rel="author" href="/">Campus:bit</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger">
+        
+          
+          
+          
+          
+          
+          <a class="page-link" href='/libros/publicación-de-sitios-webs-estáticos-con-github-pages'>Publicación de sitios webs estáticos con GitHub Pages</a>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Introducción a GitHub Pages</h1>
+  </header>
+
+  <div class="post-reading-time">
+    <span class="material-symbols-outlined">schedule</span>
+    <span>16 minutos</span>
+  </div>
+
+  <div class="post-content">
+    <p>Son muchos los proyectos que disponen de documentación para su uso.
+Atendiendo a los recursos, es posible que el sitio web del proyecto lo cree un diseñador o bien haya que recurrir a opciones más asequibles como <strong>GitHub Pages</strong>.
+Son menos atractivas visualmente, pero mucho más rápidas y económicas de crear.</p>
+
+<p>Al finalizar, sabrá:</p>
+
+<ul>
+  <li>
+    <p>Qué es <strong>GitHub Pages</strong>.</p>
+  </li>
+  <li>
+    <p>Qué es <strong>Jekyll</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo configurar y crear sitios webs estáticos servidos por <strong>GitHub Pages</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo configurar un sitio web transformable por <strong>Jekyll</strong>.</p>
+  </li>
+  <li>
+    <p>Cómo personalizar el dominio en el que se publicará el sitio web.</p>
+  </li>
+  <li>
+    <p>Cómo configurar <strong>GitHub Pages</strong> para que sirva nuestro sitio mediante <strong>HTTPS</strong>.</p>
+  </li>
+  <li>
+    <p>Qué evento de <strong>GitHub Actions</strong> se genera cada vez que se publica el sitio en <strong>GitHub Pages</strong>.</p>
+  </li>
+</ul>
+
+<h2 id="introducción">Introducción</h2>
+
+<p><strong>GitHub Pages</strong> es un servicio de alojamiento de webs estáticas ofrecido por <strong>GitHub</strong>.
+Dispone de capa gratuita y de pago, permitiendo así utilizar la que mejor se adapte a nuestras necesidades.
+Recordemos que un <strong>sitio web estático</strong> (<em>static website</em>) es aquel cuyo contenido no se transforma en el servidor web;
+se envía tal cual a los clientes.
+Debido a sus limitaciones, se suele utilizar para publicar libros, documentación de proyectos, pequeños blogs o webs estáticas muy sencillas.</p>
+
+<p>Entre las empresas o proyectos que usan <strong>GitHub Pages</strong>, encontramos
+<strong>Accenture</strong>,
+<strong>Airbnb</strong>,
+<strong>Express</strong>,
+<strong>GitHub</strong>,
+<strong>Jekyll</strong>,
+<strong>Naciones Unidas</strong>,
+<strong>Netflix</strong>,
+<strong>Slack</strong>,
+<strong>Udemy</strong> y
+<strong>webpack</strong>.</p>
+
+<p>Atendiendo a quién genera este sitio web, en <strong>GitHub Pages</strong>, podemos distinguir entre sitio web <strong>Jekyll</strong> o sitio web pregenerado.</p>
+
+<p>Un <strong>sitio web <em>Jekyll</em></strong> (<em>Jekyll website</em>) es aquel que genera <strong>GitHub Pages</strong> automáticamente.
+En concreto, el sitio web debe redactarse en <strong>Markdown</strong> y/o <strong>HTML</strong>;
+<strong>GitHub Pages</strong> utiliza <strong>Jekyll</strong>, <a href="https://jekyllrb.com">https://jekyllrb.com</a>, para transformarlo automáticamente en un sitio web <strong>HTML</strong> que es finalmente lo que se publica.
+En cambio, un <strong>sitio web pregenerado</strong> (<em>pre-generated website</em>) es aquel que ya está en <strong>HTML</strong>.
+En este segundo caso, podemos crear el sitio directamente en <strong>HTML</strong> o bien podemos utilizar <strong>GitHub Actions</strong> con otro generador como, por ejemplo, <strong>Hugo</strong>.</p>
+
+<p>En ambos casos, el contenido del sitio web se debe alojar en un <strong>repositorio Git</strong> específico, cuyo nombre debe ser <strong><em>nombreUsuario</em>.github.io</strong>.
+Si estamos usando la <strong>capa gratuita de GitHub</strong>, el repositorio debe ser público;
+bajo <strong>capa de pago</strong>, puede ser público o privado.
+El sitio se encontrará disponible en el dominio homónimo, es decir, en <strong>nombreUsuario.github.io</strong>.
+Por suerte, <strong>GitHub Pages</strong> permite redirigir un dominio personalizado como, por ejemplo, <em>domin.io</em> a este subdominio, dando así un aspecto más profesional.</p>
+
+<h2 id="repositorio-de-github">Repositorio de <em>GitHub</em></h2>
+
+<p>Recordemos que todo usuario tiene la opción de publicar un sitio web estático público bajo <strong>GitHub Pages</strong>, debe hacerlo bajo un repositorio específico <strong><em>nombreCuenta</em>.github.io</strong> y, además, este debe configurarse para su publicación en la plataforma.
+Este repositorio tiene las siguientes restricciones, revíselas en el momento de comenzar a trabajar por si hubieran cambiado con respecto al momento de escribir estas líneas:</p>
+
+<ul>
+  <li>
+    <p>El repositorio puede tener un tamaño máximo de <strong>1GB</strong>.</p>
+  </li>
+  <li>
+    <p>El ancho de banda del sitio es de <strong>100GB</strong> mensuales.</p>
+  </li>
+  <li>
+    <p>En caso de un <strong>sitio web <em>Jekyll</em></strong>, como máximo se puede reconstruir <strong>diez veces/hora</strong>.
+Esta restricción no se aplica a los sitios webs pregenerados.</p>
+  </li>
+</ul>
+
+<h3 id="configuración-del-repositorio-para-su-publicación-en-github-pages">Configuración del repositorio para su publicación en <em>GitHub Pages</em></h3>
+
+<p>Una vez creado el repositorio, recuerde, con el nombre <strong><em>usuario</em>.github.io</strong>, debe configurar <strong>GitHub Pages</strong>.
+La configuración es muy similar, tanto si es un sitio autogenerado por <strong>Jekyll</strong> o pregenerado.
+Esta configuración se encuentra disponible en las opciones generales del repositorio, concretamente, en <strong><em>Settings &gt; General &gt; Code and automation &gt; Pages</em></strong>.
+Recuerde que debe tener claro si desea trabajar con un sitio web <strong>Jekyll</strong> o uno pregenerado.</p>
+
+<h2 id="sitios-webs-jekyll">Sitios webs <em>Jekyll</em></h2>
+
+<p>Lo habitual es el uso de los sitios webs <strong>Jekyll</strong>, básicamente, porque son fáciles de crear y, en segundo lugar, porque el soporte para sitios webs pregenerados, por ejemplo mediante <strong>GitHub Actions</strong>, es muy reciente.
+En el momento de escribir estas líneas, los pregenerados están en modo beta.</p>
+
+<p>Recordemos que un <strong>sitio web <em>Jekyll</em></strong> (<em>Jekyll website</em>) es aquel que se encuentra escrito, principalmente, en <strong>Markdown</strong> y/o <strong>HTML</strong> y <strong>GitHub</strong> lo transforma automáticamente a <strong>HTML</strong> mediante <strong>Jekyll</strong>.
+<strong>Jekyll</strong> no es más que una herramienta que genera sitios webs estáticos.
+Fue creada por <strong>Tom Preston-Werner</strong>, fundador de <strong>GitHub</strong>, y es muy sencilla de utilizar.
+En nuestro caso, no tenemos más que saber cómo trabajar con <strong>Markdown</strong> y algunos aspectos básicos de <strong>Jekyll</strong>, pero no olvide que su invocación la hará automáticamente <strong>GitHub</strong> cada vez que subamos un cambio a la rama del sitio web.</p>
+
+<p>Entre las organizaciones que utilizan <strong>Jekyll</strong>, encontramos <strong>Agenzia per l’Italia Digitale</strong>, <strong>GitHub</strong>, <strong>Netflix</strong> y <strong>Twitch</strong>;
+y sitios webs como el de <strong>OpenSSL</strong>, <strong>Ruby on Rails</strong>, <strong>SemVer</strong>, el estado de <strong>Idaho</strong> y el <strong>Departamento de Justicia de EE.UU.</strong></p>
+
+<p>Como el repositorio puede tener múltiples directorios, <strong>GitHub Pages</strong> necesita saber cuál es el que contiene el código del sitio web estático que debe transformar.
+A este directorio, lo vamos a conocer como el <strong>directorio del sitio</strong> (<em>website directory</em>) y puede ser la raíz del repositorio (<strong>/</strong>) o bien el directorio <strong>/docs</strong>.
+Personalmente, recomiendo utilizar <strong>/</strong>.
+Además del directorio del sitio, también tenemos la <strong>rama del sitio</strong> (<em>website branch</em>), esto es, la rama del repositorio que <strong>GitHub Pages</strong> debe publicar.
+Tanto la rama como el directorio del sitio web deben configurarse explícitamente mediante <strong>GitHub</strong>, tal y como veremos en breve.</p>
+
+<h3 id="configuración-del-repositorio-para-su-publicación-en-github-pages-1">Configuración del repositorio para su publicación en <em>GitHub Pages</em></h3>
+
+<p>Una vez tenemos claro que deseamos publicar el sitio web mediante <strong>Jekyll</strong>, debemos pasar a configurar el <strong>repositorio Git</strong>.
+Esto se hace como sigue:</p>
+
+<ol>
+  <li>
+    <p>Mostrar la configuración de <strong>GitHub Pages</strong> del repositorio.
+Para ello, ir a <strong><em>Settings &gt; General &gt; Code and automation &gt; Pages</em></strong>.</p>
+  </li>
+  <li>
+    <p>Seleccionar <strong><em>Deploy from a branch</em></strong> en <strong><em>Build and deployment &gt; Source</em></strong>.
+Así, estamos indicando que estamos ante un sitio web <strong>Jekyll</strong>.
+Si indicásemos <strong>GitHub Actions</strong>, estaríamos configurando un sitio web pregenerado por un <strong>flujo de GitHub Actions</strong>.</p>
+  </li>
+  <li>
+    <p>Elegir la rama y el directorio que contienen el código del sitio web a transformar y cuya transformación será lo que se publique.
+Por lo general, la rama suele ser <strong><em>master</em></strong> o <strong><em>main</em></strong>; y, en mi caso, el directorio, <strong>/</strong>.</p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>Save</em></strong> para guardar los cambios realizados.</p>
+  </li>
+</ol>
+
+<p>He aquí un ejemplo ilustrativo de configuración que usa <strong>/docs</strong> como directorio de sitio en vez de <strong>/</strong>:</p>
+
+<p><img src="img/configuración-de-sitio-web-jekyll.png" alt="Configuración de un sitio web *Jekyll* en *GitHub Pages*" /></p>
+
+<h3 id="archivo-de-configuración-_configyaml">Archivo de configuración <em>_config.yaml</em></h3>
+
+<p>El <strong>archivo <em>_config.yaml</em></strong> (<em>_config.yaml file</em>), ubicado en el <strong>directorio del sitio</strong>, contiene opciones de configuración del sitio como, por ejemplo, el tema de <strong>Jekyll</strong> a utilizar o el título del sitio web.
+Consiste en un objeto o mapa, entre cuyas propiedades encontramos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Tipo de datos</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>title</em></strong></td>
+      <td>Texto</td>
+      <td>Título del sitio.</td>
+    </tr>
+    <tr>
+      <td><strong><em>tagline</em></strong></td>
+      <td>Texto</td>
+      <td>Breve descripción que se adjunta al título del sitio en el elemento <strong>&lt;title&gt;</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>description</em></strong></td>
+      <td>Texto</td>
+      <td>Descripción del sitio que se adjunta al resultado <strong>HTML</strong> en un metaelemento <strong>&lt;meta name=”description”&gt;</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>locale</em></strong></td>
+      <td>Texto</td>
+      <td>Idioma del contenido como, por ejemplo, <strong><em>es_ES</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>url</em></strong></td>
+      <td>Texto</td>
+      <td>URL del sitio como, por ejemplo, https://domin.io.</td>
+    </tr>
+    <tr>
+      <td><strong><em>baseurl</em></strong></td>
+      <td>Texto</td>
+      <td>Ruta base en la que comienza el sitio dentro de <strong><em>url</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>theme</em></strong></td>
+      <td>Texto</td>
+      <td>Nombre del tema a usar como, por ejemplo, <strong><em>jekyll/minima</em></strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>plugins</em></strong></td>
+      <td>Lista</td>
+      <td><em>Plugins</em> a usar.</td>
+    </tr>
+    <tr>
+      <td><strong><em>exclude</em></strong></td>
+      <td>Lista</td>
+      <td>Archivos o directorios que <strong>Jekyll</strong> no debe procesar.</td>
+    </tr>
+    <tr>
+      <td><strong><em>author</em></strong></td>
+      <td>Objeto</td>
+      <td>Datos del autor del sitio web, entre otras propiedades: <strong><em>name</em></strong>, <strong><em>twitter</em></strong>, <strong><em>picture</em></strong> y <strong><em>url</em></strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Veamos un ejemplo ilustrativo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">title</span><span class="pi">:</span> <span class="s">Akromio</span>
+<span class="na">locale</span><span class="pi">:</span> <span class="s">es_ES</span>
+<span class="na">tagline</span><span class="pi">:</span> <span class="s">Suite de automatización para equipos de IT</span>
+<span class="na">description</span><span class="pi">:</span> <span class="pi">|</span>
+  <span class="s">Akromio es una suite de automatización de tareas realizadas comúnmente por</span>
+  <span class="s">desarrolladores de software, administradores, pentesters y otros roles de IT.</span>
+<span class="na">baseurl</span><span class="pi">:</span> <span class="s">/</span>
+
+<span class="na">author</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">Sia Codelabs</span>
+  <span class="na">twitter</span><span class="pi">:</span> <span class="s">siacodelabs</span>
+</code></pre></div></div>
+
+<p>Estos datos los utilizará <strong>Jekyll</strong> cada vez que transforme el <strong>directorio del sitio</strong> a <strong>HTML</strong>.</p>
+
+<h3 id="archivos-de-datos-de-un-sitio-web-jekyll">Archivos de datos de un sitio web <em>Jekyll</em></h3>
+
+<p>Un <strong>archivo de datos</strong> (<em>data file</em>) es un archivo, en formato <strong>YAML</strong>, <strong>JSON</strong>, <strong>CSV</strong> o <strong>TSV</strong>, que contiene datos que podemos referenciar en el contenido y que <strong>Jekyll</strong> utilizará durante el proceso de transformación.
+En nuestro caso, vamos a usar <strong>YAML</strong>, ya que nos sentimos cómodos con él y lo utilizan productos como <strong>GitHub Actions</strong>, muy utilizado hoy en día para <strong>CI/CD</strong>.
+Estos archivos se deben ubicar en el <strong>directorio <em>_data</em></strong> (<em>_data directory</em>) del <strong>directorio del sitio</strong>.
+Recuerde que el directorio del sitio lo indicamos cuando configuramos <strong>GitHub Pages</strong>; en nuestro caso, usaremos <strong>/</strong>.</p>
+
+<p>Los archivos de datos pueden contener cualquier dato, sea un objeto o una lista de elementos.
+He aquí un ejemplo ilustrativo:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># variable nodejs</span>
+<span class="na">nodejs</span><span class="pi">:</span>
+  <span class="na">version</span><span class="pi">:</span> <span class="m">18.9</span>
+  <span class="na">os</span><span class="pi">:</span> <span class="s">Linux</span>
+
+<span class="c1"># variable npm</span>
+<span class="na">npm</span><span class="pi">:</span>
+  <span class="na">version</span><span class="pi">:</span> <span class="m">8.19</span>
+</code></pre></div></div>
+
+<p>En el contenido del sitio web, podemos hacer referencia al valor de una variable mediante una expresión <strong>Liquid</strong> como la siguiente:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{ site.data.nombreArchivoDatos.nombreVariable }}
+</code></pre></div></div>
+
+<p>Si el ejemplo anterior se encontrase en un archivo <em>dep.yaml</em>, he aquí un ejemplo ilustrativo de acceso a una de sus variables, más concretamente al campo <em>version</em> de la variable <em>nodejs</em>:</p>
+
+<div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{{</span><span class="w"> </span><span class="nv">site</span><span class="p">.</span><span class="nv">data</span><span class="p">.</span><span class="nv">dep</span><span class="p">.</span><span class="nv">nodejs</span><span class="p">.</span><span class="nv">version</span><span class="w"> </span><span class="p">}}</span>
+</code></pre></div></div>
+
+<h4 id="subdirectorios-de-datos-de-un-sitio-web-jekyll">Subdirectorios de datos de un sitio web <em>Jekyll</em></h4>
+
+<p>El directorio principal de los archivos de datos es <strong>_data</strong>.
+Todos los archivos de datos se deben ubicar en este directorio.
+Si lo deseamos, podemos organizar los archivos de este directorio en subdirectorios.
+En este caso, cada subdirectorio actuará como un <strong>espacio de nombres</strong> (<em>namespace</em>), de tal manera que el acceso a las variables definidas en los archivos de datos de ese espacio de nombres se accederán como sigue:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>site.data.espacioDeNombres.variable
+</code></pre></div></div>
+
+<h3 id="variable-global-site-proporcionada-por-jekyll">Variable global <em>site</em> proporcionada por <em>Jekyll</em></h3>
+
+<p><strong>Jekyll</strong> proporciona varias variables globales con datos específicos del sitio, la página, el tema u otros aspectos del sitio web.
+Una de ellas es la <strong>variable global de sitio</strong> (<em>site global variable</em>) que contiene información sobre el sitio web.
+Esta variable dispone de varias propiedades, entre las principales encontramos:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Propiedad</th>
+      <th>Tipo de datos</th>
+      <th>Descripción</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><em>time</em></strong></td>
+      <td>Texto</td>
+      <td>Fecha del momento en el que se está generando el sitio web.</td>
+    </tr>
+    <tr>
+      <td><strong><em>data</em></strong></td>
+      <td>Objeto</td>
+      <td>Datos ubicados en los archivos de datos, recordemos, aquellos definidos en el directorio <strong>_data</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>pages</em></strong></td>
+      <td>Lista</td>
+      <td>Lista de las páginas que tiene el sitio.</td>
+    </tr>
+    <tr>
+      <td><strong><em>collections</em></strong></td>
+      <td>Lista</td>
+      <td>Lista de las colecciones definidas en el archivo de configuración, <strong>_config.yaml</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong><em>posts</em></strong></td>
+      <td>Lista</td>
+      <td>Lista de los artículos que tiene el sitio.</td>
+    </tr>
+    <tr>
+      <td><strong><em>url</em></strong></td>
+      <td>Texto</td>
+      <td>URL del sitio según indicado en el archivo de configuración, <strong>_config.yaml</strong>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Las propiedades de configuración, recordemos, las definidas en el archivo <strong>_config.yaml</strong>, también están disponibles mediante esta variable <strong><em>site</em></strong>.</p>
+
+<h3 id="flujo-de-trabajo-interno-de-jekyll">Flujo de trabajo interno de <em>Jekyll</em></h3>
+
+<p>Cuando se utiliza un <strong>sitio web <em>Jekyll</em></strong>, <strong>GitHub Pages</strong> crea un flujo de <strong>GitHub Actions</strong> que se encarga de generar el sitio web y publicarlo.
+Este flujo de trabajo es muy importante tenerlo presente porque hasta que no se ejecute, no se mostrará el sitio web.
+Por lo tanto, si ha hecho un cambio, sea paciente y espere a que le llegue el turno, se ejecute y termine para verlo.</p>
+
+<p>Se puede consultar en la pestaña <strong><em>Actions</em></strong> del repositorio y su nombre es <strong><em>pages-build-deployment</em></strong>.
+Es muy útil para saber que los cambios realizados ya se han publicado y para obtener información de un error durante la transformación, por ejemplo, por una mala configuración o un error de sintaxis en <strong>Liquid</strong>.</p>
+
+<h2 id="personalización-del-dominio">Personalización del dominio</h2>
+
+<p>Todo sitio web publicado con <strong>GitHub Pages</strong> está disponible mediante <em>cuenta.github.io</em>.
+Es posible configurar un dominio personalizado que redirija a este subdominio de <strong>github.io</strong>.
+Esto es un proceso en dos pasos.
+El primero se configura en el <strong>servidor de DNS</strong>, que puede variar atendiendo a quién nos proporcione este servicio.
+En segundo lugar, hay que configurar <strong>GitHub Pages</strong> e indicarle el dominio en cuestión.</p>
+
+<h3 id="configuración-de-dns">Configuración de <em>DNS</em></h3>
+
+<p>En primer lugar, debemos tener claro el dominio personalizado.
+Atendiendo a si es un subdominio o no lo es, deberemos hacerlo de una manera u otra.
+Se habla de subdominio cuando tenemos algo como <em>sub.domin.io</em>.
+Mientras que si lo que deseamos configurar es <em>domin.io</em>, estamos hablando de un dominio raíz.</p>
+
+<p>Lo que hay que hacer es independiente del proveedor del dominio, cómo hacerlo es lo dependiente.
+Tiene que averiguar cómo trabajar con <strong>registros de DNS</strong> con su proveedor del dominio y hacer lo que vamos a ver a continuación.</p>
+
+<h4 id="configuración-de-un-subdominio">Configuración de un subdominio</h4>
+
+<p>Para un <strong>subdominio</strong> (<em>subdomain</em>), uno que cuelga de otro, hay que crear un <strong>registro CNAME</strong> (<em>CNAME record</em>), el cual no hace más que indicar que cuando se acceda al dominio hay que acceder realmente al subdominio indicado.
+Por ejemplo, para configurar el subdominio <em>www.domin.io</em> tendremos que crear un <strong>registro CNAME</strong> que indique <em>cuenta.github.io</em>.</p>
+
+<h4 id="configuración-de-dominio-raíz">Configuración de dominio raíz</h4>
+
+<p>Un <strong>dominio raíz</strong> (<em>apex domain</em>) no es más que un dominio que cuelga de una raíz como, por ejemplo, <em>.com</em>, <em>.org</em>, <em>.net</em>, <em>.me</em>, <em>.io</em>, etc., básicamente, lo que compramos a un vendedor de dominios como <strong>Google Domains</strong>, <strong>Hostalia</strong> u <strong>OVHcloud</strong>.
+En este caso, no hay que crear un registro <strong>CNAME</strong> sino uno <strong>A</strong> o <strong>AAAA</strong>.
+Con un <strong>registro A</strong> (<em>A record</em>) o un <strong><em>registro AAAA</em></strong> (<em>AAAA record</em>) se indica la <strong>dirección IP</strong> asociada al dominio indicado.
+Observe que con <strong>CNAME</strong> se crea un alias con el que se referencia a otro dominio;
+en cambio con <strong>A</strong> o <strong>AAAA</strong> lo que hacemos es indicar exactamente la <strong>dirección IP</strong> del dispositivo asociado a ese nombre de dominio.
+En este caso, hay que saber cuáles son las <strong>IP</strong>s de los <strong>servidores de <em>GitHub Pages</em></strong>.
+En el momento de escribir estas líneas, se pueden utilizar las siguientes:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Protocolo IP</th>
+      <th>Registro</th>
+      <th>Direcciones posibles</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>IPv4</td>
+      <td>A</td>
+      <td>185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153</td>
+    </tr>
+    <tr>
+      <td>IPv6</td>
+      <td>AAAA</td>
+      <td>2606:50c0:8000::153, 2606:50c0:8001::153, 2606:50c0:8002::153, 2606:50c0:8003::153</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>El registro <strong>A</strong> se utiliza para la versión <strong>4</strong> del protocolo <strong>IP</strong>;
+mientras que para la versión <strong>6</strong>, se usa <strong>AAAA</strong>.</p>
+
+<p>Así pues, lo que haremos es crear un registro <strong>A</strong> y <strong>AAAA</strong> para cada una de las posibles <strong>direcciones IP</strong> de <strong>GitHub Pages</strong>.
+Por ejemplo, si deseamos configurar el dominio <em>domin.io</em>, tendremos que crear los siguientes <strong>registros de DNS</strong>, si tenemos en cuenta las direcciones anteriores:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Protocolo</th>
+      <th>Dominio</th>
+      <th>Registro</th>
+      <th>Dirección de IP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>IPv4</td>
+      <td>domin.io</td>
+      <td>A</td>
+      <td>185.199.108.153</td>
+    </tr>
+    <tr>
+      <td>IPv4</td>
+      <td>domin.io</td>
+      <td>A</td>
+      <td>185.199.109.153</td>
+    </tr>
+    <tr>
+      <td>IPv4</td>
+      <td>domin.io</td>
+      <td>A</td>
+      <td>185.199.110.153</td>
+    </tr>
+    <tr>
+      <td>IPv4</td>
+      <td>domin.io</td>
+      <td>A</td>
+      <td>185.199.111.153</td>
+    </tr>
+    <tr>
+      <td>IPv6</td>
+      <td>domin.io</td>
+      <td>AAAA</td>
+      <td>2606:50c0:8000::153</td>
+    </tr>
+    <tr>
+      <td>IPv6</td>
+      <td>domin.io</td>
+      <td>AAAA</td>
+      <td>2606:50c0:8001::153</td>
+    </tr>
+    <tr>
+      <td>IPv6</td>
+      <td>domin.io</td>
+      <td>AAAA</td>
+      <td>2606:50c0:8002::153</td>
+    </tr>
+    <tr>
+      <td>IPv6</td>
+      <td>domin.io</td>
+      <td>AAAA</td>
+      <td>2606:50c0:8003::153</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Es posible configurar <em>www.domin.io</em> para que haga referencia a <em>domin.io</em> con un <strong>registro CNAME</strong>;
+y, finalmente, <em>domin.io</em> para que apunte a los <strong>servidores de GitHub Pages</strong> con <strong>registros A</strong> y <strong>AAAA</strong>.</p>
+
+<h4 id="tiempo-de-vida-de-los-registros">Tiempo de vida de los registros</h4>
+
+<p>Los registros <strong>CNAME</strong>, <strong>A</strong> y <strong>AAAA</strong> tienen lo que se conoce como un <strong>tiempo de vida</strong> (<em>time-to-live</em> o <strong>TTL</strong>), un intervalo de tiempo durante el que los dispositivos pueden retener esos datos en sus cachés sin necesidad de volver a consultar el <strong>servidor de DNS</strong>.
+Esto reduce las consultas a los <strong>servidores de DNS</strong> y mejora la latencia cuando se obtiene la información directamente de nuestra <strong>caché de DNS</strong>.
+Esto quiere decir que si cambia algo, los dispositivos clientes que tengan el registro cacheado no podrán ver ese cambio hasta que haya pasado este tiempo de expiración.
+Se mide en segundos y se suele fijar <strong>3600</strong>, pero puede hacerlo más corto o largo según sus necesidades.</p>
+
+<h4 id="comprobación-de-la-configuración">Comprobación de la configuración</h4>
+
+<p>Una vez configurado el <strong>servidor de DNS</strong> en nuestro proveedor, lo siguiente es hacer una pequeña prueba para ver que las cosas funcionan.
+Lo más fácil es hacer un <em>ping</em>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>ping domin.io
+</code></pre></div></div>
+
+<p>Si algo no va bien, puede utilizar cualquier herramienta que sea capaz de consultar el <strong>registro de DNS</strong> del dominio como, por ejemplo, <strong>dig</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>dig domin.io
+</code></pre></div></div>
+
+<h3 id="configuración-de-github-pages">Configuración de <em>GitHub Pages</em></h3>
+
+<p>Una vez configurado el <strong>registro de DNS</strong> para que referencie a <strong>GitHub Pages</strong>, lo siguiente es ir a la configuración de <strong>GitHub Pages</strong> del repositorio e indicarle el dominio personalizado, es decir, desde el que accederán los usuarios:</p>
+
+<ol>
+  <li>
+    <p>Ir a <strong><em>Settings &gt; General &gt; Code and automation &gt; Pages</em></strong> del repositorio.</p>
+  </li>
+  <li>
+    <p>Escribir el dominio en <strong><em>Custom domain</em></strong>:</p>
+
+    <p><img src="img/configuración-de-dominio-personalizado.png" alt="Configuración de dominio personalizado" /></p>
+  </li>
+  <li>
+    <p>Hacer clic en <strong><em>Save</em></strong> para guardar los cambios.</p>
+  </li>
+</ol>
+
+<h3 id="archivo-cname">Archivo <em>CNAME</em></h3>
+
+<p>Cuando se publica un sitio web estático en <strong>GitHub Pages</strong> desde una rama del <strong>repositorio Git</strong>, al configurar <strong>GitHub Pages</strong>, se crea automáticamente el <strong>archivo <em>CNAME</em></strong> (<em>CNAME file</em>) en la raíz del repositorio, cuyo contenido es el nombre del dominio personalizado.
+Si se publica el sitio web mediante <strong>GitHub Actions</strong>, este archivo no se crea.</p>
+
+<h2 id="configuración-de-https">Configuración de <em>HTTPS</em></h2>
+
+<p>Por seguridad, se recomienda que el sitio web servido por <strong>GitHub Pages</strong> sea siempre bajo <strong>HTTPS</strong>.
+Recordemos que <strong>HTTPS</strong> (<em>HTTP Secure</em>) es una extensión del protocolo <strong>HTTP</strong> que garantiza las comunicaciones seguras.
+Aunque el sitio web no contenga datos privados, es buena práctica que se sirva siempre por <strong>HTTPS</strong>.
+Su configuración es como sigue:</p>
+
+<ol>
+  <li>
+    <p>Ir a la configuración de <strong>GitHub Pages</strong> del repositorio, <strong><em>Settings &gt; General &gt; Code and automation &gt; Pages</em></strong>.</p>
+  </li>
+  <li>
+    <p>En la sección <strong><em>Custom domain</em></strong>, seleccionar <strong><em>Enforce HTTPS</em></strong>.</p>
+  </li>
+</ol>
+
+<p>Cuando esta opción se encuentra seleccionada, <strong>GitHub Pages</strong> sólo servirá el sitio web mediante <strong>HTTPS</strong>.</p>
+
+<p><strong>HTTPS</strong> requiere que el servidor disponga de un certificado digital.
+Un <strong>certificado digital</strong> (<em>digital certificate</em>) es un documento digital que proporciona información sobre algo como, por ejemplo, una persona, una entidad o un servidor.
+Estos certificados son emitidos por entidades conocidas formalmente como <strong>autoridades de certificación</strong> (<em>certificate authority</em>, <strong>CA</strong>).
+Eso significa que, si configuramos <strong>HTTPS</strong> en <strong>GitHub Pages</strong>, necesitamos un certificado para que los clientes puedan comunicarse con nuestro sitio de manera segura.
+Por suerte, <strong>GitHub Pages</strong> solicita, para nuestro sitio, un certificado a <strong>Let’s Encrypt</strong> y lo almacena.
+<strong>Let’s Encrypt</strong>, <a href="https://letsencrypt.org">https://letsencrypt.org</a>, es una organización sin ánimo de lucro que certifica, de manera gratuita, un dominio web.
+Nada más, ni su propiedad ni ninguna otra cosa.
+Entre sus patrocinadores encontramos organizaciones como <strong>Cisco</strong>, <strong>GitHub</strong>, <strong>IBM</strong>, <strong>Mozilla</strong>, <strong>OVHcloud</strong> y <strong>Red Hat</strong>.
+Lo que hace <strong>GitHub</strong> es ponerse en contacto, por nosotros, con <strong>Let’s Encrypt</strong>, guardar el certificado y proporcionarlo a los clientes cuando abren conexión con nuestro dominio personalizado.</p>
+
+<h2 id="evento-de-github-actions-relacionado-con-github-pages">Evento de <em>GitHub Actions</em> relacionado con <em>GitHub Pages</em></h2>
+
+<p><strong>GitHub</strong> genera el <strong>evento <em>page_build</em></strong> (<em>page_build event</em>) cada vez que se realiza una publicación en <strong>GitHub Pages</strong>.
+No tiene propiedades extras como otros eventos.
+He aquí un ejemplo ilustrativo de su configuración en un flujo de trabajo de <strong>GitHub Actions</strong>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">on</span><span class="pi">:</span> <span class="s">page_build</span>
+</code></pre></div></div>
+
+<p>Por ejemplo, puede utilizarlo para generar una notificación automática de un cambio en su sitio web.</p>
+
+  </div>
+
+  <div class="back-to-top">
+    <a href="#"><span class="material-symbols-outlined">arrow_upward</span></a>
+  </div>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="social-links"><ul class="social-media-list"><li>
+  <a rel="me" href="https://twitter.com/krameredulab" target="_blank" title="twitter">
+    <svg class="svg-icon grey">
+      <use xlink:href="/assets/minima-social-icons.svg#twitter"></use>
+    </svg>
+  </a>
+</li>
+</ul>
+</div>
+
+    <div>
+      Copyright © 2023 Kramer Edulab. Product of Spain, EU, made in Valencia by Kramer Edulab.
+      <br />
+      Portal de formación dedicado a Manuela Cavero Asensio.
+    </div>
+  </div>
+</footer></body>
+
+</html>
