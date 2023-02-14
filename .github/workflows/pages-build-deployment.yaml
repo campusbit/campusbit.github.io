@@ -17,7 +17,7 @@ jobs:
       - name: Generate and save GitHub Pages artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: "."
+          path: ./_site
       
       - name: Publish website on GitHub Pages
         uses: actions/deploy-pages@v1
